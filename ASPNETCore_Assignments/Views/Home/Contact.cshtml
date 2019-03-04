@@ -1,0 +1,90 @@
+﻿<!--#region Get in tough------------------------------------------------------------------------------------>
+<div class="social_parallax_background d-flex flex-column">
+  <div id="contactPageId"
+       in-view-animation="social_parallax_text_show"
+       class="social_parallax_text mt-3 text-center text-white">
+    <h1 class="display-1">Be in touch!</h1>
+    <h3 class="display-4">I have to say some thing cool here!</h3>
+  </div>
+  <div class="align-self-stretch my-3">
+    <div class="d-flex justify-content-around overflow-hidden text-white text-center"
+         in-view-animation="parallax_icons_show">
+      <a href="https://github.com/fadiksho"
+         target="_blank"
+         class="parallax_icons mt-5 text-white">
+        <i class="icon-github-circled"></i>
+        <small class="social_icon_text text-white d-block">/fadi-ksho</small>
+      </a>
+      <a href="https://twitter.com/FadyKsho"
+         target="_blank"
+         class="parallax_icons mt-5 text-white">
+        <i class="icon-twitter"></i>
+        <small class="social_icon_text text-white d-block">/fadiksho</small>
+      </a>
+      <a href="https://www.linkedin.com/in/fadi-ksho"
+         target="_blank"
+         class="parallax_icons mt-5 text-white">
+        <i class="icon-linkedin-squared"></i>
+
+        <small class="social_icon_text text-white d-block">@@FadiKsho</small>
+      </a>
+
+    </div>
+  </div>
+  <!-- Contact Form -->
+  <div class="container my-5">
+    <h3 class="display-4 text-white text-center">Send Dircect Message :-)</h3>
+    <form class="needs-validation"
+          novalidate>
+      <div class="form-row">
+        <div class="col-md-6">
+          <label for="exampleInputEmail1">Email address *</label>
+          <input type="email"
+                 class="form-control"
+                 id="exampleInputEmail1"
+                 aria-describedby="emailHelp"
+                 placeholder="Enter email"
+                 required>
+          <div class="invalid-feedback">
+            Email Addrees is requird.
+          </div>
+          <small id="emailHelp"
+                 class="form-text text-muted">I will never share your email with anyone else.</small>
+        </div>
+        <div class="col-md-6">
+          <label for="phoneNumberInputId">Phone Number</label>
+          <input type="text"
+                 class="form-control"
+                 id="phoneNumberInputId"
+                 aria-describedby="phoneHelp"
+                 placeholder="Enter Phone Number">
+          <small id="emailHelp"
+                 class="form-text text-muted">I will never share your email with anyone else.</small>
+        </div>
+        <div class="col-12 mt-3">
+          <label for="contactMessageInputId">Message</label>
+          <textarea class="form-control"
+                    id="contactMessageInputId"
+                    rows="3"
+                    placeholder="Enter Message..."
+                    required></textarea>
+          <div class="invalid-feedback">
+            Message is requird
+          </div>
+        </div>
+        <div class="col-12 mt-4 d-flex">
+          <button type="submit"
+                  class="btn btn-success w-100">
+            SEND
+          </button>
+          <button type="button"
+                  id="resetFormButtonId"
+                  class="btn btn-danger ml-3">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!--#endregion-->

@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewBag.Title</title>
+</head>
+<body>
+  <!--#region ToolBar Navigation---------------------------------------------------------------------------------------------->
+  <nav id="toolBarId"
+       role="navigation"
+       class="navbar fixed-top navbar-expand-md navbar-dark bg-primary top_nav">
+    <a asp-controller="Home"
+       asp-action="Index"
+       class="navbar-brand">Code & Coffees</a>
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse"
+         id="navbarTogglerDemo02">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a asp-controller="Home"
+             asp-action="Index"
+             class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             href="https://staging.codeandcoffees.com">Blog</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+             href="#"
+             id="navbarDropdown"
+             role="button"
+             data-toggle="dropdown"
+             aria-haspopup="false"
+             aria-expanded="true">
+            Projects
+          </a>
+          <div class="dropdown-menu"
+               aria-labelledby="navbarDropdown">
+            <a class="dropdown-item"
+               href="https://milanosavsjo.se">Milano WebSite</a>
+            <a class="dropdown-item"
+               href="https://sokoban.codeandcoffees.com">Sokoban Game</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a asp-action="About"
+             class="nav-link">About</a>
+        </li>
+        <li class="nav-item">
+          <a asp-action="Contact"
+             class="nav-link">Contact</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+             href="#"
+             id="navbarDropdown"
+             role="button"
+             data-toggle="dropdown"
+             aria-haspopup="false"
+             aria-expanded="true">
+            Dark
+          </a>
+          <div class="dropdown-menu"
+               aria-labelledby="navbarDropdown">
+            <a class="dropdown-item"
+               href="#">Light</a>
+            <a class="dropdown-item"
+               href="#">Dark</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!--#endregion-->
+  <!--#region Pages---------------------------------------------------------------------------------------------->
+  <main id="main_tag_id" class="main_content">
+    @RenderBody()
+  </main>
+  <!--#endregion-->
+  <!--#region footer---------------------------------------------------------------------------------------------->
+  <footer class="container pt-4 pb-2 overflow-hidden">
+    <div class="row mt-4 d-flex justify-content-around">
+      <!-- Resources & Follow-->
+      <div class="d-flex flex-column justify-content-around flex-md-row flex-md-grow-1">
+        <ul class="list-unstyled">
+          <li>
+            <h4>Resources</h4>
+          </li>
+          <li><a href="https://www.pexels.com/">Images</a></li>
+          <li>
+            Fonts
+            <ul>
+              <li>
+                <a href="https://fonts.google.com"
+                   target="_black">Google Fonts</a>
+              </li>
+              <li>
+                <a href="http://fontello.com/"
+                   target="_black">Fontello</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="list-unstyled">
+          <li>
+            <h4>Explore</h4>
+          </li>
+          <li><a href="">Home</a></li>
+          <li><a href="">Blog</a></li>
+          <li><a href="">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Explore & About-->
+      <div class="d-flex flex-column justify-content-around flex-md-row flex-md-grow-1">
+        <ul class="list-unstyled">
+          <li>
+            <h4>Follow</h4>
+          </li>
+          <li><a href="">Twitter</a></li>
+          <li><a href="">Github</a></li>
+          <li><a href="">LinkedIn</a></li>
+        </ul>
+        <ul class="list-unstyled">
+          <li>
+            <h4>About</h4>
+          </li>
+          <li>fadiksho@gmail.com</li>
+          <li>+46 735739271</li>
+          <li></li>
+        </ul>
+      </div>
+    </div>
+    <div class="d-flex align-items-baseline mt-3">
+      <span class="ml-auto display-4">&copy; Fadi Ksho 2019</span>
+      <button id="scrollUpButtonId"
+              type="button"
+              class="go_up_button ml-auto btn btn-outline-secondary">
+        <i class="icon-up-big"></i>
+      </button>
+    </div>
+  </footer>
+  <!--#endregion-->
+</body>
+</html>
