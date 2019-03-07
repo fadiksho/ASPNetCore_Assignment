@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ASPNETCore_Assignments
@@ -19,7 +20,10 @@ namespace ASPNETCore_Assignments
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
+        app.UseBrowserLink();
       }
+
+      app.UseStaticFiles();
 
       app.UseMvc(routes =>
       {

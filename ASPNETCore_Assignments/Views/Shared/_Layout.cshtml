@@ -4,28 +4,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon"
+        type="image/x-icon"
+        href="~/favicon.ico">
   <title>@ViewBag.Title</title>
+  <link href="https://fonts.googleapis.com/css?family=Felipa"
+        rel="stylesheet">
+  <environment include="Development">
+    <link href="~/css/main.css" rel="stylesheet" type="text/css" />
+    @RenderSection("Styles", required: false)
+  </environment>
 </head>
 <body>
   <!--#region ToolBar Navigation---------------------------------------------------------------------------------------------->
   <nav id="toolBarId"
        role="navigation"
-       class="navbar fixed-top navbar-expand-md navbar-dark bg-primary top_nav">
+       class="navbar fixed-top navbar-expand-sm navbar-dark bg-primary top_nav">
     <a asp-controller="Home"
        asp-action="Index"
        class="navbar-brand">Code & Coffees</a>
     <button class="navbar-toggler"
             type="button"
             data-toggle="collapse"
-            data-target="#navbarTogglerDemo02"
-            aria-controls="navbarTogglerDemo02"
-            aria-expanded="false"
+            data-target="navbarLinks"
             aria-label="Toggle navigation">
+
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse"
-         id="navbarTogglerDemo02">
+         id="navbarLinks">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a asp-controller="Home"
@@ -33,52 +41,14 @@
              class="nav-link">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link"
-             href="https://staging.codeandcoffees.com">Blog</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle"
-             href="#"
-             id="navbarDropdown"
-             role="button"
-             data-toggle="dropdown"
-             aria-haspopup="false"
-             aria-expanded="true">
-            Projects
-          </a>
-          <div class="dropdown-menu"
-               aria-labelledby="navbarDropdown">
-            <a class="dropdown-item"
-               href="https://milanosavsjo.se">Milano WebSite</a>
-            <a class="dropdown-item"
-               href="https://sokoban.codeandcoffees.com">Sokoban Game</a>
-          </div>
-        </li>
-        <li class="nav-item">
           <a asp-action="About"
+             asp-controller="Home"
              class="nav-link">About</a>
         </li>
         <li class="nav-item">
-          <a asp-action="Contact"
+          <a asp-controller="Home"
+             asp-action="Contact"
              class="nav-link">Contact</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle"
-             href="#"
-             id="navbarDropdown"
-             role="button"
-             data-toggle="dropdown"
-             aria-haspopup="false"
-             aria-expanded="true">
-            Dark
-          </a>
-          <div class="dropdown-menu"
-               aria-labelledby="navbarDropdown">
-            <a class="dropdown-item"
-               href="#">Light</a>
-            <a class="dropdown-item"
-               href="#">Dark</a>
-          </div>
         </li>
       </ul>
     </div>
@@ -106,10 +76,6 @@
                 <a href="https://fonts.google.com"
                    target="_black">Google Fonts</a>
               </li>
-              <li>
-                <a href="http://fontello.com/"
-                   target="_black">Fontello</a>
-              </li>
             </ul>
           </li>
         </ul>
@@ -118,7 +84,7 @@
             <h4>Explore</h4>
           </li>
           <li><a href="">Home</a></li>
-          <li><a href="">Blog</a></li>
+          <li><a href="">About</a></li>
           <li><a href="">Contact</a></li>
         </ul>
       </div>
@@ -129,9 +95,9 @@
           <li>
             <h4>Follow</h4>
           </li>
-          <li><a href="">Twitter</a></li>
-          <li><a href="">Github</a></li>
-          <li><a href="">LinkedIn</a></li>
+          <li><a href="https://twitter.com/FadyKsho" target="_blank" rel="noreferrer">Twitter</a></li>
+          <li><a href="https://github.com/fadiksho" target="_blank" rel="noreferrer">Github</a></li>
+          <li><a href="https://www.linkedin.com/in/fadi-ksho" target="_blank" rel="noreferrer">LinkedIn</a></li>
         </ul>
         <ul class="list-unstyled">
           <li>
@@ -148,10 +114,16 @@
       <button id="scrollUpButtonId"
               type="button"
               class="go_up_button ml-auto btn btn-outline-secondary">
-        <i class="icon-up-big"></i>
+        &#8593;
       </button>
     </div>
   </footer>
   <!--#endregion-->
+
+  <environment include="Development">
+    <script src="~/js/main-bandle.js" type="text/javascript"></script>
+    @RenderSection("Scripts", required: false)
+  </environment>
+
 </body>
 </html>
