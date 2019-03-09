@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Guessing Game";
+}
+
+<div class="container pt-3">
+	<div class="jumbotron rounded shadow">
+		<form asp-controller="Temperature" asp-action="FeverCheck" method="get">
+			<div class="form-group">
+				<label for="guessing">Guess</label>
+				<input class="form-control" type="number" id="guessing" aria-describedby="Guessing value" placeholder="Try Guessing">
+			</div>
+			<button type="submit" class="btn btn-primary">Check</button>
+		</form>
+	</div>
+</div>

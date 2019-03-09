@@ -1,0 +1,97 @@
+﻿@section Styles {
+  <environment include="Development">
+    <link href="~/css/sokoban.css" rel="stylesheet" type="text/css" />
+  </environment>
+}
+
+<div id="gameContainerId"
+     tabindex="0"
+     class="container-fluid d-flex flex-column flex-md-row">
+  <div class="game_control mt-1 mt-md-3 mb-md-auto mb-3 mb-md-0">
+    <div class="mb-1 mb-md-2 d-flex flex-row align-items-center flex-md-column align-items-md-start">
+      <h5 class="mr-3">
+        <label for="levelSelectId">
+          Collection
+        </label>
+      </h5>
+      <select class="form-control"
+              id="levelSelectId"
+              name="levelSelect">
+        <option value="0">Orginal</option>
+        <option value="1">Try It</option>
+        <option value="2">Is it imposible!</option>
+      </select>
+    </div>
+    <div class="mb-1 mb-md-2 d-flex flex-row align-items-center flex-md-column align-items-md-start">
+      <h5 class="mr-3">Moves</h5>
+      <div class="d-flex flex-grow-1"
+           aria-label="moves navigation"
+           id="movesHistoryButtonsId">
+        <button type="button"
+                move-amount="-10"
+                class="btn btn-secondary btn-sm flex-grow-1 rounded-0 ">
+          &lt;&lt;
+        </button>
+        <button type="button"
+                move-amount="-1"
+                class="btn btn-secondary btn-sm flex-grow-1 rounded-0">
+          &lt;
+        </button>
+        <span id="movementIndexId"
+              style="min-width: 40px;"
+              class="btn btn-dark px-0 disabled flex-grow-1 rounded-0">0</span>
+        <button type="button"
+                class="btn btn-secondary btn-sm flex-grow-1 rounded-0"
+                move-amount="1">
+          &gt;
+        </button>
+        <button type="button"
+                move-amount="10"
+                class="btn btn-secondary btn-sm flex-grow-1 rounded-0">
+          &gt;&gt;
+        </button>
+      </div>
+    </div>
+    <div class="mb-2 mb-md-4 d-flex flex-row align-items-center align-items-md-start">
+      <h5 class="mr-3">Time:</h5>
+      <div>
+        <span id="timeId"
+              class="text-success">00:00</span>
+      </div>
+    </div>
+    <button id="restartButtonId"
+            class="btn btn-warning btn-block rounded-0">
+      Restart
+    </button>
+  </div>
+
+  <div class="flex-grow-1 ml-md-3 overflow-hidden">
+    <nav class="nav nav-pills nav-fill mb-2"
+         id="gridRenderingEnginesId">
+      <button class="btn btn-link nav-item nav-link active"
+              toggle-rendering="table">
+        Table
+      </button>
+      <button class="btn btn-link nav-item nav-link disabled"
+              toggle-rendering="divs">
+        Divs
+      </button>
+      <button class="btn btn-link nav-item nav-link disabled"
+              toggle-rendering="console">
+        Console
+      </button>
+    </nav>
+
+    <div id="renderContainerId"
+         class="my-3 position-relative">
+      <div id="renderEngineId"
+           class="my-0 mx-auto"></div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+  <environment include="Development">
+    <script src="~/js/sokoban-bandle.js"></script>
+  </environment>
+}
