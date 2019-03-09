@@ -1,13 +1,13 @@
 ﻿const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
-    main: ["./src/index.js", "./src/index.scss"]
+    main: ["./src/index.js", "./src/site.scss"],
+    sokoban: ["./src/js/sokoban.js", "./src/sass/projects/sokoban.scss"]
   },
   mode: "development",
   devtool: 'inline-source-map',
-  watch: true,
+
   watchOptions: {
     ignored: /node_modules/,
     aggregateTimeout: 0
@@ -33,8 +33,13 @@ module.exports = {
       test: /\.(scss|css)$/,
       use: [
         {
-          loader: MiniCssExtractPlugin.loader,
-          options: {}
+          loader: 'file-loader',
+          options: {
+            name: 'css/[name].css'
+          }
+        },
+        {
+          loader: 'extract-loader'
         },
         {
           loader: "css-loader"
@@ -45,28 +50,20 @@ module.exports = {
       ]
     },
     {
-      test: /\.(jpg|jpeg|png)$/,
+      test: /\.(jpg|jpeg|png|ico)$/,
       use: [{
         loader: "file-loader",
         options: {
-          name: "images/[name].[ext]"
-        }
-      }]
-    },
-    {
-      test: /\.(ico)$/,
-      use: [{
-        loader: "file-loader",
-        options: {
-          name: "[name].[ext]"
+          name: "[path]/[name].[ext]",
+          outputPath: (file) => {
+            let path = file.split("src/")[1];
+            return path;
+          }
         }
       }]
     }
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'css/[name].css'
-    })
   ]
 };

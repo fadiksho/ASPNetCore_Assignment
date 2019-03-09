@@ -3,6 +3,13 @@
 // // $headings-font-family:Comfortaa;
 
 // // $enable-grid-classes:false;
+
+
+/*! Import Bootstrap 4 variables */
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+
+
 $primary: #FF550B;
 $secondary: #303030;
 $success: #015668;
@@ -11,11 +18,6 @@ $info: #0F81C7;
 $warning: #0DE2EA;
 $light: #e8e8e8;
 $dark: #000000;
-
-/*! Import Bootstrap 4 variables */
-@import "../../../node_modules/bootstrap/scss/functions";
-@import "../../../node_modules/bootstrap/scss/variables";
-
 
 // // $enable-shadows:true;
 $gray-300: #000000;
