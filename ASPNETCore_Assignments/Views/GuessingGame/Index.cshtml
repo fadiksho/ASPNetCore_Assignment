@@ -1,16 +1,24 @@
-﻿
+﻿@model GuessingGameModel
 @{
-    ViewData["Title"] = "Guessing Game";
+	ViewData["Title"] = "Guessing Game";
 }
 
 <div class="container pt-3">
 	<div class="jumbotron rounded shadow">
-		<form asp-controller="Temperature" asp-action="FeverCheck" method="get">
+		<form asp-controller="GuessingGame" method="post">
 			<div class="form-group">
 				<label for="guessing">Guess</label>
-				<input class="form-control" type="number" id="guessing" aria-describedby="Guessing value" placeholder="Try Guessing">
+				<input name="guesingNumber" class="form-control" type="number" id="guessing" aria-describedby="Guessing value" placeholder="Try Guessing">
 			</div>
 			<button type="submit" class="btn btn-primary">Check</button>
 		</form>
+		@if (Model != null)
+		{
+			<div class="alert alert-info mt-3">
+				<h5>@Model.Message</h5>
+				<h5>You tried @Model.TryCount times</h5>
+			</div>
+		}
 	</div>
 </div>
+

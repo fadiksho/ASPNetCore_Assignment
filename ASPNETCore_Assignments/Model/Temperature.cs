@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ASPNETCore_Assignments.Model
+﻿namespace ASPNETCore_Assignments.Model
 {
 	public class Temperature
 	{

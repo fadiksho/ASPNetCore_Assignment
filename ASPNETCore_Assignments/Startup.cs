@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace ASPNETCore_Assignments
 {
@@ -10,7 +11,14 @@ namespace ASPNETCore_Assignments
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddMvc();
+			services.AddDistributedMemoryCache();
+			services.AddSession(options =>
+			{
+				// Set a short timeout for easy testing.
+				options.IdleTimeout = TimeSpan.FromMinutes(20);
+				options.Cookie.HttpOnly = false;
+			});
+			services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -20,10 +28,10 @@ namespace ASPNETCore_Assignments
       {
         app.UseDeveloperExceptionPage();
       }
-
       app.UseStaticFiles();
+			app.UseSession();
 
-      app.UseMvc(routes =>
+			app.UseMvc(routes =>
       {
         routes.MapRoute(
                   name: "default",
