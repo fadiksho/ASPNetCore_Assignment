@@ -22,6 +22,25 @@
 				</div>
 			}
 		</div>
+
+		<div class="ml-3">
+			<h3>Top 5 Scores</h3>
+
+			@if (!string.IsNullOrWhiteSpace(Context.Request.Cookies["highScore"]))
+			{
+				<ul class="list-group">
+					@foreach (var score in Context.Request.Cookies["highScore"].Split(','))
+					{
+						<li class="list-group-item">@score hit</li>
+					}
+				</ul>
+			}
+			else
+			{
+				<span>Try guessing if you know binary search you can do it with no more than 7 guesses!</span>
+			}
+		</div>
+
 	</div>
 </div>
 
