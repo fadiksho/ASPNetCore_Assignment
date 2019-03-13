@@ -14,20 +14,21 @@ namespace ASPNETCore_Assignments
 			services.AddDistributedMemoryCache();
 			services.AddSession(options =>
 			{
-				// Set a short timeout for easy testing.
 				options.IdleTimeout = TimeSpan.FromMinutes(20);
 				options.Cookie.HttpOnly = false;
 			});
-			services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
+			services.AddMvc()
+				.SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
     }
-
+		
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
-      }
+				app.UseBrowserLink();
+			}
       app.UseStaticFiles();
 			app.UseSession();
 
