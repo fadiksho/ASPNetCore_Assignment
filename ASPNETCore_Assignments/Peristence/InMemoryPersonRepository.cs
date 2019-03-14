@@ -17,12 +17,12 @@ namespace ASPNETCore_Assignments.Peristence
 		{
 			_people = new List<Person>()
 			{
-				new Person() { Name = "Fadi", PhoneNumber = "003011122", City = "USA"},
-				new Person() { Name = "Mati", PhoneNumber = "099112234", City = "UK" },
-				new Person() { Name = "Koko", PhoneNumber = "099721234", City = "USA"},
-				new Person() { Name = "Kiki", PhoneNumber = "087612342", City = "USA"},
-				new Person() { Name = "dodo", PhoneNumber = "099721234", City = "USA"},
-				new Person() { Name = "mimo", PhoneNumber = "087612342", City = "USA"},
+				new Person() { Id = Guid.NewGuid(), Name = "Fadi", PhoneNumber = "003011122", City = "USA"},
+				new Person() { Id = Guid.NewGuid(), Name = "Mati", PhoneNumber = "099112234", City = "UK" },
+				new Person() { Id = Guid.NewGuid(), Name = "Koko", PhoneNumber = "099721234", City = "USA"},
+				new Person() { Id = Guid.NewGuid(), Name = "Kiki", PhoneNumber = "087612342", City = "USA"},
+				new Person() { Id = Guid.NewGuid(), Name = "dodo", PhoneNumber = "099721234", City = "USA"},
+				new Person() { Id = Guid.NewGuid(), Name = "mimo", PhoneNumber = "087612342", City = "USA"},
 			};
 		}
 
@@ -35,7 +35,6 @@ namespace ASPNETCore_Assignments.Peristence
 				PhoneNumber = dto.PhoneNumber,
 				Id = Guid.NewGuid()
 			};
-
 			_people.Add(person);
 		}
 
@@ -57,20 +56,20 @@ namespace ASPNETCore_Assignments.Peristence
 		{
 			IEnumerable<Person> query = _people;
 
-			if (!string.IsNullOrWhiteSpace(personQuery.OrderByNameAndCity))
+			if (!string.IsNullOrWhiteSpace(personQuery.Filter))
 			{
-				var caseCopmarison = personQuery.CaseSensitive ? StringComparison.CurrentCultureIgnoreCase : StringComparison.CurrentCulture;
+				var caseCopmarison = personQuery.CaseSensitive ? StringComparison.CurrentCulture : StringComparison.OrdinalIgnoreCase;
 				query = _people
-					.Where(p => p.Name.StartsWith(personQuery.OrderByNameAndCity)
-					|| p.City.StartsWith(personQuery.OrderByNameAndCity, caseCopmarison));
+					.Where(p => p.Name.StartsWith(personQuery.Filter, caseCopmarison)
+					|| p.City.StartsWith(personQuery.Filter, caseCopmarison));
 			}
-			
-			query = personQuery.Ascending ? query.OrderBy(p => p.Name).ThenBy(p => p.City) :
-				query.OrderByDescending(p => p.Name).ThenBy(p => p.City);
+
+			query = personQuery.Descending ? query.OrderByDescending(p => p.Name).ThenBy(p => p.City) :
+				 query.OrderBy(p => p.Name).ThenBy(p => p.City);
 
 			// befor apply the pagging store the items count
-			var totalItems = _people.Count();
-			
+			var totalItems = query.Count();
+
 			var peopleAfterPagging = query.ApplayPaging(personQuery);
 
 			var paggingResult = new PaggingResult<Person>

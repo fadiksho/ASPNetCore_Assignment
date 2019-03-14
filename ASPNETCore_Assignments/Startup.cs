@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using ASPNETCore_Assignments.Peristence;
+using ASPNETCore_Assignments.Reository;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,6 +19,9 @@ namespace ASPNETCore_Assignments
 				options.IdleTimeout = TimeSpan.FromMinutes(20);
 				options.Cookie.HttpOnly = false;
 			});
+
+			services.AddSingleton<IPersonRepository, InMemoryPersonRepository>();
+
 			services.AddMvc()
 				.SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
     }

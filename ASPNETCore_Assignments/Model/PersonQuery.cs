@@ -6,9 +6,9 @@ namespace ASPNETCore_Assignments.Model
 	{
 		public int Page { get; set; } = 1;
 		public int PageSize { get; set; } = 5;
-
-		public string OrderByNameAndCity { get; set; }
-		public bool Ascending { get; set; } = true;
+		
+		public string Filter { get; set; }
+		public bool Descending { get; set; }
 		public bool CaseSensitive { get; set; }
 	}
 }

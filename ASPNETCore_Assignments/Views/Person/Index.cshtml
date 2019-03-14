@@ -1,0 +1,106 @@
+﻿@model PersonViewModel
+@{
+	ViewData["Title"] = "Index";
+}
+
+
+<div class="container-fluid pt-2">
+	<div class="row">
+		<div class="col-12 col-sm-9">
+			<h3>Add new person</h3>
+			<form asp-controller="Person"
+						asp-action="AddNew"
+						method="post"
+						novalidate
+						class="p-2 rounded shadow">
+				<div class="form-group">
+					<label asp-for="PersonDto.Name">Person Name: *</label>
+					<input asp-for="PersonDto.Name"
+								 type="text" class="form-control"
+								 aria-describedby="Person Name" placeholder="Enter name">
+					<span asp-validation-for="PersonDto.Name"
+								class="invalid-feedback d-block"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="PersonDto.PhoneNumber">Number:</label>
+					<input asp-for="PersonDto.PhoneNumber"
+								 type="text" class="form-control"
+								 aria-describedby="Person Number" placeholder="Enter number">
+				</div>
+				<div class="form-group">
+					<label asp-for="PersonDto.City">City:</label>
+					<input asp-for="PersonDto.City"
+								 type="text" class="form-control"
+								 aria-describedby="Person City:" placeholder="Enter city">
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+		<div class="col-12 col-sm-3">
+			<form asp-action="Index" method="get"
+						class="p-2 rounded shadow">
+				<div class="form-group">
+					<label for="filterId">Filter People:</label>
+					<input id="filterId"
+								 name="Filter"
+								 value="@Model.Query.Filter"
+								 type="text"
+								 class="form-control"
+								 aria-describedby="Filte By Name And City"
+								 placeholder="Name & City">
+				</div>
+				<div class="form-group custom-control custom-checkbox">
+					<input id="caseSensitiveCheckBoxId"
+								 name="CaseSensitive"
+								 value="true"
+								 @Html.Raw((Model.Query.CaseSensitive) ? "checked=\"checked\"" : "")
+								 type="checkbox" class="custom-control-input" />
+					<label for="caseSensitiveCheckBoxId"
+								 class="custom-control-label">Case Sensitive</label>
+				</div>
+				<div class="form-group custom-control custom-checkbox">
+					<input id="descendingCheckBoxId"
+								 name="Descending"
+								 type="checkbox"
+								 value="true"
+								 @Html.Raw((Model.Query.Descending) ? "checked=\"checked\"" : "")
+								 class="custom-control-input" />
+					<label for="descendingCheckBoxId"
+								 class="custom-control-label">Descending Order</label>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+
+	</div>
+	<hr />
+	<h3>People List</h3>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Name</th>
+				<th scope="col">Phone</th>
+				<th scope="col">City</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var person in Model.PersonPagingResult.TResult)
+			{
+				<tr>
+					<td>@person.Name</td>
+					<td>@person.PhoneNumber</td>
+					<td>@person.City</td>
+					<td>
+						<form asp-controller="Person"
+									asp-action="Delete" method="post">
+							<input type="hidden" name="id" asp-for="@person.Id" />
+							<button type="submit" class="btn btn-outline-danger">Delete</button>
+						</form>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<partial name="~/Views/Shared/_pagination.cshtml" model="Model.PersonPagingResult" />
+</div>
