@@ -1,19 +1,27 @@
 ﻿@model Person
-<div class="row align-items-center my-1 shadow">
-	<div class="col p-2">
+<div class="row align-items-center my-1 shadow" id="person_row_@Model.Id">
+	<div name="name" bindable-property class="col p-2">
 		@Model.Name
 	</div>
-	<div class="col p-2">
+	<div name="phoneNumber" bindable-property class="col p-2">
 		@Model.PhoneNumber
 	</div>
-	<div class="col p-2">
+	<div name="city"bindable-property class="col p-2">
 		@Model.City
 	</div>
 	<div class="col p-2">
-		<form asp-controller="Person"
-					asp-action="Delete" method="post">
-			<input type="hidden" name="id" asp-for="@Model.Id" />
-			<button type="submit" class="btn btn-outline-danger">Delete</button>
-		</form>
+		<div class="d-flex">
+			<button edit-person="person_row_@Model.Id" type="button" class="btn btn-outline-primary mr-2">Edit</button>
+			<form asp-controller="Person"
+						asp-action="Delete"
+						data-ajax="true"
+						data-ajax-success="deletePersonSucceeded('person_row_@Model.Id')"
+						data-ajax-method="post"
+						data-ajax-loading="#personListLoaderId"
+						method="post">
+				<input type="hidden" name="id" bindable-property asp-for="@Model.Id" />
+				<button type="submit" class="btn btn-outline-danger">Delete</button>
+			</form>
+		</div>
 	</div>
 </div>

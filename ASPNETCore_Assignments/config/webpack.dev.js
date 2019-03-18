@@ -1,9 +1,12 @@
 ﻿const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
+
   entry: {
     main: ["./src/index.js", "./src/site.scss"],
-    sokoban: ["./src/js/sokoban.js", "./src/sass/projects/sokoban.scss"]
+		sokoban: ["./src/js/sokoban.js", "./src/sass/projects/sokoban.scss"],
+		person: ["./src/js/person.js"]
   },
   mode: "development",
   devtool: 'inline-source-map',
@@ -64,6 +67,10 @@ module.exports = {
     }
     ]
   },
-  plugins: [
+	plugins: [
+		new webpack.ProvidePlugin({
+			$: 'jquery',
+			jQuery: 'jquery'
+		})
   ]
 };

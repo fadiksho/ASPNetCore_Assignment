@@ -4,6 +4,7 @@ using ASPNETCore_Assignments.Reository;
 using ASPNETCore_Assignments.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading;
 
 namespace ASPNETCore_Assignments.Controllers
 {
@@ -23,20 +24,30 @@ namespace ASPNETCore_Assignments.Controllers
 			return View(personViewModel);
 		}
 
+		public IActionResult Filter(PersonQuery query)
+		{
+			Thread.Sleep(2000);
+			var personViewModel = this.BuildViewModel(query);
+
+			return PartialView("_personList", personViewModel);
+		}
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult AddNew(PersonDto personDto)
 		{
+			//Thread.Sleep(2000);
+			var personViewModel = this.BuildViewModel(new PersonQuery());
+
 			if (!ModelState.IsValid)
 			{
-				var personViewModel = this.BuildViewModel(new PersonQuery());
 				personViewModel.PersonDto = personDto;
 				return View("Index", personViewModel);
 			}
 
 			this._personRepo.Add(personDto);
 
-			return RedirectToAction("Index");
+			return PartialView("_personList", personViewModel);
 		}
 
 		[HttpPost]
@@ -44,7 +55,18 @@ namespace ASPNETCore_Assignments.Controllers
 		public IActionResult Delete(Guid id)
 		{
 			this._personRepo.Remove(id);
-			return RedirectToAction("Index");
+			return NoContent();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public JsonResult UpdatePerson(PersonDto personDto, Guid id)
+		{
+			if (ModelState.IsValid)
+			{
+				this._personRepo.Update(personDto, id);
+			}
+			return new JsonResult(false);
 		}
 
 		private PersonViewModel BuildViewModel(PersonQuery query)

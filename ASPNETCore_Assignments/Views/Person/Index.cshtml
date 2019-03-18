@@ -3,23 +3,31 @@
 	ViewData["Title"] = "Index";
 }
 
-
 <div class="container-fluid pt-2">
 	<div class="row">
 		<div class="col-12 col-sm-9">
 			<h3>Add new person</h3>
 			<form asp-controller="Person"
 						asp-action="AddNew"
+						id="addNewPersonFormId"
 						method="post"
-						novalidate
+						data-ajax="true"
+						data-ajax-method="POST"
+						data-ajax-update="#personListId"
+						data-ajax-mode="replace"
+						data-ajax-loading="#personListLoaderId"
+						data-ajax-success="addPersonSucceeded()"
 						class="p-2 rounded shadow">
 				<div class="form-group">
 					<label asp-for="PersonDto.Name">Person Name: *</label>
 					<input asp-for="PersonDto.Name"
-								 type="text" class="form-control"
+								 type="text"
+								 class="form-control"
 								 aria-describedby="Person Name" placeholder="Enter name">
-					<span asp-validation-for="PersonDto.Name"
-								class="invalid-feedback d-block"></span>
+					<small>
+						<span asp-validation-for="PersonDto.Name"
+									class="text-danger"></span>
+					</small>
 				</div>
 				<div class="form-group">
 					<label asp-for="PersonDto.PhoneNumber">Number:</label>
@@ -37,7 +45,12 @@
 			</form>
 		</div>
 		<div class="col-12 col-sm-3">
-			<form asp-action="Index" method="get"
+			<form asp-action="Filter" method="get"
+						data-ajax="true"
+						data-ajax-method="GET"
+						data-ajax-update="#personListId"
+						data-ajax-mode="replace"
+						data-ajax-loading="#personListLoaderId"
 						class="p-2 rounded shadow">
 				<div class="form-group">
 					<label for="filterId">Filter People:</label>
@@ -68,12 +81,103 @@
 					<label for="descendingCheckBoxId"
 								 class="custom-control-label">Descending Order</label>
 				</div>
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="submit" class="btn btn-primary">
+					Filter
+				</button>
 			</form>
 		</div>
 	</div>
+
 	<hr />
-	<partial name="~/Views/Shared/_PersonList.cshtml" model="Model.PersonPagingResult.TResult" />
-	<hr />
-	<partial name="~/Views/Shared/_pagination.cshtml" model="Model.PersonPagingResult" />
+
+	<div class="d-flex">
+		<h3>
+			People List
+		</h3>
+		<div id="personListLoaderId" class="spinner-border text-primary ml-auto" style="display:none;" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row align-items-center my-1 border-bottom border-secondary">
+			<div class="col p-2 font-weight-bold">
+				Name
+			</div>
+			<div class="col p-2 font-weight-bold">
+				Phone Number
+			</div>
+			<div class="col p-2 font-weight-bold">
+				City
+			</div>
+			<div class="col p-2 font-weight-bold">
+				Actions
+			</div>
+		</div>
+
+		<form id="personEditFormId"
+					class="row my-1 shadow"
+					style="display:none;"
+					asp-controller="Person"
+					asp-action="UpdatePerson"
+					method="post"
+					data-ajax="true"
+					data-ajax-method="post"
+					data-ajax-success="updatePersonSucceeded()"
+					data-ajax-loading="#personUpdateLoaderId">
+			<div class="col py-2 pl-0 pr-2">
+				<label asp-for="PersonDto.Name"
+							 class="d-none">Person Name: *</label>
+				<input asp-for="PersonDto.Name"
+							 class="form-control"
+							 placeholder="Enter name">
+				<small>
+					<span asp-validation-for="PersonDto.Name"
+								class="text-danger"></span>
+				</small>
+			</div>
+			<div class="col p-2">
+				<label asp-for="PersonDto.PhoneNumber"
+							 class="d-none">Number:</label>
+				<input asp-for="PersonDto.PhoneNumber"
+							 class="form-control"
+							 placeholder="Phone Number">
+			</div>
+			<div class="col p-2">
+				<label asp-for="PersonDto.City"
+							 class="d-none">City:</label>
+				<input asp-for="PersonDto.City"
+							 class="form-control"
+							 aria-describedby="Person City:"
+							 placeholder="City">
+			</div>
+			<input name="id" type="hidden"/>
+			<div class="col p-2">
+				<div class="d-flex align-items-center">
+					<button type="submit" class="btn btn-success">Save</button>
+					<button id="cancelEditButtonId"
+									type="button" class="btn btn-danger ml-1">
+						Cancel
+					</button>
+					<div id="personUpdateLoaderId"
+							 class="spinner-border text-primary ml-auto"
+							 style="display:none;"
+							 role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+				</div>
+
+			</div>
+		</form>
+	</div>
+
+	<div id="personListId" class="container-fluid">
+		<partial name="~/Views/Shared/_PersonList.cshtml" model="Model" />
+	</div>
 </div>
+
+@section Scripts {
+	<environment include="Development">
+		<script src="~/js/person-bandle.js"></script>
+	</environment>
+}

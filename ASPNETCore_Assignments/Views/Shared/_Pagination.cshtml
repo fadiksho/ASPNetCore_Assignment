@@ -1,32 +1,62 @@
-﻿@model IPaggingData
+﻿@model PersonViewModel
 @{
-	var queryParams = Context.Request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
-
+	var queryParamsDictonary = Context.Request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
+	string queryParams = "?";
+	var queryString = Context.Request.QueryString;
+	string url = Url.Action("Filter", "Person") + queryString;
+	foreach (var param in queryParamsDictonary)
+	{
+		queryParams += $"{param.Key}={param.Value}&";
+	}
 }
 <nav aria-label="Page navigation example">
 	<ul class="pagination justify-content-center">
-		<li class="page-item @(Model.HasPrevious ? "" : "disabled")">
-			<a asp-all-route-data="@queryParams"
-				 asp-route-Page="@(Model.CurrentPage - 1)"
-				 asp-controller="Person"
-				 asp-action="Index"
-				 class="page-link">Previous</a>
+		<li class="page-item @(Model.PersonPagingResult.HasPrevious ? "" : "disabled")">
+			<a data-ajax="true"
+				 data-ajax-loading="#personListLoaderId"
+				 data-ajax-method="GET"
+				 data-ajax-mode="replace"
+				 data-ajax-update="#personListId"
+				 data-ajax-url="@Url.Action("Filter", "Person", new {
+										 page = Model.PersonPagingResult.CurrentPage - 1,
+										 pageSize = Model.Query.PageSize,
+										 Filter = Model.Query.Filter,
+										 CaseSensitive = Model.Query.CaseSensitive,
+										 Descending = Model.Query.Descending
+									 })"
+				 class=" page-link">Previous</a>
 		</li>
-		@for (int i = 1; i <= Model.TotalPages; i++)
+		@for (int i = 1; i <= Model.PersonPagingResult.TotalPages; i++)
 		{
-			<li class="page-item @(Model.CurrentPage == i ? "active" : "")">
-				<a asp-all-route-data="@queryParams"
-					 asp-route-Page="@i"
-					 asp-controller="Person"
-					 asp-action="Index"
+			<li class="page-item @(Model.PersonPagingResult.CurrentPage == i ? "active" : "")">
+				<a data-ajax="true"
+					 data-ajax-loading="#personListLoaderId"
+					 data-ajax-method="GET"
+					 data-ajax-mode="replace"
+					 data-ajax-update="#personListId"
+					 data-ajax-url="@Url.Action("Filter", "Person", new {
+										 page = i,
+										 pageSize = Model.Query.PageSize,
+										 Filter = Model.Query.Filter,
+										 CaseSensitive = Model.Query.CaseSensitive,
+										 Descending = Model.Query.Descending
+									 })"
 					 class="page-link">@i</a>
 				</li>
 			}
-		<li class="page-item @(Model.HasNext ? "" : "disabled")">
-			<a asp-all-route-data="@queryParams"
-				 asp-route-Page="@(Model.CurrentPage + 1)"
-				 asp-controller="Person"
-				 asp-action="Index"
+		<li class="page-item @(Model.PersonPagingResult.HasNext ? "" : "disabled")">
+			<a data-ajax="true"
+				 data-ajax-loading="#personListLoaderId"
+				 data-ajax-method="GET"
+				 data-ajax-mode="replace"
+				 data-ajax-update="#personListId"
+				 data-ajax-url="@Url.Action("Filter", "Person", new {
+										 page = Model.PersonPagingResult.CurrentPage + 1,
+										 pageSize = Model.Query.PageSize,
+										 Filter = Model.Query.Filter,
+										 CaseSensitive = Model.Query.CaseSensitive,
+										 Descending = Model.Query.Descending
+									 })"
 				 class="page-link">Next</a>
 		</li>
 	</ul>
