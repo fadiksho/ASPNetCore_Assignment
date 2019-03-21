@@ -1,12 +1,12 @@
-﻿@model GuessingGameModel
+﻿@model GuessingGameViewModel
 @{
 	ViewData["Title"] = "Guessing Game";
 
 }
 
-<div class="container pt-3">
-	<div class="d-flex flex-column flex-sm-row">
-		<div class="flex-grow-1 jumbotron rounded shadow">
+<div class="container-fluid pt-3">
+	<div class="row justify-content-center">
+		<div class="col-12 col-md-8 rounded shadow">
 			<form asp-controller="GuessingGame" method="post">
 				<div class="form-group">
 					<label for="guessing">Guess</label>
@@ -16,14 +16,14 @@
 			</form>
 			@if (Model != null)
 			{
-				<div class="alert alert-info mt-3">
+				<div class="alert alert-info my-3">
 					<h5>@Model.Message</h5>
 					<h5>You tried @Model.TryCount times</h5>
 				</div>
 			}
 		</div>
 
-		<div class="ml-3">
+		<div class="col-12 col-md-3">
 			<h3>Top 5 Scores</h3>
 
 			@if (!string.IsNullOrWhiteSpace(Context.Request.Cookies["highScore"]))
@@ -40,7 +40,6 @@
 				<span>Try guessing if you know binary search you can do it with no more than 7 guesses!</span>
 			}
 		</div>
-
 	</div>
 </div>
 

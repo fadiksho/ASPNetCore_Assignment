@@ -32,7 +32,6 @@ namespace ASPNETCore_Assignments
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
-				app.UseBrowserLink();
 			}
       app.UseStaticFiles();
 			app.UseSession();
