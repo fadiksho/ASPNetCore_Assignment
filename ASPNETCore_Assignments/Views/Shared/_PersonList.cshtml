@@ -1,23 +1,8 @@
-﻿@model IEnumerable<Person>
+﻿@model PersonViewModel
 
-<h3>People List</h3>
-<div class="container-fluid">
-	<div class="row align-items-center my-1 border-bottom">
-		<div class="col p-2 font-weight-bold">
-			Name
-		</div>
-		<div class="col p-2 font-weight-bold">
-			Phone Number
-		</div>
-		<div class="col p-2 font-weight-bold">
-			City
-		</div>
-		<div class="col p-2 font-weight-bold">
-			Actions
-		</div>
-	</div>
-	@foreach (var person in Model)
-	{
-		<partial name="~/Views/Shared/_person.cshtml" model="person" />
-	}
-</div>
+@foreach (var person in Model.PersonPagingResult.TResult)
+{
+	<partial name="~/Views/Shared/_person.cshtml" model="person" />
+}
+<hr />
+<partial name="~/Views/Shared/_pagination.cshtml" model="Model" />

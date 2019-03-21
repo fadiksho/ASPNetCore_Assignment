@@ -10,7 +10,11 @@ namespace ASPNETCore_Assignments.Reository
 	{
 		PaggingResult<Person> People(PersonQuery personQuery);
 
+		Person GetPerson(Guid id);
+
 		void Add(PersonDto dto);
+
+		void Update(PersonDto dto, Guid id);
 
 		void Remove(Guid id);
 

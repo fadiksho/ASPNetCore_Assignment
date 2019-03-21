@@ -4,16 +4,17 @@ using ASPNETCore_Assignments.Reository;
 using ASPNETCore_Assignments.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading;
 
 namespace ASPNETCore_Assignments.Controllers
 {
 	public class PersonController : Controller
 	{
-		private readonly IPersonRepository _personRepo;
+		private readonly IPersonRepository personRepo;
 
 		public PersonController(IPersonRepository personRepo)
 		{
-			this._personRepo = personRepo;
+			this.personRepo = personRepo;
 		}
 
 		public IActionResult Index(PersonQuery query)
@@ -23,33 +24,68 @@ namespace ASPNETCore_Assignments.Controllers
 			return View(personViewModel);
 		}
 
+		public IActionResult Filter(PersonQuery query)
+		{
+			var personViewModel = this.BuildViewModel(query);
+
+			return PartialView("_personList", personViewModel);
+		}
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult AddNew(PersonDto personDto)
 		{
+			Thread.Sleep(2000);
+			var personViewModel = this.BuildViewModel(new PersonQuery());
 			if (!ModelState.IsValid)
 			{
-				var personViewModel = this.BuildViewModel(new PersonQuery());
 				personViewModel.PersonDto = personDto;
-				return View("Index", personViewModel);
+				return BadRequest(ModelState.Values);
 			}
 
-			this._personRepo.Add(personDto);
+			this.personRepo.Add(personDto);
 
-			return RedirectToAction("Index");
+			if (!this.personRepo.Save())
+			{
+				personViewModel.PersonDto = personDto;
+				return BadRequest();
+			}
+
+			return PartialView("_personList", personViewModel);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Delete(Guid id)
 		{
-			this._personRepo.Remove(id);
-			return RedirectToAction("Index");
+			Thread.Sleep(2000);
+			this.personRepo.Remove(id);
+
+			if (!this.personRepo.Save())
+				return BadRequest(new { success = false });
+
+			return Ok(new { id, success = true });
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult UpdatePerson(PersonDto personDto, Guid id)
+		{
+			Thread.Sleep(2000);
+			if (!ModelState.IsValid)
+				return BadRequest(new { success = false });
+
+			this.personRepo.Update(personDto, id);
+			if (!this.personRepo.Save())
+				return BadRequest(new { success = false });
+
+			return Ok(new { id, success = true });
 		}
 
 		private PersonViewModel BuildViewModel(PersonQuery query)
 		{
-			var pagginResult = this._personRepo.People(query);
+			var pagginResult = this.personRepo.People(query);
+
 			var personViewModel = new PersonViewModel()
 			{
 				Query = query,

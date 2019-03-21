@@ -23,6 +23,18 @@ namespace ASPNETCore_Assignments.Peristence
 				new Person() { Id = Guid.NewGuid(), Name = "Kiki", PhoneNumber = "087612342", City = "USA"},
 				new Person() { Id = Guid.NewGuid(), Name = "dodo", PhoneNumber = "099721234", City = "USA"},
 				new Person() { Id = Guid.NewGuid(), Name = "mimo", PhoneNumber = "087612342", City = "USA"},
+				new Person() { Id = Guid.NewGuid(), Name = "Fadi", PhoneNumber = "003011122", City = "USA"},
+				new Person() { Id = Guid.NewGuid(), Name = "Mati", PhoneNumber = "099112234", City = "UK" },
+				new Person() { Id = Guid.NewGuid(), Name = "Koko", PhoneNumber = "099721234", City = "USA"},
+				new Person() { Id = Guid.NewGuid(), Name = "Kiki", PhoneNumber = "087612342", City = "USA"},
+				new Person() { Id = Guid.NewGuid(), Name = "dodo", PhoneNumber = "099721234", City = "SSA"},
+				new Person() { Id = Guid.NewGuid(), Name = "mimo", PhoneNumber = "087612342", City = "SSA"},
+				new Person() { Id = Guid.NewGuid(), Name = "Fadi", PhoneNumber = "003011122", City = "SSA"},
+				new Person() { Id = Guid.NewGuid(), Name = "Mati", PhoneNumber = "099112234", City = "SK" },
+				new Person() { Id = Guid.NewGuid(), Name = "Koko", PhoneNumber = "099721234", City = "SSA"},
+				new Person() { Id = Guid.NewGuid(), Name = "Kiki", PhoneNumber = "087612342", City = "SSA"},
+				new Person() { Id = Guid.NewGuid(), Name = "dodo", PhoneNumber = "099721234", City = "SSA"},
+				new Person() { Id = Guid.NewGuid(), Name = "mimo", PhoneNumber = "087612342", City = "SSA"},
 			};
 		}
 
@@ -40,7 +52,7 @@ namespace ASPNETCore_Assignments.Peristence
 
 		public void Remove(Guid id)
 		{
-			var person = this._people.Where(p => p.Id == id).FirstOrDefault();
+			var person = this.GetPerson(id);
 			if (person != null)
 			{
 				this._people.Remove(person);
@@ -81,6 +93,22 @@ namespace ASPNETCore_Assignments.Peristence
 			};
 
 			return paggingResult;
+		}
+
+		public void Update(PersonDto dto, Guid id)
+		{
+			var person = this.GetPerson(id);
+			if (person != null)
+			{
+				person.Name = dto.Name;
+				person.City = dto.City;
+				person.PhoneNumber = dto.PhoneNumber;
+			}
+		}
+
+		public Person GetPerson(Guid id)
+		{
+			return this._people.Where(p => p.Id == id).FirstOrDefault();
 		}
 	}
 }
