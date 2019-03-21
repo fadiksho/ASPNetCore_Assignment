@@ -1,6 +1,6 @@
 ﻿@model PersonViewModel
 @{
-	ViewData["Title"] = "Index";
+	ViewData["Title"] = "People Data - Demo";
 }
 
 <div class="container-fluid pt-2">
@@ -16,7 +16,8 @@
 						data-ajax-update="#personListId"
 						data-ajax-mode="replace"
 						data-ajax-loading="#personListLoaderId"
-						data-ajax-success="addPersonSucceeded()"
+						data-ajax-success="addPersonSuccess"
+						data-ajax-failure="addPersonFailure"
 						class="p-2 rounded shadow">
 				<div class="form-group">
 					<label asp-for="PersonDto.Name">Person Name: *</label>
@@ -49,6 +50,7 @@
 						data-ajax="true"
 						data-ajax-method="GET"
 						data-ajax-update="#personListId"
+						data-ajax-failure="addPersonFailure"
 						data-ajax-mode="replace"
 						data-ajax-loading="#personListLoaderId"
 						class="p-2 rounded shadow">
@@ -122,8 +124,9 @@
 					asp-action="UpdatePerson"
 					method="post"
 					data-ajax="true"
-					data-ajax-method="post"
-					data-ajax-success="updatePersonSucceeded()"
+					data-ajax-method="POST"
+					data-ajax-success="updatePersonSuccess"
+					data-ajax-failure="updatePersonFailure"
 					data-ajax-loading="#personUpdateLoaderId">
 			<div class="col py-2 pl-0 pr-2">
 				<label asp-for="PersonDto.Name"

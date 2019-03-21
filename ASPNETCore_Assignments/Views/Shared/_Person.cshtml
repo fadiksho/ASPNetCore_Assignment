@@ -15,7 +15,8 @@
 			<form asp-controller="Person"
 						asp-action="Delete"
 						data-ajax="true"
-						data-ajax-success="deletePersonSucceeded('person_row_@Model.Id')"
+						data-ajax-success="deletePersonSuccess"
+						data-ajax-failure="deletePersonFailure"
 						data-ajax-method="post"
 						data-ajax-loading="#personListLoaderId"
 						method="post">

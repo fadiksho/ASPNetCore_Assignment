@@ -26,7 +26,6 @@ $(document).on('click', '[edit-person]', function (e) {
 	populatePersonFormWithJsonData(personEditForm, person);
 });
 
-
 function toggleEditFormVisibility(isVisable) {
 	if (isVisable) {
 		personEditForm.show('slow');
@@ -72,18 +71,38 @@ function populatePersonTileWithJsonData(data) {
 	});
 }
 
-addPersonSucceeded = function (xhr) {
+addPersonSuccess = function (response) {
 	addNewPersonForm.find("input[type=text]").val("");
+	// Todo: Add toast
+	console.log(response);
 };
+addPersonFailure = function (response) {
+	// Todo: Add toast
+	console.log(response);
+}
 
-updatePersonSucceeded = function () {
-	
+updatePersonSuccess = function (response) {
 	toggleEditFormVisibility(false);
 	let updatedPerson = getJsonPersonFromEditForm();
 	populatePersonTileWithJsonData(updatedPerson);
 	seletedPersonTile.show('slow');
+	// Todo: Add toast
+	console.log(response);
 };
 
-deletePersonSucceeded = function (rowId) {
-	$(`#${rowId}`).hide('slow');
+updatePersonFailure = function (response) {
+	// Todo: Add toast
+	console.log(response);
+};
+
+deletePersonSuccess = function (response) {
+	if (response.success === true) {
+		$(`#person_row_${response.id}`).hide('slow');
+		// Todo: Add toast
+		console.log(response);
+	}
+};
+deletePersonFailure = function (response) {
+	// Todo: Add toast
+	console.log(response);
 };
