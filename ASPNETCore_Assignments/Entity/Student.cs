@@ -9,6 +9,6 @@ namespace ASPNETCore_Assignments.Entity
 		public string Name { get; set; }
 
 		public IList<StudentCourse> StudentCourses { get; set; }
-		public IList<StudentTeacher> StudentTeachers { get; set; }
+			= new List<StudentCourse>();
 	}
 }
