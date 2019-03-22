@@ -1,4 +1,4 @@
-﻿using ASPNETCore_Assignments.Peristence;
+﻿using ASPNETCore_Assignments.Persistence;
 using ASPNETCore_Assignments.Reository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +9,9 @@ namespace ASPNETCore_Assignments
 {
   public class Startup
   {
-    // This method gets called by the runtime. Use this method to add services to the container.
-    // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-    public void ConfigureServices(IServiceCollection services)
+		// This method gets called by the runtime. Use this method to add services to the container.
+		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+		public void ConfigureServices(IServiceCollection services)
     {
 			services.AddDistributedMemoryCache();
 			services.AddSession(options =>
