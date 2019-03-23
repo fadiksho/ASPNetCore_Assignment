@@ -18,26 +18,7 @@ namespace ASPNETCore_Assignments.Migrations
 					.HasAnnotation("Relational:MaxIdentifierLength", 128)
 					.HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-			modelBuilder.Entity("ASPNETCore_Assignments.Entity.Course", b =>
-					{
-						b.Property<int>("Id")
-											.ValueGeneratedOnAdd()
-											.HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-						b.Property<string>("Description");
-
-						b.Property<string>("Name");
-
-						b.Property<int>("TeacherId");
-
-						b.HasKey("Id");
-
-						b.HasIndex("TeacherId");
-
-						b.ToTable("Courses");
-					});
-
-			modelBuilder.Entity("ASPNETCore_Assignments.Entity.CourseAssignment", b =>
+			modelBuilder.Entity("ASPNETCore_Assignments.Entity.CourseAssignmentEntity", b =>
 					{
 						b.Property<int>("Id")
 											.ValueGeneratedOnAdd()
@@ -56,7 +37,39 @@ namespace ASPNETCore_Assignments.Migrations
 						b.ToTable("CourseAssignments");
 					});
 
-			modelBuilder.Entity("ASPNETCore_Assignments.Entity.Student", b =>
+			modelBuilder.Entity("ASPNETCore_Assignments.Entity.CourseEntity", b =>
+					{
+						b.Property<int>("Id")
+											.ValueGeneratedOnAdd()
+											.HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+						b.Property<string>("Description");
+
+						b.Property<string>("Name");
+
+						b.Property<int>("TeacherId");
+
+						b.HasKey("Id");
+
+						b.HasIndex("TeacherId");
+
+						b.ToTable("Courses");
+					});
+
+			modelBuilder.Entity("ASPNETCore_Assignments.Entity.StudentCourseEntity", b =>
+					{
+						b.Property<int>("StudentId");
+
+						b.Property<int>("CourseId");
+
+						b.HasKey("StudentId", "CourseId");
+
+						b.HasIndex("CourseId");
+
+						b.ToTable("StudentCourseEntity");
+					});
+
+			modelBuilder.Entity("ASPNETCore_Assignments.Entity.StudentEntity", b =>
 					{
 						b.Property<int>("Id")
 											.ValueGeneratedOnAdd()
@@ -69,20 +82,7 @@ namespace ASPNETCore_Assignments.Migrations
 						b.ToTable("Students");
 					});
 
-			modelBuilder.Entity("ASPNETCore_Assignments.Entity.StudentCourse", b =>
-					{
-						b.Property<int>("StudentId");
-
-						b.Property<int>("CourseId");
-
-						b.HasKey("StudentId", "CourseId");
-
-						b.HasIndex("CourseId");
-
-						b.ToTable("StudentCourse");
-					});
-
-			modelBuilder.Entity("ASPNETCore_Assignments.Entity.Teacher", b =>
+			modelBuilder.Entity("ASPNETCore_Assignments.Entity.TeacherEntity", b =>
 					{
 						b.Property<int>("Id")
 											.ValueGeneratedOnAdd()
@@ -95,30 +95,30 @@ namespace ASPNETCore_Assignments.Migrations
 						b.ToTable("Teachers");
 					});
 
-			modelBuilder.Entity("ASPNETCore_Assignments.Entity.Course", b =>
+			modelBuilder.Entity("ASPNETCore_Assignments.Entity.CourseAssignmentEntity", b =>
 					{
-						b.HasOne("ASPNETCore_Assignments.Entity.Teacher", "Teacher")
-											.WithMany("Courses")
-											.HasForeignKey("TeacherId")
-											.OnDelete(DeleteBehavior.Cascade);
-					});
-
-			modelBuilder.Entity("ASPNETCore_Assignments.Entity.CourseAssignment", b =>
-					{
-						b.HasOne("ASPNETCore_Assignments.Entity.Course", "Course")
+						b.HasOne("ASPNETCore_Assignments.Entity.CourseEntity", "Course")
 											.WithMany("CourseAssignments")
 											.HasForeignKey("CourseId")
 											.OnDelete(DeleteBehavior.Cascade);
 					});
 
-			modelBuilder.Entity("ASPNETCore_Assignments.Entity.StudentCourse", b =>
+			modelBuilder.Entity("ASPNETCore_Assignments.Entity.CourseEntity", b =>
 					{
-						b.HasOne("ASPNETCore_Assignments.Entity.Course", "Course")
+						b.HasOne("ASPNETCore_Assignments.Entity.TeacherEntity", "Teacher")
+											.WithMany("Courses")
+											.HasForeignKey("TeacherId")
+											.OnDelete(DeleteBehavior.Cascade);
+					});
+
+			modelBuilder.Entity("ASPNETCore_Assignments.Entity.StudentCourseEntity", b =>
+					{
+						b.HasOne("ASPNETCore_Assignments.Entity.CourseEntity", "Course")
 											.WithMany("StudentCourses")
 											.HasForeignKey("CourseId")
 											.OnDelete(DeleteBehavior.Cascade);
 
-						b.HasOne("ASPNETCore_Assignments.Entity.Student", "Student")
+						b.HasOne("ASPNETCore_Assignments.Entity.StudentEntity", "Student")
 											.WithMany("StudentCourses")
 											.HasForeignKey("StudentId")
 											.OnDelete(DeleteBehavior.Cascade);

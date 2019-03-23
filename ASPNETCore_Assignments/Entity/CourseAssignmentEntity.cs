@@ -1,6 +1,6 @@
 ﻿namespace ASPNETCore_Assignments.Entity
 {
-	public class CourseAssignment
+	public class CourseAssignmentEntity
 	{
 		public int Id { get; set; }
 
@@ -8,6 +8,6 @@
 		public bool IsDone { get; set; }
 
 		public int CourseId { get; set; }
-		public Course Course { get; set; }
+		public CourseEntity Course { get; set; }
 	}
 }

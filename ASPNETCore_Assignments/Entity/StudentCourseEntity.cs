@@ -1,11 +1,11 @@
 ﻿namespace ASPNETCore_Assignments.Entity
 {
-	public class StudentCourse
+	public class StudentCourseEntity
 	{
 		public int StudentId { get; set; }
-		public Student Student { get; set; }
+		public StudentEntity Student { get; set; }
 
 		public int CourseId { get; set; }
-		public Course Course { get; set; }
+		public CourseEntity Course { get; set; }
 	}
 }
