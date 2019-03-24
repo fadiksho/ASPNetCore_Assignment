@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ASPNETCore_Assignments.Model
 {
@@ -16,7 +13,7 @@ namespace ASPNETCore_Assignments.Model
 
 		public List<CourseAssignment> CourseAssignments { get; set; }
 			= new List<CourseAssignment>();
-		public List<Student> StudentCourses { get; set; }
+		public List<Student> Students { get; set; }
 			= new List<Student>();
 	}
 }
