@@ -2,6 +2,7 @@
 using ASPNETCore_Assignments.Persistence.Data;
 using ASPNETCore_Assignments.Reository;
 using ASPNETCore_Assignments.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,8 @@ namespace ASPNETCore_Assignments
 				options.IdleTimeout = TimeSpan.FromMinutes(20);
 				options.Cookie.HttpOnly = false;
 			});
+
+			services.AddAutoMapper();
 
 			services.AddSingleton<IPersonRepository, InMemoryPersonRepository>();
 
