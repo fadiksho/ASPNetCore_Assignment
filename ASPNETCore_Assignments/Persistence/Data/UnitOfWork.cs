@@ -23,9 +23,9 @@ namespace ASPNETCore_Assignments.Persistence.Data
 		public ICourseRepository Courses { get; private set; }
 		public ICourseAssignmentRepository CourseAssignment { get; private set; }
 
-		public Task<bool> SaveAsync()
+		public async Task<bool> SaveAsync()
 		{
-			throw new System.NotImplementedException();
+			return await _context.SaveChangesAsync() >= 0;
 		}
 	}
 }
