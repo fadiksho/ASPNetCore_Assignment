@@ -1,4 +1,5 @@
-﻿using ASPNETCore_Assignments.Entity;
+﻿using ASPNETCore_Assignments.DTO;
+using ASPNETCore_Assignments.Entity;
 using ASPNETCore_Assignments.MapperProfiles;
 using ASPNETCore_Assignments.Model;
 using ASPNETCore_Assignments_Test.Utility;
@@ -90,6 +91,79 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 			Assert.IsType<List<Student>>(model.Students);
 			Assert.IsType<List<CourseAssignment>>(model.CourseAssignments);
 			Assert.Equal(expecteModel.Students.Count, model.Students.Count);
+			Assert.Equal(expecteModel.CourseAssignments.Count, model.CourseAssignments.Count);
+		}
+
+		[Fact]
+		public void ConvertCourseForCreatingDtoToCourseEntity()
+		{
+			// arrange
+			var mapperConfig = new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile<CourseProfile>();
+				cfg.AddProfile<CourseAssignmentProfile>();
+			});
+			var iMapper = mapperConfig.CreateMapper();
+			var courseForCreatingDto = new CourseForCreatingDto
+			{
+				Name = "name",
+				Description = "description",
+				TeacherId = 1,
+				CourseAssignmets = new List<CourseAssignmentForCreatingDto>()
+				{
+					new CourseAssignmentForCreatingDto(),
+					new CourseAssignmentForCreatingDto()
+				}
+			};
+
+			// act
+			var model = iMapper.Map<CourseEntity>(courseForCreatingDto);
+
+			// assert
+			Assert.IsType<CourseEntity>(model);
+			Assert.IsType<List<CourseAssignmentEntity>>(model.CourseAssignments);
+		}
+
+		[Fact]
+		public void CheckPropertiesValueAfterConvertingCourseForCreatingDtoToCourseEntity()
+		{
+			// arrange
+			var mapperConfig = new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile<CourseProfile>();
+				cfg.AddProfile<CourseAssignmentProfile>();
+			});
+			var iMapper = mapperConfig.CreateMapper();
+			var courseForCreatingDto = new CourseForCreatingDto
+			{
+				Name = "name",
+				Description = "description",
+				TeacherId = 1,
+				CourseAssignmets = new List<CourseAssignmentForCreatingDto>()
+				{
+					new CourseAssignmentForCreatingDto(),
+					new CourseAssignmentForCreatingDto()
+				}
+			};
+
+			var expecteModel = new CourseEntity
+			{
+				Id = 0,
+				Name = "name",
+				Description = "description",
+				TeacherId = 1,
+				CourseAssignments = new List<CourseAssignmentEntity>()
+				{
+					new CourseAssignmentEntity(),
+					new CourseAssignmentEntity()
+				}
+			};
+
+			// act
+			var model = iMapper.Map<CourseEntity>(courseForCreatingDto);
+
+			// assert
+			Assert.True(CompareClasses.IsCoursesEntityEqual(expecteModel, model));
 			Assert.Equal(expecteModel.CourseAssignments.Count, model.CourseAssignments.Count);
 		}
 	}

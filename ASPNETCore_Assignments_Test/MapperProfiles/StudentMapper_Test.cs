@@ -1,4 +1,5 @@
-﻿using ASPNETCore_Assignments.Entity;
+﻿using ASPNETCore_Assignments.DTO;
+using ASPNETCore_Assignments.Entity;
 using ASPNETCore_Assignments.MapperProfiles;
 using ASPNETCore_Assignments.Model;
 using ASPNETCore_Assignments_Test.Utility;
@@ -66,6 +67,51 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 			Assert.True(CompareClasses.IsStudentsEqual(expectedModel, studentModel));
 			Assert.IsType<List<Course>>(studentModel.Courses);
 			Assert.Equal(expectedModel.Courses.Count, studentModel.Courses.Count);
+		}
+
+		[Fact]
+		public void ConvertStudentForCreatingDtoToStudentEntityType()
+		{
+			// arrange
+			var mapperConfig = new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile<StudentProfile>();
+			});
+			var iMapper = mapperConfig.CreateMapper();
+			var studentForCreating = new StudentForCreatingDto();
+
+			// act
+			var model = iMapper.Map<StudentEntity>(studentForCreating);
+
+			// assert
+			Assert.IsType<StudentEntity>(model);
+		}
+
+		[Fact]
+		public void CheckPropertiesValueAfterConvertingStudentForCreatingDtoToStudentEntity()
+		{
+			// arrange
+			var mapperConfig = new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile<StudentProfile>();
+				cfg.AddProfile<CourseProfile>();
+			});
+			var iMapper = mapperConfig.CreateMapper();
+			var model = new StudentForCreatingDto
+			{
+				Name = "name"
+			};
+			var expectedModel = new StudentEntity
+			{
+				Id = 0,
+				Name = "name",
+			};
+
+			// act
+			var studentModel = iMapper.Map<StudentEntity>(model);
+
+			// assert
+			Assert.True(CompareClasses.IsStudentEntitiesEqual(expectedModel, studentModel));
 		}
 	}
 }

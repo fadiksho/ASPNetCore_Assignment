@@ -1,4 +1,5 @@
-﻿using ASPNETCore_Assignments.Entity;
+﻿using ASPNETCore_Assignments.DTO;
+using ASPNETCore_Assignments.Entity;
 using ASPNETCore_Assignments.MapperProfiles;
 using ASPNETCore_Assignments.Model;
 using ASPNETCore_Assignments_Test.Utility;
@@ -67,6 +68,51 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 			Assert.True(CompareClasses.IsTeachersEqual(expecteModel, model));
 			Assert.IsType<List<Course>>(model.Courses);
 			Assert.Equal(expecteModel.Courses.Count, model.Courses.Count);
+		}
+
+		[Fact]
+		public void ConvertTeacherForCreatingDtoToTeacherEntityType()
+		{
+			// arrange
+			var mapperConfig = new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile<TeacherProfile>();
+				cfg.AddProfile<CourseProfile>();
+			});
+			var iMapper = mapperConfig.CreateMapper();
+			var studentForCreatingDto = new TeacherForCreatingDto();
+			
+			// act
+			var studentModel = iMapper.Map<TeacherEntity>(studentForCreatingDto);
+
+			// assert
+			Assert.IsType<TeacherEntity>(studentModel);
+		}
+
+		[Fact]
+		public void CheckPropertiesValueAfterConvertingTeacherForCreatingDtoToTeacherEntity()
+		{
+			// arrange
+			var mapperConfig = new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile<TeacherProfile>();
+				cfg.AddProfile<CourseProfile>();
+			});
+			var iMapper = mapperConfig.CreateMapper();
+			var teacherEntity = new TeacherForCreatingDto
+			{
+				Name = "name"
+			};
+			var expecteModel = new TeacherEntity
+			{
+				Name = "name"
+			};
+
+			// act
+			var model = iMapper.Map<TeacherEntity>(teacherEntity);
+
+			// assert
+			Assert.True(CompareClasses.IsTeacherEntitiesEqual(expecteModel, model));
 		}
 	}
 }

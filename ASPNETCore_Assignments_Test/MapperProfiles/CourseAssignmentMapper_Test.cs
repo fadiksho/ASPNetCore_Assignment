@@ -1,4 +1,5 @@
-﻿using ASPNETCore_Assignments.Entity;
+﻿using ASPNETCore_Assignments.DTO;
+using ASPNETCore_Assignments.Entity;
 using ASPNETCore_Assignments.MapperProfiles;
 using ASPNETCore_Assignments.Model;
 using ASPNETCore_Assignments_Test.Utility;
@@ -63,6 +64,57 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 			// assert
 			Assert.True(CompareClasses.IsCourseAssignmentEqual(expectedModel, model));
 			Assert.NotNull(model.Course);
+		}
+
+		[Fact]
+		public void ConvertCourseAssignmentForCreatingDtoToCourseAssignmentEntityType()
+		{
+			// arrange
+			var mapperConfig = new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile<CourseAssignmentProfile>();
+				cfg.AddProfile<CourseProfile>();
+			});
+			var iMapper = mapperConfig.CreateMapper();
+			var courseAssignmetnForCreatingDto = new CourseAssignmentForCreatingDto
+			{
+				Name = "name",
+				CourseId = 1
+			};
+
+			// act
+			var model = iMapper.Map<CourseAssignmentEntity>(courseAssignmetnForCreatingDto);
+
+			// assert
+			Assert.IsType<CourseAssignmentEntity>(model);
+		}
+
+		[Fact]
+		public void CheckPropertiesValueAfterConvertingCourseAssignmentForCreatingDtoToCourseAssignmentEntity()
+		{
+			// arrange
+			var mapperConfig = new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile<CourseAssignmentProfile>();
+				cfg.AddProfile<CourseProfile>();
+			});
+			var iMapper = mapperConfig.CreateMapper();
+			var courseAssignmentForCreatingDto = new CourseAssignmentForCreatingDto
+			{
+				Name = "name",
+				CourseId = 1
+			};
+			var expectedModel = new CourseAssignmentEntity
+			{
+				Name = "name",
+				CourseId = 1
+			};
+
+			// act
+			var model = iMapper.Map<CourseAssignmentEntity>(courseAssignmentForCreatingDto);
+
+			// assert
+			Assert.True(CompareClasses.IsCourseAssignmentEntityEqual(expectedModel, model));
 		}
 	}
 }
