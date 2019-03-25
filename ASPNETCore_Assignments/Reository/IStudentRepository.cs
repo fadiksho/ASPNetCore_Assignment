@@ -10,7 +10,7 @@ namespace ASPNETCore_Assignments.Reository
 		Task<Student> GetStudent(int studentId);
 		Task<IEnumerable<Student>> GetAllStudents();
 
-		Task<int> AddStudent(StudentForCreatingDto dto);
-		Task<int> DeleteStudent(int studentId);
+		Task AddStudent(StudentForCreatingDto dto);
+		Task DeleteStudent(int studentId);
 	}
 }

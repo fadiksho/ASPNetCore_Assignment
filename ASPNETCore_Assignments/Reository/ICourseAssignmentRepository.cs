@@ -10,7 +10,7 @@ namespace ASPNETCore_Assignments.Reository
 		Task<CourseAssignment> GetCourseAssignment(int courseAssignmentId);
 		Task<IEnumerable<CourseAssignment>> GetAllCourseAssignments();
 
-		Task<int> AddCourseAssignment(CourseAssignmentForCreatingDto dto);
+		Task AddCourseAssignment(CourseAssignmentForCreatingDto dto);
 		Task<int> DeleteCourseAssignment(int courseAssignmentId);
 	}
 }

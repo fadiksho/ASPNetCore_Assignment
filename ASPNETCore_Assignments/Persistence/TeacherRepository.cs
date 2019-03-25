@@ -1,4 +1,5 @@
 ﻿using ASPNETCore_Assignments.DTO;
+using ASPNETCore_Assignments.Entity;
 using ASPNETCore_Assignments.Model;
 using ASPNETCore_Assignments.Persistence.Data;
 using ASPNETCore_Assignments.Reository;
@@ -22,12 +23,14 @@ namespace ASPNETCore_Assignments.Persistence
 			this._mapper = mapper;
 		}
 
-		public Task<int> AddTeacher(TeacherForCreatingDto dto)
+		public async Task AddTeacher(TeacherForCreatingDto dto)
 		{
-			throw new NotImplementedException();
+			var teacherEntity = this._mapper.Map<TeacherEntity>(dto);
+
+			await this._context.Teachers.AddAsync(teacherEntity);
 		}
 
-		public Task<int> DeleteTeacher(int teacherId)
+		public Task DeleteTeacher(int teacherId)
 		{
 			throw new NotImplementedException();
 		}
