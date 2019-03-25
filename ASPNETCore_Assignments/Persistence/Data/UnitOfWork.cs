@@ -9,7 +9,7 @@ namespace ASPNETCore_Assignments.Persistence.Data
 	{
 		private readonly SchoolManagementContext _context;
 
-		public UnitOfWork(SchoolManagementContext context, Mapper mapper)
+		public UnitOfWork(SchoolManagementContext context, IMapper mapper)
 		{
 			this._context = context;
 			this.Students = new StudentRepository(context, mapper);
