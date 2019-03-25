@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ASPNETCore_Assignments.Reository;
 using ASPNETCore_Assignments.Reository.Data;
+using AutoMapper;
 
 namespace ASPNETCore_Assignments.Persistence.Data
 {
@@ -8,13 +9,13 @@ namespace ASPNETCore_Assignments.Persistence.Data
 	{
 		private readonly SchoolManagementContext _context;
 
-		public UnitOfWork(SchoolManagementContext context)
+		public UnitOfWork(SchoolManagementContext context, Mapper mapper)
 		{
 			this._context = context;
-			this.Students = new StudentRepository(context);
-			this.Teachers = new TeacherRepository(context);
-			this.Courses = new CourseRepository(context);
-			this.CourseAssignment = new CourseAssignmentRepository(context);
+			this.Students = new StudentRepository(context, mapper);
+			this.Teachers = new TeacherRepository(context, mapper);
+			this.Courses = new CourseRepository(context, mapper);
+			this.CourseAssignment = new CourseAssignmentRepository(context, mapper);
 		}
 
 		public IStudentRepository Students { get; private set; }

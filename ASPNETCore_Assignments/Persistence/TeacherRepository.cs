@@ -1,8 +1,11 @@
 ﻿using ASPNETCore_Assignments.Model;
 using ASPNETCore_Assignments.Persistence.Data;
 using ASPNETCore_Assignments.Reository;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ASPNETCore_Assignments.Persistence
@@ -10,10 +13,12 @@ namespace ASPNETCore_Assignments.Persistence
 	public class TeacherRepository : ITeacherRepository
 	{
 		private readonly SchoolManagementContext _context;
+		private readonly IMapper _mapper;
 
-		public TeacherRepository(SchoolManagementContext context)
+		public TeacherRepository(SchoolManagementContext context, IMapper mapper)
 		{
 			this._context = context;
+			this._mapper = mapper;
 		}
 
 		public Task<int> AddTeacher()
@@ -26,14 +31,23 @@ namespace ASPNETCore_Assignments.Persistence
 			throw new NotImplementedException();
 		}
 
-		public Task<IEnumerable<Teacher>> GetAllTeachers()
+		public async Task<IEnumerable<Teacher>> GetAllTeachers()
 		{
-			throw new NotImplementedException();
+			var teacherEntities = await this._context.Teachers
+				.Include(t => t.Courses)
+				.ToListAsync();
+
+			return _mapper.Map<IEnumerable<Teacher>>(teacherEntities);
 		}
 
-		public Task<Teacher> GetTeacher(int teacherId)
+		public async Task<Teacher> GetTeacher(int teacherId)
 		{
-			throw new NotImplementedException();
+			var teacherEntity = await this._context.Teachers
+				.Where(t => t.Id == teacherId)
+				.Include(c => c.Courses)
+				.FirstOrDefaultAsync();
+
+			return _mapper.Map<Teacher>(teacherEntity);
 		}
 	}
 }

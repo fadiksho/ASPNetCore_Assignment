@@ -1,8 +1,11 @@
 ﻿using ASPNETCore_Assignments.Model;
 using ASPNETCore_Assignments.Persistence.Data;
 using ASPNETCore_Assignments.Reository;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ASPNETCore_Assignments.Persistence
@@ -10,10 +13,12 @@ namespace ASPNETCore_Assignments.Persistence
 	public class CourseRepository : ICourseRepository
 	{
 		private readonly SchoolManagementContext _context;
+		private readonly IMapper _mapper;
 
-		public CourseRepository(SchoolManagementContext context)
+		public CourseRepository(SchoolManagementContext context, IMapper mapper)
 		{
 			this._context = context;
+			this._mapper = mapper;
 		}
 
 		public Task<int> AddCourse()
@@ -26,14 +31,29 @@ namespace ASPNETCore_Assignments.Persistence
 			throw new NotImplementedException();
 		}
 
-		public Task<IEnumerable<Course>> GetAllCourses()
+		public async Task<IEnumerable<Course>> GetAllCourses()
 		{
-			throw new NotImplementedException();
+			var courseEntities = await this._context.Courses
+				.Include(c => c.Teacher)
+				.Include(c => c.CourseAssignments)
+				.Include(c => c.StudentCourses)
+				.ThenInclude(c => c.Student)
+				.ToListAsync();
+
+			return this._mapper.Map<IEnumerable<Course>>(courseEntities);
 		}
 
-		public Task<Course> GetCourse(int courseId)
+		public async Task<Course> GetCourse(int courseId)
 		{
-			throw new NotImplementedException();
+			var courseEntity = await this._context.Courses
+				.Where(c => c.Id == courseId)
+				.Include(c => c.Teacher)
+				.Include(c => c.CourseAssignments)
+				.Include(c => c.StudentCourses)
+				.ThenInclude(c => c.Student)
+				.FirstOrDefaultAsync();
+
+			return this._mapper.Map<Course>(courseEntity);
 		}
 	}
 }
