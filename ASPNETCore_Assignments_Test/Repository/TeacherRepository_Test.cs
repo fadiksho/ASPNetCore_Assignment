@@ -90,7 +90,7 @@ namespace ASPNETCore_Assignments_Test.Repository
 				{
 					var unitOfWork = new UnitOfWork(context, _mapper);
 					await unitOfWork.Teachers.AddTeacherAsync(new TeacherForCreatingDto { Name = "name" });
-					await context.SaveChangesAsync();
+					await unitOfWork.SaveAsync();
 				}
 				using (var context = new SchoolManagementContext(options))
 				{
