@@ -23,19 +23,19 @@ namespace ASPNETCore_Assignments.Persistence
 			this._mapper = mapper;
 		}
 
-		public async Task AddCourse(CourseForCreatingDto dto)
+		public async Task AddCourseAsync(CourseForCreatingDto dto)
 		{
 			var courseEntity = this._mapper.Map<CourseEntity>(dto);
 
 			await this._context.Courses.AddAsync(courseEntity);
 		}
 
-		public Task<int> DeleteCourse(int courseId)
+		public Task<int> DeleteCourseAsync(int courseId)
 		{
 			throw new NotImplementedException();
 		}
 
-		public async Task<IEnumerable<Course>> GetAllCourses()
+		public async Task<IEnumerable<Course>> GetAllCoursesAsync()
 		{
 			var courseEntities = await this._context.Courses
 				.Include(c => c.Teacher)
@@ -47,7 +47,7 @@ namespace ASPNETCore_Assignments.Persistence
 			return this._mapper.Map<IEnumerable<Course>>(courseEntities);
 		}
 
-		public async Task<Course> GetCourse(int courseId)
+		public async Task<Course> GetCourseAsync(int courseId)
 		{
 			var courseEntity = await this._context.Courses
 				.Where(c => c.Id == courseId)

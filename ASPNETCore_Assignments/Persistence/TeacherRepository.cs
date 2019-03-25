@@ -23,19 +23,19 @@ namespace ASPNETCore_Assignments.Persistence
 			this._mapper = mapper;
 		}
 
-		public async Task AddTeacher(TeacherForCreatingDto dto)
+		public async Task AddTeacherAsync(TeacherForCreatingDto dto)
 		{
 			var teacherEntity = this._mapper.Map<TeacherEntity>(dto);
 
 			await this._context.Teachers.AddAsync(teacherEntity);
 		}
 
-		public Task DeleteTeacher(int teacherId)
+		public Task DeleteTeacherAsync(int teacherId)
 		{
 			throw new NotImplementedException();
 		}
 
-		public async Task<IEnumerable<Teacher>> GetAllTeachers()
+		public async Task<IEnumerable<Teacher>> GetAllTeachersAsync()
 		{
 			var teacherEntities = await this._context.Teachers
 				.Include(t => t.Courses)
@@ -44,7 +44,7 @@ namespace ASPNETCore_Assignments.Persistence
 			return _mapper.Map<IEnumerable<Teacher>>(teacherEntities);
 		}
 
-		public async Task<Teacher> GetTeacher(int teacherId)
+		public async Task<Teacher> GetTeacherAsync(int teacherId)
 		{
 			var teacherEntity = await this._context.Teachers
 				.Where(t => t.Id == teacherId)

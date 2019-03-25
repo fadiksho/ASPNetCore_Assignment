@@ -7,10 +7,10 @@ namespace ASPNETCore_Assignments.Reository
 {
 	public interface ICourseAssignmentRepository
 	{
-		Task<CourseAssignment> GetCourseAssignment(int courseAssignmentId);
-		Task<IEnumerable<CourseAssignment>> GetAllCourseAssignments();
+		Task<CourseAssignment> GetCourseAssignmentAsync(int courseAssignmentId);
+		Task<IEnumerable<CourseAssignment>> GetAllCourseAssignmentsAsync();
 
-		Task AddCourseAssignment(CourseAssignmentForCreatingDto dto);
-		Task<int> DeleteCourseAssignment(int courseAssignmentId);
+		Task AddCourseAssignmentAsync(CourseAssignmentForCreatingDto dto);
+		Task<int> DeleteCourseAssignmentAsync(int courseAssignmentId);
 	}
 }

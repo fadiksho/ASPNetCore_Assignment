@@ -7,10 +7,10 @@ namespace ASPNETCore_Assignments.Reository
 {
 	public interface IStudentRepository
 	{
-		Task<Student> GetStudent(int studentId);
-		Task<IEnumerable<Student>> GetAllStudents();
+		Task<Student> GetStudentAsync(int studentId);
+		Task<IEnumerable<Student>> GetAllStudentsAsync();
 
-		Task AddStudent(StudentForCreatingDto dto);
-		Task DeleteStudent(int studentId);
+		Task AddStudentAsync(StudentForCreatingDto dto);
+		Task DeleteStudentAsync(int studentId);
 	}
 }
