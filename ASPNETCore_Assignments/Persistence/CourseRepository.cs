@@ -1,4 +1,5 @@
-﻿using ASPNETCore_Assignments.Model;
+﻿using ASPNETCore_Assignments.DTO;
+using ASPNETCore_Assignments.Model;
 using ASPNETCore_Assignments.Persistence.Data;
 using ASPNETCore_Assignments.Reository;
 using AutoMapper;
@@ -21,7 +22,7 @@ namespace ASPNETCore_Assignments.Persistence
 			this._mapper = mapper;
 		}
 
-		public Task<int> AddCourse()
+		public Task<int> AddCourse(CourseForCreatingDto dto)
 		{
 			throw new NotImplementedException();
 		}

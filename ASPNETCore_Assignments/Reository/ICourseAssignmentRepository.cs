@@ -1,4 +1,5 @@
-﻿using ASPNETCore_Assignments.Model;
+﻿using ASPNETCore_Assignments.DTO;
+using ASPNETCore_Assignments.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace ASPNETCore_Assignments.Reository
 		Task<CourseAssignment> GetCourseAssignment(int courseAssignmentId);
 		Task<IEnumerable<CourseAssignment>> GetAllCourseAssignments();
 
-		Task<int> AddCourseAssignment();
+		Task<int> AddCourseAssignment(CourseAssignmentForCreatingDto dto);
 		Task<int> DeleteCourseAssignment(int courseAssignmentId);
 	}
 }

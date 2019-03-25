@@ -1,4 +1,5 @@
-﻿using ASPNETCore_Assignments.Model;
+﻿using ASPNETCore_Assignments.DTO;
+using ASPNETCore_Assignments.Model;
 using ASPNETCore_Assignments.Persistence.Data;
 using ASPNETCore_Assignments.Reository;
 using AutoMapper;
@@ -21,7 +22,7 @@ namespace ASPNETCore_Assignments.Persistence
 			this._mapper = mapper;
 		}
 
-		public Task<int> AddStudent()
+		public Task<int> AddStudent(StudentForCreatingDto dto)
 		{
 			throw new NotImplementedException();
 		}
