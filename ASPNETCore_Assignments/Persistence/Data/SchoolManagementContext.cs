@@ -20,11 +20,12 @@ namespace ASPNETCore_Assignments.Persistence.Data
 		{
 			base.OnModelCreating(modelBuilder);
 
-			// Configure each course has one teacher and each teacher has many courses
+			// Configure optional relationship where each course has one teacher and each teacher has many courses
 			modelBuilder.Entity<CourseEntity>()
 						.HasOne<TeacherEntity>(c => c.Teacher)
 						.WithMany(t => t.Courses)
-						.HasForeignKey(c => c.TeacherId);
+						.HasForeignKey(c => c.TeacherId)
+						.IsRequired(false);
 
 			// Configure each CourseAssignment has one Course and each Course has many CourseAssignments
 			modelBuilder.Entity<CourseAssignmentEntity>()
