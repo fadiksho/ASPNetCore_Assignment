@@ -7,7 +7,7 @@ namespace ASPNETCore_Assignments.DTO
 		public string Name { get; set; }
 		public string Description { get; set; }
 
-		public int TeacherId { get; set; }
+		public int? TeacherId { get; set; }
 
 		public ICollection<CourseAssignmentForCreatingDto> CourseAssignmets { get; set; }
 	}
