@@ -6,7 +6,8 @@ module.exports = {
   entry: {
     main: ["./src/index.js", "./src/site.scss"],
 		sokoban: ["./src/js/sokoban.js", "./src/sass/projects/sokoban.scss"],
-		person: ["./src/js/person.js"]
+    person: ["./src/js/person.js"],
+    schoolManagement: ["./src/js/schoolManagement.js", "./src/sass/school_management.scss"]
   },
   mode: "development",
   devtool: 'inline-source-map',

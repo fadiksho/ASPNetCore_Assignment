@@ -1,0 +1,12 @@
+$background-shadow:  rgba(#000000, 0.28);
+
+.school_dashboard_cover_text {
+  text-align: center;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%, -50%);
+  background-color: $background-shadow;
+}
+.sc-m-nav {
+  transform: translateY(-50%);
+}

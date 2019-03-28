@@ -77,7 +77,10 @@ $list-group-disabled-bg: $black;
 $list-group-action-color: $white;
 $breadcrumb-active-color: $gray-500;
 
-// // Add SASS theme customizations here..
+$box-shadow-sm: 0 .125rem .25rem rgba($black, 1);
+$box-shadow: 0 .5rem 1rem rgba($black, 1);
+$box-shadow-lg: 0 1rem 3rem rgba($black, 1);
+
 .navbar-dark.bg-primary
 {
   background-color: #111111 !important;

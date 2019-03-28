@@ -2,7 +2,7 @@
 
 require('./favicon.ico');
 require('./images/contact-keyboard.jpg');
-
+require("./images/school_management_dashboard.jpg");
 
 // Sokoban Assets
 require("./images/sokoban/emptyTile.png");
