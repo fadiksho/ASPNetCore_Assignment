@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNETCore_Assignments.Controllers
 {
-  public class StudentController : Controller
+	[Route("/SchoolManagement/[Controller]")]
+	public class StudentController : Controller
   {
     private readonly IUnitOfWork unitOfWork;
 
@@ -30,7 +31,8 @@ namespace ASPNETCore_Assignments.Controllers
       }
     }
 
-    public async Task<IActionResult> GetStudentDetails(int studentId)
+		[Route("{studentId}")]
+		public async Task<IActionResult> GetStudentDetails(int studentId)
     {
       try
       {

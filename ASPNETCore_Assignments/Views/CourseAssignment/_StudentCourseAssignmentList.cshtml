@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CourseAssignment>
+@{
+	int counter = 1;
+}
+
+<div class="container-fluid">
+	<div class="row align-items-center my-1 border-bottom border-light">
+		<div class="col p-2 text-center">
+			#
+		</div>
+		<div class="col p-2 text-center">
+			Name
+		</div>
+		<div class="col p-2 text-center">
+			Progress
+		</div>
+	</div>
+	@foreach (var courseAssignment in Model)
+	{
+	<div class="row align-items-center my-1">
+		<div class="col p-2 text-center">
+			@counter
+		</div>
+		<div class="col p-2 text-center">
+			@courseAssignment.Name
+		</div>
+		<div class="col p-2 text-center">
+			@courseAssignment.IsDone
+		</div>
+	</div>
+		{ counter++; }
+	}
+</div>

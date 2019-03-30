@@ -1,0 +1,58 @@
+﻿@model Student
+@{
+	int counter = 1;
+}
+<div>
+	<h1 class="display-4">@Model.Name</h1>
+	<p class="ml-4 text-muted">-Enrolled in: @Model.Courses.Count Courses.</p>
+</div>
+
+<h2 class="display-4">Courses</h2>
+
+<div class="container-fluid">
+	<div class="row align-items-center my-1 border-bottom border-warning">
+		<div class="col p-2 text-center">
+			Course Name
+		</div>
+		<div class="col p-2 text-center">
+			My Assignments
+		</div>
+		<div class="col p-2 text-center">
+			Description
+		</div>
+		<div class="col p-2 text-center">
+			Actions
+		</div>
+	</div>
+	@foreach (var course in Model.Courses)
+	{
+		<div class="row align-items-center my-1">
+			<div class="col p-2 text-center">
+				@course.Name
+			</div>
+			<div class="col p-2 text-center">
+				@course.CourseAssignments.Count
+				<button data-dynamic-target="course-assignment-@counter" data-dynamic-toggle="show" class="btn btn-outline-info ml-1">View Assignments</button>
+			</div>
+			<div class="col p-2 text-center">
+				<button data-dynamic-target="description-@counter" data-dynamic-toggle="show" class="btn btn-outline-info">Show</button>
+			</div>
+			<div class="col p-2 text-center">
+				<a class="btn btn-danger">Remove</a>
+			</div>
+		</div>
+		<div class="row align-items-center my-1 mb-3 collapse" id="description-@counter">
+			<span class="text-white rounded-pill bg-info scm-translateY-down px-3 ml-2">Description</span>
+			<div class="alert pt-3 w-100 rounded border-info">
+				@course.Description
+			</div>
+		</div>
+		<div class="row align-items-center my-1 mb-3 collapse" id="course-assignment-@counter">
+			<span class="text-dark rounded-pill bg-light scm-translateY-down px-3 ml-2">Student Assignment</span>
+			<div class="pt-3 w-100 rounded border border-light">
+				<partial name="~/Views/CourseAssignment/_StudentCourseAssignmentList.cshtml" model="course.CourseAssignments" />
+			</div>
+		</div>
+		{ counter++; }
+	}
+</div>

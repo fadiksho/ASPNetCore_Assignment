@@ -1,28 +1,47 @@
 @model IEnumerable<Student>
 @{
-  int counter = 1;
+	int counter = 1;
 }
 
-<table class="table table-borderless text-center">
-    <thead>
-      <tr class="border-bottom border-primary">
-        <th scope="col">#</th>
-        <th scope="col">Student Name</th>
-        <th scope="col">Courses Count</th>
-        <th scope="col">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach (var student in Model)
-      {
-        <tr>
-          <td scope="row">@counter</td>
-          <td>@student.Name</td>
-          <td>@student.Courses.Count</td>
-          <td><a href="">details</a></td>
-        </tr>
-        
-        { counter++; }
-      }
-    </tbody>
-  </table>
+
+<div class="container-fluid">
+	<div class="row align-items-center my-1 border-bottom border-primary">
+		<div class="col p-2 text-center">
+			#
+		</div>
+		<div class="col p-2 text-center">
+			Student Name
+		</div>
+		<div class="col p-2 text-center">
+			Course Count
+		</div>
+		<div class="col p-2 text-center">
+			Details
+		</div>
+	</div>
+	@foreach (var student in Model)
+	{
+		<div class="row align-items-center my-1">
+			<div class="col p-2 text-center">
+				@counter
+			</div>
+			<div class="col p-2 text-center">
+				@student.Name
+			</div>
+			<div class="col p-2 text-center">
+				@student.Courses.Count
+			</div>
+			<div class="col p-2 text-center">
+				<a data-ajax="true"
+					 data-ajax-loading="#dashBoardLoaderId"
+					 data-ajax-method="GET"
+					 data-ajax-mode="replace"
+					 data-ajax-update="#dashboard_content"
+					 asp-controller="Student"
+					 asp-action="GetStudentDetails"
+					 asp-route-studentId="@student.Id">Details</a>
+			</div>
+		</div>
+		{ counter++; }
+	}
+</div>
