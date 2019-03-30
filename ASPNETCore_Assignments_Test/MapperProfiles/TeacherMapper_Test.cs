@@ -31,6 +31,54 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 		}
 
 		[Fact]
+		public void TheNavigationPropertyAfterConvertingEntityToModelAreNotNull()
+		{
+			// arrange
+			var mapperConfig = new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile<CourseProfile>();
+				cfg.AddProfile<TeacherProfile>();
+				cfg.AddProfile<StudentProfile>();
+				cfg.AddProfile<CourseAssignmentProfile>();
+			});
+			var iMapper = mapperConfig.CreateMapper();
+			var teacherEntity = new TeacherEntity();
+
+			var courseEntity = new CourseEntity
+			{
+				Teacher = teacherEntity,
+				CourseAssignments = new List<CourseAssignmentEntity>
+				{
+					new CourseAssignmentEntity(),
+					new CourseAssignmentEntity()
+				}
+			};
+			var studentsToCourses = new StudentCourseEntity[]
+			{
+					new StudentCourseEntity { Student = new StudentEntity(), Course = courseEntity },
+					new StudentCourseEntity { Student = new StudentEntity(), Course = courseEntity },
+					new StudentCourseEntity { Student = new StudentEntity(), Course = courseEntity },
+			};
+			courseEntity.StudentCourses = studentsToCourses;
+			teacherEntity.Courses = new List<CourseEntity>
+			{
+				courseEntity
+			};
+
+			// act
+			var expectedModel = iMapper.Map<Teacher>(teacherEntity);
+			// assert
+			Assert.NotNull(expectedModel.Courses);
+			foreach (var course in teacherEntity.Courses)
+			{
+				foreach (var sc in course.StudentCourses)
+				{
+					Assert.NotNull(sc.Course);
+					Assert.NotNull(sc.Student);
+				}
+			}
+		}
+		[Fact]
 		public void CheckPropertiesValueAfterConvertingFromTeacherEntityToTeacherModel()
 		{
 			// arrange
