@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNETCore_Assignments.Controllers
 {
+	[Route("/SchoolManagement")]
   public class SchoolManagementController : Controller
   {
     private readonly IUnitOfWork unitOfWork;
@@ -13,7 +14,9 @@ namespace ASPNETCore_Assignments.Controllers
       this.unitOfWork = unitOfWork;
     }
 
-    public async Task<IActionResult> DashBoard()
+		[HttpGet("")]
+		[HttpGet("dashboard")]
+		public async Task<IActionResult> DashBoard()
     {
       try
       {

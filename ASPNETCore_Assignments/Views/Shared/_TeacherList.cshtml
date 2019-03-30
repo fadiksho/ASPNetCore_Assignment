@@ -5,7 +5,7 @@
 
 <table class="table table-borderless text-center">
   <thead>
-    <tr class="shadow-sm bg-secondary">
+    <tr class="border-bottom border-secondary">
       <th scope="col">#</th>
       <th scope="col">Teacher Name</th>
       <th scope="col">Courses</th>
@@ -19,7 +19,17 @@
         <td scope="row">@counter</td>
         <td>@teacher.Name</td>
         <td>@teacher.Courses.Count</td>
-        <td><a href="">details</a></td>
+        <td>
+          <a data-ajax="true"
+             data-ajax-loading="#dashBoardLoaderId"
+             data-ajax-method="GET"
+             data-ajax-mode="replace"
+             data-ajax-update="#dashboard_content"
+             asp-controller="Teacher"
+             asp-action="GetTeacherDetails"
+             asp-route-teacherId="@teacher.Id"
+          >details</a>
+        </td>
       </tr>
       
       { counter++; }

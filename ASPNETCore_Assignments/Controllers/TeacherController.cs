@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNETCore_Assignments.Controllers
 {
+  [Route("/SchoolManagement/[Controller]")]
   public class TeacherController : Controller
   {
     private readonly IUnitOfWork unitOfWork;
@@ -14,7 +15,7 @@ namespace ASPNETCore_Assignments.Controllers
       this.unitOfWork = unitOfWork;
     }
 
-    public async Task<IActionResult> TeacherList()
+		public async Task<IActionResult> TeacherList()
     {
       try
       {
@@ -30,7 +31,8 @@ namespace ASPNETCore_Assignments.Controllers
       }
     }
 
-    public async Task<IActionResult> GetTeacherDetails(int teacherId)
+		[Route("{teacherId}")]
+		public async Task<IActionResult> GetTeacherDetails(int teacherId)
     {
       try
       {
@@ -45,5 +47,5 @@ namespace ASPNETCore_Assignments.Controllers
       }
       return PartialView("ErrorRetrivingData");
     }
-  }
+	}
 }

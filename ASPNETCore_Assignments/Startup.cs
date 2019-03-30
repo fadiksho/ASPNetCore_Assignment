@@ -61,7 +61,10 @@ namespace ASPNETCore_Assignments
         routes.MapRoute(
                   name: "default",
                   template: "{controller=Home}/{action=Index}/{id?}");
-      });
+				routes.MapRoute(
+						name: "SchoolManagement",
+						template: "SchoolManagement/{controller=SchoolManagement}/{action=Index}/{id?}");
+			});
     }
   }
 }

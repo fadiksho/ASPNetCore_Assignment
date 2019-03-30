@@ -1,0 +1,24 @@
+﻿@model IEnumerable<CourseAssignment>
+@{
+	int counter = 1;
+}
+
+<table class="table table-borderless text-center">
+	<thead>
+		<tr class="border-bottom border-light">
+			<th scope="col">#</th>
+			<th scope="col">Assignment Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var courseAssignment in Model)
+		{
+			<tr>
+				<td scope="row">@counter</td>
+				<td>@courseAssignment.Name</td>
+			</tr>
+
+			{ counter++; }
+		}
+	</tbody>
+</table>
