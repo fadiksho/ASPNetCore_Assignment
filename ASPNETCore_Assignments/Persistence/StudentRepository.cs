@@ -50,7 +50,11 @@ namespace ASPNETCore_Assignments.Persistence
 			var studentEntity = await this._context.Students
 				.Where(s => s.Id == studentId)
 				.Include(sc => sc.StudentCourses)
-				.ThenInclude(c => c.Course)
+					.ThenInclude(c => c.Course)
+					.ThenInclude(t => t.Teacher)
+				.Include(sc => sc.StudentCourses)
+					.ThenInclude(c => c.Course)
+					.ThenInclude(ca => ca.CourseAssignments)
 				.FirstOrDefaultAsync();
 			
 			return this._mapper.Map<Student>(studentEntity);

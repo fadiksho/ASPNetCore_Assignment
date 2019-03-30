@@ -76,6 +76,74 @@ namespace ASPNETCore_Assignments_Test.Repository
 		}
 
 		[Fact]
+		public async Task GettingStudentByIdAllNavigationPropertyShouldNotBeNull()
+		{
+			var connection = new SqliteConnection("DataSource=:memory:");
+			connection.Open();
+			try
+			{
+				var options = new DbContextOptionsBuilder<SchoolManagementContext>()
+						.UseSqlite(connection)
+						.Options;
+
+				using (var context = new SchoolManagementContext(options))
+				{
+					context.Database.EnsureCreated();
+				}
+				using (var context = new SchoolManagementContext(options))
+				{
+					var student = new StudentEntity { Name = "name" };
+					var courses = new List<CourseEntity>
+					{
+						new CourseEntity()
+						{
+							Teacher = new TeacherEntity(),
+							CourseAssignments = new List<CourseAssignmentEntity>
+							{
+								new CourseAssignmentEntity(),
+								new CourseAssignmentEntity()
+							}
+						},
+						new CourseEntity()
+						{
+							Teacher = new TeacherEntity(),
+							CourseAssignments = new List<CourseAssignmentEntity>
+							{
+								new CourseAssignmentEntity(),
+								new CourseAssignmentEntity()
+							}
+						}
+					};
+					var studentsToCourses = new StudentCourseEntity[]
+					{
+						new StudentCourseEntity { Student = student, Course = courses[0] },
+						new StudentCourseEntity { Student = student, Course = courses[1] },
+					};
+					context.AddRange(studentsToCourses);
+					context.SaveChanges();
+				}
+				using (var context = new SchoolManagementContext(options))
+				{
+					var unitOfWork = new UnitOfWork(context, _mapper);
+					var studentId = context.Students.First().Id;
+					var student = await unitOfWork.Students.GetStudentAsync(studentId);
+					Assert.NotNull(student);
+					Assert.Equal(2, student.Courses.Count);
+					foreach (var course in student.Courses)
+					{
+						Assert.NotNull(course.Teacher);
+						Assert.NotNull(course.CourseAssignments);
+						Assert.Equal(2, course.CourseAssignments.Count);
+					}
+				}
+			}
+			finally
+			{
+				connection.Close();
+			}
+		}
+
+		[Fact]
 		public async Task AddingNewStudentShouldPersiste()
 		{
 			var connection = new SqliteConnection("DataSource=:memory:");
