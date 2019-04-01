@@ -34,7 +34,7 @@
 				@course.Name
 			</div>
 			<div class="col p-2 text-center">
-				@course.Teacher.Name
+				@(course.Teacher != null ? course.Teacher.Name : "No Teacher Yet!")
 			</div>
 			<div class="col p-2 text-center">
 				@course.Students.Count

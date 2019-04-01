@@ -10,13 +10,20 @@ $(document).on('click', '[data-dynamic-toggle]', function (e) {
 	targetElement.toggleClass(classToBeToggled);
 });
 
+$(document).on('click', '[data-dynamic-toggle-remove]', function (e) {
+	let targetTrigger = e.target.attributes["data-dynamic-toggle-remove"].value;
+	let targetElement = $(`#${targetTrigger}`);
+	targetElement.hide('slow', function () {
+		targetElement.remove();
+	});
+});
+
 closeAddNewDashboardDropdown = function () {
 	$('#AddNewInDashboardId').removeClass('show');
 };
 
 loadFormValidation = function (selector) {
 	let form = $(selector);
-	console.log(form);
 	form.removeData('validator');
 	form.removeData('unobtrusiveValidation');
 	$.validator.unobtrusive.parse(form);

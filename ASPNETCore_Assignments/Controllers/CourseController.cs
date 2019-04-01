@@ -1,12 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ASPNETCore_Assignments.DTO;
 using ASPNETCore_Assignments.Reository.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNETCore_Assignments.Controllers
 {
-  public class CourseController : Controller
+	[Route("/SchoolManagement/[Controller]/[action]")]
+	public class CourseController : Controller
   {
     private readonly IUnitOfWork unitOfWork;
 
@@ -31,7 +34,8 @@ namespace ASPNETCore_Assignments.Controllers
       return PartialView("ErrorRetrivingData");
     }
 
-    public async Task<IActionResult> GetCourseDetails(int courseId)
+		[Route("{courseId}")]
+		public async Task<IActionResult> GetCourseDetails(int courseId)
     {
       try
       {
@@ -46,5 +50,42 @@ namespace ASPNETCore_Assignments.Controllers
       }
       return PartialView("ErrorRetrivingData");
     }
-  }
+
+		public IActionResult AddCourse()
+		{
+			Thread.Sleep(1000);
+			return PartialView("_AddCourse");
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> AddCourse(CourseForCreatingDto dto)
+		{
+			try
+			{
+				Thread.Sleep(1000);
+				if (!ModelState.IsValid)
+				{
+					return BadRequest(ModelState.Values);
+				}
+
+				await this.unitOfWork.Courses.AddCourseAsync(dto);
+
+				if (!await this.unitOfWork.SaveAsync())
+				{
+					return PartialView("_SavingError");
+				}
+
+				var courses = await this.unitOfWork.Courses.GetAllCoursesAsync();
+
+				return PartialView("_CourseList", courses);
+			}
+			catch
+			{
+				// ToDo: Logging
+			}
+
+			return PartialView("_ServerError");
+		}
+	}
 }

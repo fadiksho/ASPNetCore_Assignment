@@ -62,7 +62,16 @@
 					 asp-controller="Teacher"
 					 asp-action="AddTeacher"
 					 class="dropdown-item border-bottom border-secondary">Teacher</a>
-				<a class="dropdown-item border-bottom border-warning" href="#">Course</a>
+				<a data-ajax="true"
+					 data-ajax-loading="#dashBoardLoaderId"
+					 data-ajax-method="GET"
+					 data-ajax-mode="replace"
+					 data-ajax-update="#dashboard_content"
+					 data-ajax-complete="closeAddNewDashboardDropdown"
+					 data-ajax-success="loadFormValidation('#addCourseFormId')"
+					 asp-controller="Course"
+					 asp-action="AddCourse"
+					 class="dropdown-item border-bottom border-warning">Course</a>
 			</div>
 		</div>
 	</div>

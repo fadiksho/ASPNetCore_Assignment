@@ -83,5 +83,21 @@ namespace ASPNETCore_Assignments.Controllers
 
 			return PartialView("_ServerError");
 		}
+
+		public async Task<IActionResult> SelectTeacherToCourse()
+		{
+			try
+			{
+				Thread.Sleep(1000);
+				var teachers = await this.unitOfWork.Teachers.GetAllTeachersAsync();
+
+				return PartialView("_SelectTeacherToCourse", teachers);
+			}
+			catch
+			{
+				// ToDo: Logging
+			}
+			return View("ErrorRetrivingData");
+		}
 	}
 }
