@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNETCore_Assignments.Controllers
 {
-	[Route("/SchoolManagement/[Controller]")]
+	[Route("/SchoolManagement/[Controller]/[action]")]
 	public class StudentController : Controller
   {
     private readonly IUnitOfWork unitOfWork;
@@ -32,20 +32,20 @@ namespace ASPNETCore_Assignments.Controllers
     }
 
 		[Route("{studentId}")]
-		public async Task<IActionResult> GetStudentDetails(int studentId)
+		public async Task<IActionResult> Details(int studentId)
     {
       try
       {
         Thread.Sleep(1000);
         var student = await this.unitOfWork.Students.GetStudentAsync(studentId);
 
-        return PartialView("_StudentDetails", student);
+        return View(student);
       }
       catch
       {
         // ToDo: Logging
       }
-      return PartialView("ErrorRetrivingData");
+      return View("ErrorRetrivingData");
     }
   }
 }

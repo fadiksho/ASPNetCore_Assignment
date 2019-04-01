@@ -1,13 +1,11 @@
 ﻿@import 'custom_bootsrap.scss';
 
 // #region Nav ************************************************************************************
-.navbar-nav
+
+.dropdown-menu-left
 {
-  .dropdown-menu
-  {
-    right: 0;
-    left: auto;
-  }
+  right: 0;
+  left: auto;
 }
 
 // #endregion

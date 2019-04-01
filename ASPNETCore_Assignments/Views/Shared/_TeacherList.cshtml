@@ -20,13 +20,8 @@
         <td>@teacher.Name</td>
         <td>@teacher.Courses.Count</td>
         <td>
-          <a data-ajax="true"
-             data-ajax-loading="#dashBoardLoaderId"
-             data-ajax-method="GET"
-             data-ajax-mode="replace"
-             data-ajax-update="#dashboard_content"
-             asp-controller="Teacher"
-             asp-action="GetTeacherDetails"
+          <a asp-controller="Teacher"
+             asp-action="Details"
              asp-route-teacherId="@teacher.Id"
           >details</a>
         </td>

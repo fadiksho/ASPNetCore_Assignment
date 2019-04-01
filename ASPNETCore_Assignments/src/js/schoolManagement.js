@@ -9,3 +9,15 @@ $(document).on('click', '[data-dynamic-toggle]', function (e) {
 	
 	targetElement.toggleClass(classToBeToggled);
 });
+
+closeAddNewDashboardDropdown = function () {
+	$('#AddNewInDashboardId').removeClass('show');
+};
+
+loadFormValidation = function (selector) {
+	let form = $(selector);
+	console.log(form);
+	form.removeData('validator');
+	form.removeData('unobtrusiveValidation');
+	$.validator.unobtrusive.parse(form);
+}

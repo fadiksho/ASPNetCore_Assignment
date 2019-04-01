@@ -1,57 +1,80 @@
 @model IEnumerable<Teacher>
 
 @section Styles {
-  <environment include="Development">
-    <link href="~/css/school_management.css" rel="stylesheet" type="text/css" />
-  </environment>
+	<environment include="Development">
+		<link href="~/css/school_management.css" rel="stylesheet" type="text/css" />
+	</environment>
 }
 
 <div class="position-relative">
-  <img src="~/images/school_management_dashboard.jpg" class="w-100">
-  <h1 class="d-inline-block position-absolute rounded-pill shadow px-5 py-3 school_dashboard_cover_text display-1">School Management</h1>
+	<img src="~/images/school_management_dashboard.jpg" class="w-100">
+	<h1 class="d-inline-block position-absolute rounded-pill shadow px-5 py-3 school_dashboard_cover_text display-1">School Management</h1>
 </div>
 
-<nav class="scm-translateY-up d-flex justify-content-around">
-  <a data-ajax="true"
-     data-ajax-loading="#dashBoardLoaderId"
-     data-ajax-method="GET"
-     data-ajax-mode="replace"
-     data-ajax-update="#dashboard_content"
-     data-ajax-url="@Url.Action("StudentList", "Student")" 
-     href="" class="btn btn-outline-primary shadow display-5 rounded-pill">Students</a>
-  <a data-ajax="true"
-     data-ajax-loading="#dashBoardLoaderId"
-     data-ajax-method="GET"
-     data-ajax-mode="replace"
-     data-ajax-update="#dashboard_content"
-     data-ajax-url="@Url.Action("TeacherList", "Teacher")"
-     class="btn btn-outline-secondary shadow display-5 rounded-pill">Teachers</a>
-  <a data-ajax="true"
-     data-ajax-loading="#dashBoardLoaderId"
-     data-ajax-method="GET"
-     data-ajax-mode="replace"
-     data-ajax-update="#dashboard_content"
-     data-ajax-url="@Url.Action("CourseList", "Course")"
-     class="btn btn-outline-warning shadow display-5 rounded-pill">Courses</a>
-  <a href="" class="btn btn-outline-success shadow display-5 rounded-pill">Add New</a>
+<nav class="position-relative scm-translateY-up d-flex justify-content-around">
+	<a data-ajax="true"
+		 data-ajax-loading="#dashBoardLoaderId"
+		 data-ajax-method="GET"
+		 data-ajax-mode="replace"
+		 data-ajax-update="#dashboard_content"
+		 data-ajax-url="@Url.Action("StudentList", "Student")"
+		 class="btn btn-outline-primary shadow display-5 rounded-pill">Students</a>
+	<a data-ajax="true"
+		 data-ajax-loading="#dashBoardLoaderId"
+		 data-ajax-method="GET"
+		 data-ajax-mode="replace"
+		 data-ajax-update="#dashboard_content"
+		 data-ajax-url="@Url.Action("TeacherList", "Teacher")"
+		 class="btn btn-outline-secondary shadow display-5 rounded-pill">Teachers</a>
+	<a data-ajax="true"
+		 data-ajax-loading="#dashBoardLoaderId"
+		 data-ajax-method="GET"
+		 data-ajax-mode="replace"
+		 data-ajax-update="#dashboard_content"
+		 data-ajax-url="@Url.Action("CourseList", "Course")"
+		 class="btn btn-outline-warning shadow display-5 rounded-pill">Courses</a>
+	<div class="d-flex">
+		<div class="dropdown mr-1">
+			<button type="button"
+							class="btn btn-outline-success shadow display-5 rounded-pill dropdown-toggle"
+							data-toggle="show"
+							data-target="AddNewInDashboardId">
+				Add New
+			</button>
+			<div id="AddNewInDashboardId" class="dropdown-menu dropdown-menu-left">
+				<a class="dropdown-item border-bottom border-primary" href="#">Student</a>
+				<a data-ajax="true"
+					 data-ajax-loading="#dashBoardLoaderId"
+					 data-ajax-method="GET"
+					 data-ajax-mode="replace"
+					 data-ajax-update="#dashboard_content"
+					 data-ajax-complete="closeAddNewDashboardDropdown"
+					 data-ajax-success="loadFormValidation('#addTeacherFormId')"
+					 asp-controller="Teacher"
+					 asp-action="AddTeacher"
+					 class="dropdown-item border-bottom border-secondary">Teacher</a>
+				<a class="dropdown-item border-bottom border-warning" href="#">Course</a>
+			</div>
+		</div>
+	</div>
 </nav>
 <div id="dashBoardLoaderId" class="text-center my-2" style="display: none;">
-  <div class="spinner-grow text-success" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-  <div class="spinner-grow text-warning mx-4" style="animation-delay: 0.3s;" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-  <div class="spinner-grow text-primary" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
+	<div class="spinner-grow text-success" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+	<div class="spinner-grow text-warning mx-4" style="animation-delay: 0.3s;" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+	<div class="spinner-grow text-primary" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
 </div>
 <div class="container-fluid" id="dashboard_content">
-  <partial name="~/Views/Shared/_TeacherList.cshtml" model="@Model" />
+	<partial name="~/Views/Shared/_TeacherList.cshtml" model="@Model" />
 </div>
 
 @section Scripts {
-  <environment include="Development">
-    <script src="~/js/schoolManagement-bandle.js"></script>
-  </environment>
+	<environment include="Development">
+		<script src="~/js/schoolManagement-bandle.js"></script>
+	</environment>
 }
