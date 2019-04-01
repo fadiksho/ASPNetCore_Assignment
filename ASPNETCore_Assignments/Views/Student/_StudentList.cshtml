@@ -32,13 +32,8 @@
 				@student.Courses.Count
 			</div>
 			<div class="col p-2 text-center">
-				<a data-ajax="true"
-					 data-ajax-loading="#dashBoardLoaderId"
-					 data-ajax-method="GET"
-					 data-ajax-mode="replace"
-					 data-ajax-update="#dashboard_content"
-					 asp-controller="Student"
-					 asp-action="GetStudentDetails"
+				<a asp-controller="Student"
+					 asp-action="Details"
 					 asp-route-studentId="@student.Id">Details</a>
 			</div>
 		</div>
