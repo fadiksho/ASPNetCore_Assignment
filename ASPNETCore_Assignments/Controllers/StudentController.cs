@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using ASPNETCore_Assignments.DTO;
 using ASPNETCore_Assignments.Reository.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,5 +48,40 @@ namespace ASPNETCore_Assignments.Controllers
       }
       return View("ErrorRetrivingData");
     }
-  }
+
+		public IActionResult AddStudent()
+		{
+			return PartialView("_AddStudent");
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> AddStudent(StudentForCreatingDto dto)
+		{
+			try
+			{
+				if (!ModelState.IsValid)
+				{
+					return BadRequest(ModelState.Values);
+				}
+
+				await this.unitOfWork.Students.AddStudentAsync(dto);
+
+				if (!await this.unitOfWork.SaveAsync())
+				{
+					return PartialView("_SavingError");
+				}
+
+				var students = await this.unitOfWork.Students.GetAllStudentsAsync();
+
+				return PartialView("_StudentList", students);
+			}
+			catch
+			{
+				// ToDo: Logging
+			}
+
+			return PartialView("_ServerError");
+		}
+	}
 }

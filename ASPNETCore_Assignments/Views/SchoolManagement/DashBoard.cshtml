@@ -42,7 +42,16 @@
 				Add New
 			</button>
 			<div id="AddNewInDashboardId" class="dropdown-menu dropdown-menu-left">
-				<a class="dropdown-item border-bottom border-primary" href="#">Student</a>
+				<a data-ajax="true"
+					 data-ajax-loading="#dashBoardLoaderId"
+					 data-ajax-method="GET"
+					 data-ajax-mode="replace"
+					 data-ajax-update="#dashboard_content"
+					 data-ajax-complete="closeAddNewDashboardDropdown"
+					 data-ajax-success="loadFormValidation('#addStudentFormId')"
+					 asp-controller="Student"
+					 asp-action="AddStudent"
+					 class="dropdown-item border-bottom border-primary">Student</a>
 				<a data-ajax="true"
 					 data-ajax-loading="#dashBoardLoaderId"
 					 data-ajax-method="GET"
@@ -70,7 +79,7 @@
 	</div>
 </div>
 <div class="container-fluid" id="dashboard_content">
-	<partial name="~/Views/Shared/_TeacherList.cshtml" model="@Model" />
+	<partial name="~/Views/Teacher/_TeacherList.cshtml" model="@Model" />
 </div>
 
 @section Scripts {
