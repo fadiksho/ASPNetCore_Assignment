@@ -22,28 +22,7 @@ namespace ASPNETCore_Assignments.Persistence
 			this._context = context;
 			this._mapper = mapper;
 		}
-
-		public async Task AddTeacherAsync(TeacherForCreatingDto dto)
-		{
-			var teacherEntity = this._mapper.Map<TeacherEntity>(dto);
-
-			await this._context.Teachers.AddAsync(teacherEntity);
-		}
-
-		public Task DeleteTeacherAsync(int teacherId)
-		{
-			throw new NotImplementedException();
-		}
-
-		public async Task<IEnumerable<Teacher>> GetAllTeachersAsync()
-		{
-			var teacherEntities = await this._context.Teachers
-				.Include(t => t.Courses)
-				.ToListAsync();
-
-			return _mapper.Map<IEnumerable<Teacher>>(teacherEntities);
-		}
-
+		
 		public async Task<Teacher> GetTeacherAsync(int teacherId)
 		{
 			var teacherEntity = await this._context.Teachers
@@ -56,6 +35,62 @@ namespace ASPNETCore_Assignments.Persistence
 				.FirstOrDefaultAsync();
 
 			return _mapper.Map<Teacher>(teacherEntity);
+		}
+		public async Task<IEnumerable<Teacher>> GetAllTeachersAsync()
+		{
+			var teacherEntities = await this._context.Teachers
+				.Include(t => t.Courses)
+				.ToListAsync();
+
+			return _mapper.Map<IEnumerable<Teacher>>(teacherEntities);
+		}
+
+		public async Task AddTeacherAsync(TeacherForCreatingDto dto)
+		{
+			var teacherEntity = this._mapper.Map<TeacherEntity>(dto);
+
+			await this._context.Teachers.AddAsync(teacherEntity);
+		}
+		public Task DeleteTeacherAsync(int teacherId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public async Task AssignStudentsToCourseAsync(int courseId, List<int> studentsId)
+		{
+			var studenToCourses = new List<StudentCourseEntity>();
+			foreach (var studenId in studentsId)
+			{
+				var studentcourse = new StudentCourseEntity
+				{
+					CourseId = courseId,
+					StudentId = studenId
+				};
+				studenToCourses.Add(studentcourse);
+			}
+			if (studenToCourses.Count > 0)
+				await this._context.AddRangeAsync(studenToCourses);
+		}
+		public async Task AssignStudentsToCourseAsync(int courseId, List<AssignStudentToCourseDto> students)
+		{
+			var studentIds = students.Where(c => c.IsSelected).Select(s => s.Id).ToList();
+
+			await this.AssignStudentsToCourseAsync(courseId, studentIds);
+		}
+		public void RemoveStudentsFromCourse(int courseId, List<int> studentsId)
+		{
+			var studenToCourses = new List<StudentCourseEntity>();
+			foreach (var studenId in studentsId)
+			{
+				var studentcourse = new StudentCourseEntity
+				{
+					CourseId = courseId,
+					StudentId = studenId
+				};
+				studenToCourses.Add(studentcourse);
+			}
+			if (studenToCourses.Count > 0)
+				this._context.RemoveRange(studenToCourses);
 		}
 	}
 }

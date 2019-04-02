@@ -53,7 +53,7 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 					new CourseAssignmentEntity()
 				}
 			};
-			var studentsToCourses = new StudentCourseEntity[]
+			var studentsToCourses = new List<StudentCourseEntity>
 			{
 					new StudentCourseEntity { Student = new StudentEntity(), Course = courseEntity },
 					new StudentCourseEntity { Student = new StudentEntity(), Course = courseEntity },

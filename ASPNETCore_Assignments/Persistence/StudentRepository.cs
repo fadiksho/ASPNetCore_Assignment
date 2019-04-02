@@ -59,5 +59,15 @@ namespace ASPNETCore_Assignments.Persistence
 			
 			return this._mapper.Map<Student>(studentEntity);
 		}
+
+		public async Task<IEnumerable<AssignStudentToCourseDto>> GetStudentsThatNotInCourseAsync(int courseId)
+		{
+			var studentEntities = await this._context.Students
+				.Include(sc => sc.StudentCourses)
+				.Where(s => !s.StudentCourses.Any(sc => sc.CourseId == courseId))
+				.ToListAsync();
+
+			return this._mapper.Map<IEnumerable<AssignStudentToCourseDto>>(studentEntities);
+		}
 	}
 }

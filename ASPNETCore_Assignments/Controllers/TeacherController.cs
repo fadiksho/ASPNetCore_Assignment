@@ -1,12 +1,14 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ASPNETCore_Assignments.DTO;
 using ASPNETCore_Assignments.Reository.Data;
+using ASPNETCore_Assignments.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNETCore_Assignments.Controllers
 {
-  [Route("/SchoolManagement/[Controller]/[action]")]
+	[Route("/SchoolManagement/[Controller]/[action]")]
   public class TeacherController : Controller
   {
     private readonly IUnitOfWork unitOfWork;
@@ -98,6 +100,52 @@ namespace ASPNETCore_Assignments.Controllers
 				// ToDo: Logging
 			}
 			return View("ErrorRetrivingData");
+		}
+
+		public async Task<IActionResult> AssignStudentsToCourse(int courseId)
+		{
+			Thread.Sleep(1000);
+
+			var assignStudentToCourseDtos = await this.unitOfWork.Students.GetStudentsThatNotInCourseAsync(courseId);
+
+			var AssignStudentToCourseViewModel = new AssignStudentToCourseViewModel
+			{
+				Students = assignStudentToCourseDtos.ToList(),
+				CourseId = courseId
+			};
+			
+			return PartialView("_AssignStudentsToCourse" , AssignStudentToCourseViewModel);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> AssignStudentsToCourse(AssignStudentToCourseViewModel model)
+		{
+			try
+			{
+				Thread.Sleep(1000);
+				if (!ModelState.IsValid)
+				{
+					return BadRequest(ModelState.Values);
+				}
+
+				await this.unitOfWork.Teachers.AssignStudentsToCourseAsync(model.CourseId, model.Students);
+
+				if (!await this.unitOfWork.SaveAsync())
+				{
+					return PartialView("_SavingError");
+				}
+
+				var course = await this.unitOfWork.Courses.GetCourseAsync(model.CourseId);
+
+				return PartialView("_TeacherCourseRow", course);
+			}
+			catch
+			{
+				// ToDo: Logging
+			}
+			
+			return PartialView("_ServerError");
 		}
 	}
 }

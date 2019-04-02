@@ -14,7 +14,7 @@ namespace ASPNETCore_Assignments.Entity
 
 		public IList<CourseAssignmentEntity> CourseAssignments { get; set; }
 			= new List<CourseAssignmentEntity>();
-		public IList<StudentCourseEntity> StudentCourses { get; set; }
+		public List<StudentCourseEntity> StudentCourses { get; set; }
 			= new List<StudentCourseEntity>();
 	}
 }

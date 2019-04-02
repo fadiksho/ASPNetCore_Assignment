@@ -326,7 +326,7 @@ namespace ASPNETCore_Assignments_Test.Repository
 		}
 
 		[Fact]
-		public async Task AddingNewCourseWithTeacherShouldPersiste()
+		public async Task AssignStudentsToCourseShouldPersiste()
 		{
 			var connection = new SqliteConnection("DataSource=:memory:");
 			connection.Open();
@@ -340,27 +340,107 @@ namespace ASPNETCore_Assignments_Test.Repository
 				{
 					context.Database.EnsureCreated();
 				}
+				int courseId;
+				List<int> studentsId;
+				using (var context = new SchoolManagementContext(options))
+				{
+					var course = new CourseEntity();
+					var students = new List<StudentEntity>
+					{
+						new StudentEntity(),
+						new StudentEntity()
+					};
+					var studentsToCourses = new StudentCourseEntity[]
+					{
+						new StudentCourseEntity { Student = new StudentEntity(), Course = course },
+						new StudentCourseEntity { Student = new StudentEntity(), Course = course },
+					};
+					context.AddRange(studentsToCourses);
+					context.AddRange(students);
+					context.SaveChanges();
+					
+					courseId = studentsToCourses[0].CourseId;
+					studentsId = new List<int>
+					{
+						students[0].Id,
+						students[1].Id,
+					};
+				}
 
 				using (var context = new SchoolManagementContext(options))
 				{
-					var teacher = new TeacherEntity();
-					context.Teachers.Add(teacher);
-					context.SaveChanges();
-
 					var unitOfWork = new UnitOfWork(context, _mapper);
-					
-					var course = new CourseForCreatingDto
-					{
-						Name = "name",
-						TeacherId = teacher.Id
-					};
-					await unitOfWork.Courses.AddCourseAsync(course);
+					await unitOfWork.Teachers.AssignStudentsToCourseAsync(courseId, studentsId);
 					await unitOfWork.SaveAsync();
 				}
+
 				using (var context = new SchoolManagementContext(options))
 				{
-					Assert.Equal(1, context.Courses.Count());
-					Assert.Equal(context.Teachers.First().Id, context.Courses.First().TeacherId);
+					var students = context.Courses
+						.Include(c => c.StudentCourses)
+						.FirstOrDefault();
+
+					Assert.Equal(4, students.StudentCourses.Count);
+				}
+			}
+			finally
+			{
+				connection.Close();
+			}
+		}
+
+		[Fact]
+		public async Task RemoveStudentsFromCourseShouldPersiste()
+		{
+			var connection = new SqliteConnection("DataSource=:memory:");
+			connection.Open();
+			try
+			{
+				var options = new DbContextOptionsBuilder<SchoolManagementContext>()
+						.UseSqlite(connection)
+						.Options;
+
+				using (var context = new SchoolManagementContext(options))
+				{
+					context.Database.EnsureCreated();
+				}
+				int courseId;
+				List<int> studentsId;
+				using (var context = new SchoolManagementContext(options))
+				{
+					var course = new CourseEntity();
+
+					var studentsToCourses = new StudentCourseEntity[]
+					{
+						new StudentCourseEntity { Student = new StudentEntity(), Course = course },
+						new StudentCourseEntity { Student = new StudentEntity(), Course = course },
+
+					};
+					context.AddRange(studentsToCourses);
+					context.SaveChanges();
+
+					courseId = studentsToCourses[0].CourseId;
+					studentsId = new List<int>
+					{
+						studentsToCourses[0].StudentId,
+						studentsToCourses[1].StudentId,
+					};
+				}
+
+				using (var context = new SchoolManagementContext(options))
+				{
+					var unitOfWork = new UnitOfWork(context, _mapper);
+					unitOfWork.Teachers.RemoveStudentsFromCourse(courseId, studentsId);
+					await unitOfWork.SaveAsync();
+				}
+
+				using (var context = new SchoolManagementContext(options))
+				{
+					var students = context.Courses
+						.Include(c => c.StudentCourses)
+						.FirstOrDefault();
+
+					Assert.Equal(0, students.StudentCourses.Count);
 				}
 			}
 			finally

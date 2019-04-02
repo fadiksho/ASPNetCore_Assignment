@@ -113,5 +113,41 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 			// assert
 			Assert.True(CompareClasses.IsStudentEntitiesEqual(expectedModel, studentModel));
 		}
+
+
+		[Fact]
+		public void CheckPropertiesValueAfterConvertingFromStudentEntityToAssignStudentToCourseDto()
+		{
+			// arrange
+			var mapperConfig = new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile<StudentProfile>();
+			});
+			var iMapper = mapperConfig.CreateMapper();
+			var studentEntity = new StudentEntity
+			{
+				Id = 1,
+				Name = "name",
+				StudentCourses = new List<StudentCourseEntity>()
+				{
+					new StudentCourseEntity() { Course = new CourseEntity() },
+					new StudentCourseEntity() { Course = new CourseEntity() },
+				}
+			};
+			var expectedModel = new AssignStudentToCourseDto
+			{
+				Id = 1,
+				Name = "name",
+				IsSelected = false
+			};
+
+			// act
+			var assignStudentToCourseDto = iMapper.Map<AssignStudentToCourseDto>(studentEntity);
+
+			// assert
+			Assert.Equal(expectedModel.Id, assignStudentToCourseDto.Id);
+			Assert.Equal(expectedModel.Name, assignStudentToCourseDto.Name);
+			Assert.False(assignStudentToCourseDto.IsSelected);
+		}
 	}
 }
