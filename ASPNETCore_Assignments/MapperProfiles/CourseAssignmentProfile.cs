@@ -10,7 +10,8 @@ namespace ASPNETCore_Assignments.MapperProfiles
 		public CourseAssignmentProfile()
 		{
 			CreateMap<CourseAssignmentEntity, CourseAssignment>();
-			CreateMap<CourseAssignmentForCreatingDto, CourseAssignmentEntity>();
+			CreateMap<CourseAssignmentForCreatingDto, CourseAssignmentEntity>()
+        .ReverseMap();
 		}
 	}
 }

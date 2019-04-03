@@ -12,7 +12,7 @@ namespace ASPNETCore_Assignments.Entity
 		public int? TeacherId { get; set; }
 		public TeacherEntity Teacher { get; set; }
 
-		public IList<CourseAssignmentEntity> CourseAssignments { get; set; }
+		public List<CourseAssignmentEntity> CourseAssignments { get; set; }
 			= new List<CourseAssignmentEntity>();
 		public List<StudentCourseEntity> StudentCourses { get; set; }
 			= new List<StudentCourseEntity>();

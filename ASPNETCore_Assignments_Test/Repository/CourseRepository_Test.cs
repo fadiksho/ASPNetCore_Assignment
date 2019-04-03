@@ -304,7 +304,7 @@ namespace ASPNETCore_Assignments_Test.Repository
 					var course = new CourseForCreatingDto
 					{
 						Name = "name",
-						CourseAssignmets = new List<CourseAssignmentForCreatingDto>
+						CourseAssignments = new List<CourseAssignmentForCreatingDto>
 						{
 							new CourseAssignmentForCreatingDto(),
 							new CourseAssignmentForCreatingDto()
@@ -440,7 +440,66 @@ namespace ASPNETCore_Assignments_Test.Repository
 						.Include(c => c.StudentCourses)
 						.FirstOrDefault();
 
-					Assert.Equal(0, students.StudentCourses.Count);
+					Assert.Empty(students.StudentCourses);
+				}
+			}
+			finally
+			{
+				connection.Close();
+			}
+		}
+
+		[Fact]
+		public async Task DeleteCourseShouldDeleteAllCourseAssignmentInTheCourse()
+		{
+			var connection = new SqliteConnection("DataSource=:memory:");
+			connection.Open();
+			try
+			{
+				var options = new DbContextOptionsBuilder<SchoolManagementContext>()
+						.UseSqlite(connection)
+						.Options;
+
+				using (var context = new SchoolManagementContext(options))
+				{
+					context.Database.EnsureCreated();
+				}
+				int courseId;
+				using (var context = new SchoolManagementContext(options))
+				{
+					var course = new CourseEntity
+					{
+						CourseAssignments = new List<CourseAssignmentEntity>
+						{
+							new CourseAssignmentEntity(),
+							new CourseAssignmentEntity()
+						}
+					};
+					context.Add(course);
+					context.SaveChanges();
+
+					courseId = course.Id;
+				}
+
+				using (var context = new SchoolManagementContext(options))
+				{
+					var unitOfWork = new UnitOfWork(context, _mapper);
+					
+					await unitOfWork.Courses.DeleteCourseAsync(courseId);
+					await unitOfWork.SaveAsync();
+				}
+
+				using (var context = new SchoolManagementContext(options))
+				{
+					var course = context.Courses
+						.Include(c => c.StudentCourses)
+						.Include(ca => ca.CourseAssignments)
+						.FirstOrDefault();
+
+					var courseAssignment = context.CourseAssignments.ToList();
+
+					Assert.Null(course);
+					Assert.Empty(courseAssignment);
 				}
 			}
 			finally

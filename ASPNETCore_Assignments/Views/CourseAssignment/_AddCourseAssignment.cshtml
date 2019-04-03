@@ -1,7 +1,7 @@
 ﻿@model CourseAssignmentForCreatingDto
 @{
 	string id = Guid.NewGuid().ToString();
-	string name = $"CourseAssignmets[{id}].Name";
+	string name = $"CourseAssignments[{id}].Name";
 }
 <div id="@($"assignment-{id}")" class="form-group row align-items-center">
 	<div class="col-12 col-md-2">
@@ -16,6 +16,6 @@
 						type="button"
 						class="btn btn-block btn-outline-danger">Delete</button>
 	</div>
-	<input type="hidden" name="CourseAssignmets.Index" value="@id" />
+	<input type="hidden" name="CourseAssignments.Index" value="@id" />
 	<small class="text-danger col-md-2"><span data-valmsg-for="@name" data-valmsg-replace="true"></span></small>
 </div>

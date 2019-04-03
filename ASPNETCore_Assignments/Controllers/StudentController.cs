@@ -37,7 +37,6 @@ namespace ASPNETCore_Assignments.Controllers
     {
       try
       {
-        Thread.Sleep(1000);
         var student = await this.unitOfWork.Students.GetStudentAsync(studentId);
 
         return View(student);

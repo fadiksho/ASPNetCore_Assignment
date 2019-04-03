@@ -109,7 +109,7 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 				Name = "name",
 				Description = "description",
 				TeacherId = 1,
-				CourseAssignmets = new List<CourseAssignmentForCreatingDto>()
+				CourseAssignments = new List<CourseAssignmentForCreatingDto>()
 				{
 					new CourseAssignmentForCreatingDto(),
 					new CourseAssignmentForCreatingDto()
@@ -139,7 +139,7 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 				Name = "name",
 				Description = "description",
 				TeacherId = 1,
-				CourseAssignmets = new List<CourseAssignmentForCreatingDto>()
+				CourseAssignments = new List<CourseAssignmentForCreatingDto>()
 				{
 					new CourseAssignmentForCreatingDto(),
 					new CourseAssignmentForCreatingDto()

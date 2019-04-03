@@ -55,7 +55,7 @@ namespace ASPNETCore_Assignments_Test.Repository
         {
           var courseAssignmentsId = context.CourseAssignments.First().Id;
           var unitOfWork = new UnitOfWork(context, _mapper);
-          var courseAssignmet = await unitOfWork.CourseAssignment.GetCourseAssignmentAsync(courseAssignmentsId);
+          var courseAssignmet = await unitOfWork.CourseAssignment.GetCourseAssignmentsAsync(courseAssignmentsId);
           Assert.NotNull(courseAssignmet);
           Assert.NotNull(courseAssignmet.Course);
         }

@@ -22,6 +22,12 @@ closeAddNewDashboardDropdown = function () {
 	$('#AddNewInDashboardId').removeClass('show');
 };
 
+removeAfterSuccess = function (selector) {
+	$(selector).hide('slow', function () {
+		$(selector).remove();
+	});
+}
+
 loadFormValidation = function (selector) {
 	let form = $(selector);
 	form.removeData('validator');

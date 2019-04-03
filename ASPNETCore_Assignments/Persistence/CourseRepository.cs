@@ -30,9 +30,13 @@ namespace ASPNETCore_Assignments.Persistence
 			await this._context.Courses.AddAsync(courseEntity);
 		}
 
-		public Task<int> DeleteCourseAsync(int courseId)
+		public async Task DeleteCourseAsync(int courseId)
 		{
-			throw new NotImplementedException();
+			var course = await this._context.Courses
+				.Where(c => c.Id == courseId)
+				.FirstOrDefaultAsync();
+
+			this._context.Courses.Remove(course);
 		}
 
 		public async Task<IEnumerable<Course>> GetAllCoursesAsync()

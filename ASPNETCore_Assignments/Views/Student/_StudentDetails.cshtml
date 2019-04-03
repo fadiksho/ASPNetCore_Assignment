@@ -20,9 +20,6 @@
 		<div class="col p-2 text-center">
 			Description
 		</div>
-		<div class="col p-2 text-center">
-			Actions
-		</div>
 	</div>
 	@foreach (var course in Model.Courses)
 	{
@@ -36,9 +33,6 @@
 			</div>
 			<div class="col p-2 text-center">
 				<button data-dynamic-target="description-@counter" data-dynamic-toggle="show" class="btn btn-outline-info">Show</button>
-			</div>
-			<div class="col p-2 text-center">
-				<a class="btn btn-danger">Remove</a>
 			</div>
 		</div>
 		<div class="row align-items-center my-1 mb-3 collapse" id="description-@counter">

@@ -13,7 +13,7 @@ namespace ASPNETCore_Assignments.DTO
 
 		public int? TeacherId { get; set; }
 
-		public ICollection<CourseAssignmentForCreatingDto> CourseAssignmets { get; set; }
+		public ICollection<CourseAssignmentForCreatingDto> CourseAssignments { get; set; }
 			= new List<CourseAssignmentForCreatingDto>();
 	}
 }

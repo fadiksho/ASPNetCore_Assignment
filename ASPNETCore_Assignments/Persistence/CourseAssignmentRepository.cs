@@ -44,7 +44,7 @@ namespace ASPNETCore_Assignments.Persistence
 			return this._mapper.Map<IEnumerable<CourseAssignment>>(courseAssignmentEntities);
 		}
 
-		public async Task<CourseAssignment> GetCourseAssignmentAsync(int courseAssignmentId)
+		public async Task<CourseAssignment> GetCourseAssignmentsAsync(int courseAssignmentId)
 		{
 			var courseAssignmentEntity = await this._context.CourseAssignments
 				.Where(ca => ca.Id == courseAssignmentId)
@@ -53,5 +53,27 @@ namespace ASPNETCore_Assignments.Persistence
 
 			return this._mapper.Map<CourseAssignment>(courseAssignmentEntity);
 		}
-	}
+
+    public async Task<IEnumerable<CourseAssignmentForCreatingDto>> GetAssignmentsForCourse(int courseId)
+    {
+      var courseAssignmentEntities = await this._context.CourseAssignments
+        .Where(ca => ca.CourseId == courseId)
+        .ToListAsync();
+
+      return this._mapper.Map<IEnumerable<CourseAssignmentForCreatingDto>>(courseAssignmentEntities);
+    }
+
+    public async Task SetAssignmentsForCourseAsync(int courseId, IEnumerable<CourseAssignmentForCreatingDto> assignments)
+    {
+      // Delete the old assignments
+      var course = await this._context.Courses
+        .Include(ca => ca.CourseAssignments)
+        .FirstOrDefaultAsync(c => c.Id == courseId);
+
+      course.CourseAssignments.Clear();
+
+      var newAssigments = this._mapper.Map<IEnumerable<CourseAssignmentEntity>>(assignments);
+      course.CourseAssignments.AddRange(newAssigments);
+    }
+  }
 }
