@@ -108,7 +108,7 @@ namespace ASPNETCore_Assignments.Controllers
 
 			var assignStudentToCourseDtos = await this.unitOfWork.Students.GetStudentsThatNotInCourseAsync(courseId);
 
-			var AssignStudentToCourseViewModel = new AssignStudentToCourseViewModel
+			var AssignStudentToCourseViewModel = new ManageStudentInCourseViewModel
 			{
 				Students = assignStudentToCourseDtos.ToList(),
 				CourseId = courseId
@@ -119,11 +119,11 @@ namespace ASPNETCore_Assignments.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> AssignStudentsToCourse(AssignStudentToCourseViewModel model)
+		public async Task<IActionResult> AssignStudentsToCourse(ManageStudentInCourseViewModel model)
 		{
 			try
 			{
-				Thread.Sleep(1000);
+				
 				if (!ModelState.IsValid)
 				{
 					return BadRequest(ModelState.Values);
@@ -145,6 +145,52 @@ namespace ASPNETCore_Assignments.Controllers
 				// ToDo: Logging
 			}
 			
+			return PartialView("_ServerError");
+		}
+
+		public async Task<IActionResult> RemoveStudentsFromCourse(int courseId)
+		{
+			Thread.Sleep(1000);
+
+			var studentsInCourse = await this.unitOfWork.Students.GetStudentsThatAreInCourseAsync(courseId);
+
+			var AssignStudentToCourseViewModel = new ManageStudentInCourseViewModel
+			{
+				Students = studentsInCourse.ToList(),
+				CourseId = courseId
+			};
+
+			return PartialView("_RemoveStudentsFromCourse", AssignStudentToCourseViewModel);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> RemoveStudentsToCourse(ManageStudentInCourseViewModel model)
+		{
+			try
+			{
+				Thread.Sleep(1000);
+				if (!ModelState.IsValid)
+				{
+					return BadRequest(ModelState.Values);
+				}
+
+				this.unitOfWork.Teachers.RemoveStudentsFromCourse(model.CourseId, model.Students);
+
+				if (!await this.unitOfWork.SaveAsync())
+				{
+					return PartialView("_SavingError");
+				}
+
+				var course = await this.unitOfWork.Courses.GetCourseAsync(model.CourseId);
+
+				return PartialView("_TeacherCourseRow", course);
+			}
+			catch
+			{
+				// ToDo: Logging
+			}
+
 			return PartialView("_ServerError");
 		}
 	}

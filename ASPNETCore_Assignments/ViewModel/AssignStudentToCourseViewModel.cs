@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ASPNETCore_Assignments.ViewModel
 {
-	public class AssignStudentToCourseViewModel
+	public class ManageStudentInCourseViewModel
 	{
 		public int CourseId { get; set; }
 		[Required]
-		public List<AssignStudentToCourseDto> Students { get; set; }
+		public List<ManageStudentInCourseDto> Students { get; set; }
 	}
 }

@@ -248,37 +248,5 @@ namespace ASPNETCore_Assignments_Test.Repository
 				connection.Close();
 			}
 		}
-
-		[Fact]
-		public async Task AssignStudentsToCourseShouldPersiste()
-		{
-			var connection = new SqliteConnection("DataSource=:memory:");
-			connection.Open();
-			try
-			{
-				var options = new DbContextOptionsBuilder<SchoolManagementContext>()
-								.UseSqlite(connection)
-								.Options;
-
-				using (var context = new SchoolManagementContext(options))
-				{
-					context.Database.EnsureCreated();
-				}
-				using (var context = new SchoolManagementContext(options))
-				{
-					var unitOfWork = new UnitOfWork(context, _mapper);
-					await unitOfWork.Teachers.AddTeacherAsync(new TeacherForCreatingDto { Name = "name" });
-					await unitOfWork.SaveAsync();
-				}
-				using (var context = new SchoolManagementContext(options))
-				{
-					Assert.Equal(1, context.Teachers.Count());
-				}
-			}
-			finally
-			{
-				connection.Close();
-			}
-		}
 	}
 }

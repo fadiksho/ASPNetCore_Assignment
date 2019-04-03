@@ -134,7 +134,7 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 					new StudentCourseEntity() { Course = new CourseEntity() },
 				}
 			};
-			var expectedModel = new AssignStudentToCourseDto
+			var expectedModel = new ManageStudentInCourseDto
 			{
 				Id = 1,
 				Name = "name",
@@ -142,7 +142,7 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 			};
 
 			// act
-			var assignStudentToCourseDto = iMapper.Map<AssignStudentToCourseDto>(studentEntity);
+			var assignStudentToCourseDto = iMapper.Map<ManageStudentInCourseDto>(studentEntity);
 
 			// assert
 			Assert.Equal(expectedModel.Id, assignStudentToCourseDto.Id);

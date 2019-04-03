@@ -6,7 +6,7 @@
 	<hr class="w-75 bg-primary" />
 
 	<form asp-controller="Teacher"
-				asp-action="AssignStudentsToCourse"
+				asp-action="RemoveStudentsToCourse"
 				method="post"
 				data-ajax="true"
 				data-ajax-method="post"
@@ -30,7 +30,7 @@
 									 id="@($"Students[{counter}].IsSelected")"
 									 class="custom-control-input">
 						<label for="@($"Students[{counter}].IsSelected")"
-									 class="custom-control-label">Assign To Course</label>
+									 class="custom-control-label">Remove From Course</label>
 					</div>
 				</div>
 			</div>

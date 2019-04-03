@@ -71,7 +71,7 @@ namespace ASPNETCore_Assignments.Persistence
 			if (studenToCourses.Count > 0)
 				await this._context.AddRangeAsync(studenToCourses);
 		}
-		public async Task AssignStudentsToCourseAsync(int courseId, List<AssignStudentToCourseDto> students)
+		public async Task AssignStudentsToCourseAsync(int courseId, List<ManageStudentInCourseDto> students)
 		{
 			var studentIds = students.Where(c => c.IsSelected).Select(s => s.Id).ToList();
 
@@ -91,6 +91,12 @@ namespace ASPNETCore_Assignments.Persistence
 			}
 			if (studenToCourses.Count > 0)
 				this._context.RemoveRange(studenToCourses);
+		}
+		public void RemoveStudentsFromCourse(int courseId, List<ManageStudentInCourseDto> students)
+		{
+			var studentIds = students.Where(c => c.IsSelected).Select(s => s.Id).ToList();
+
+			this.RemoveStudentsFromCourse(courseId, studentIds);
 		}
 	}
 }

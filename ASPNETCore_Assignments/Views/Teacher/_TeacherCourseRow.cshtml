@@ -26,11 +26,17 @@
 	<div class="row align-items-center my-1 mb-3 collapse" id="course_students_@Model.Id">
 		<div class="d-flex w-100 align-items-center ml-2">
 			<span class="text-white scm-translateY-down rounded-pill bg-primary px-3 mr-auto">Students</span>
-			<a class="btn btn-sm btn-outline-danger rounded-0 border-bottom-0 ml-2">Remove</a>
 			<a data-ajax="true"
 				 data-ajax-method="get"
 				 data-ajax-mode="replace"
-				 data-ajax-update="#course_assign_student_@Model.Id"
+				 data-ajax-update="#course_student_@Model.Id"
+				 data-ajax-loading="#loaderId"
+				 data-ajax-url="@Url.Action("RemoveStudentsFromCourse", "Teacher", new { courseId = Model.Id})"
+				 class="btn btn-sm btn-outline-danger rounded-0 border-bottom-0 ml-2">Remove</a>
+			<a data-ajax="true"
+				 data-ajax-method="get"
+				 data-ajax-mode="replace"
+				 data-ajax-update="#course_student_@Model.Id"
 				 data-ajax-loading="#loaderId"
 				 data-ajax-url="@Url.Action("AssignStudentsToCourse", "Teacher", new { courseId = Model.Id})"
 				 class="btn btn-sm btn-outline-success rounded-0 border-bottom-0 ml-2">Add</a>
@@ -43,7 +49,7 @@
 			{
 				<h6 class="text-center my-4">No Students Enrolled Yet</h6>
 			}
-			<div id="course_assign_student_@Model.Id">
+			<div id="course_student_@Model.Id">
 			</div>
 		</div>
 	</div>

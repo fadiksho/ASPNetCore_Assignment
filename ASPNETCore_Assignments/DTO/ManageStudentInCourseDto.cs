@@ -2,7 +2,7 @@
 
 namespace ASPNETCore_Assignments.DTO
 {
-	public class AssignStudentToCourseDto
+	public class ManageStudentInCourseDto
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }

@@ -12,7 +12,7 @@ namespace ASPNETCore_Assignments.MapperProfiles
 		{
 			CreateMap<StudentEntity, Student>()
 				.ForMember(model => model.Courses, opt => opt.MapFrom(x => x.StudentCourses.Select(y => y.Course)));
-			CreateMap<StudentEntity, AssignStudentToCourseDto>();
+			CreateMap<StudentEntity, ManageStudentInCourseDto>();
 			CreateMap<StudentForCreatingDto, StudentEntity>();
 		}
 	}

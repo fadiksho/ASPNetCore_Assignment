@@ -14,7 +14,8 @@ namespace ASPNETCore_Assignments.Reository
 		Task DeleteTeacherAsync(int teacherId);
 
 		Task AssignStudentsToCourseAsync(int courseId, List<int> studentsId);
-		Task AssignStudentsToCourseAsync(int courseId, List<AssignStudentToCourseDto> students);
+		Task AssignStudentsToCourseAsync(int courseId, List<ManageStudentInCourseDto> students);
 		void RemoveStudentsFromCourse(int courseId, List<int> studentsId);
+		void RemoveStudentsFromCourse(int courseId, List<ManageStudentInCourseDto> students);
 	}
 }
