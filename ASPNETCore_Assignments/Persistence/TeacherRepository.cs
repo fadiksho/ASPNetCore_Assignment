@@ -59,7 +59,15 @@ namespace ASPNETCore_Assignments.Persistence
       this._context.Teachers.Remove(teacher);
     }
 
-		public async Task AssignStudentsToCourseAsync(int courseId, List<int> studentsId)
+    public async Task AssignTeacherToCourseAsync(int teacherId, int courseId)
+    {
+      var course = await this._context.Courses
+        .Where(c => c.Id == courseId)
+        .FirstOrDefaultAsync();
+
+      course.TeacherId = teacherId;
+    }
+    public async Task AssignStudentsToCourseAsync(int courseId, List<int> studentsId)
 		{
 			var studenToCourses = new List<StudentCourseEntity>();
 			foreach (var studenId in studentsId)
@@ -101,5 +109,5 @@ namespace ASPNETCore_Assignments.Persistence
 
 			this.RemoveStudentsFromCourse(courseId, studentIds);
 		}
-	}
+  }
 }

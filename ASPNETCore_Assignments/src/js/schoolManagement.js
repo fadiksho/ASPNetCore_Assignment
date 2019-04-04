@@ -18,8 +18,12 @@ $(document).on('click', '[data-dynamic-toggle-remove]', function (e) {
 	});
 });
 
-closeAddNewDashboardDropdown = function () {
-	$('#AddNewInDashboardId').removeClass('show');
+hideAfterSuceess = function (selector) {
+  $(selector).removeClass('show');
+};
+
+showAfterSuccess = function (selector) {
+  $(selector).addClass('show');
 };
 
 removeAfterSuccess = function (selector) {
