@@ -108,7 +108,8 @@ namespace ASPNETCore_Assignments.Migrations
                 {
                     b.HasOne("ASPNETCore_Assignments.Entity.TeacherEntity", "Teacher")
                         .WithMany("Courses")
-                        .HasForeignKey("TeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("ASPNETCore_Assignments.Entity.StudentCourseEntity", b =>

@@ -44,7 +44,7 @@
       <span class="text-white scm-translateY-down rounded-pill bg-primary px-3 mr-auto">Students</span>
       <a asp-controller="Teacher"
          asp-action="RemoveStudentsFromCourse"
-         asp-route-coureId="@Model.Id"
+         asp-route-courseId="@Model.Id"
          data-ajax="true"
          data-ajax-method="get"
          data-ajax-mode="replace"
@@ -53,7 +53,7 @@
          class="btn btn-sm btn-outline-danger rounded-0 border-bottom-0 ml-2">Remove</a>
       <a asp-controller="Teacher"
          asp-action="AssignStudentsToCourse"
-         asp-route-coureId="@Model.Id"
+         asp-route-courseId="@Model.Id"
          data-ajax="true"
          data-ajax-method="get"
          data-ajax-mode="replace"

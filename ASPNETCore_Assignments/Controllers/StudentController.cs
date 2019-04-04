@@ -82,5 +82,37 @@ namespace ASPNETCore_Assignments.Controllers
 
 			return PartialView("_ServerError");
 		}
-	}
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteStudent(int id)
+    {
+      try
+      {
+        Thread.Sleep(1000);
+
+        if (!ModelState.IsValid)
+        {
+          return BadRequest(ModelState.Values);
+        }
+
+        // ToDo: Check if student exist before deleting
+
+        await this.unitOfWork.Students.DeleteStudentAsync(id);
+
+        if (!await this.unitOfWork.SaveAsync())
+        {
+          return BadRequest();
+        }
+
+        return Ok(new { id });
+      }
+      catch
+      {
+        // ToDo: Logging
+      }
+
+      return StatusCode(500);
+    }
+  }
 }

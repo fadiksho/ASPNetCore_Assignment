@@ -5,14 +5,13 @@ using ASPNETCore_Assignments.Persistence.Data;
 using ASPNETCore_Assignments.Reository;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ASPNETCore_Assignments.Persistence
 {
-	public class TeacherRepository : ITeacherRepository
+  public class TeacherRepository : ITeacherRepository
 	{
 		private readonly SchoolManagementContext _context;
 		private readonly IMapper _mapper;
@@ -51,10 +50,14 @@ namespace ASPNETCore_Assignments.Persistence
 
 			await this._context.Teachers.AddAsync(teacherEntity);
 		}
-		public Task DeleteTeacherAsync(int teacherId)
+		public async Task DeleteTeacherAsync(int teacherId)
 		{
-			throw new NotImplementedException();
-		}
+      var teacher = await this._context.Teachers
+        .Where(t => t.Id == teacherId)
+        .FirstOrDefaultAsync();
+
+      this._context.Teachers.Remove(teacher);
+    }
 
 		public async Task AssignStudentsToCourseAsync(int courseId, List<int> studentsId)
 		{

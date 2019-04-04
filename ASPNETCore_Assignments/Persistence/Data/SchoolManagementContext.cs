@@ -25,7 +25,8 @@ namespace ASPNETCore_Assignments.Persistence.Data
 						.HasOne<TeacherEntity>(c => c.Teacher)
 						.WithMany(t => t.Courses)
 						.HasForeignKey(c => c.TeacherId)
-						.IsRequired(false);
+						.IsRequired(false)
+            .OnDelete(DeleteBehavior.SetNull);
 
 			// Configure each CourseAssignment has one Course and each Course has many CourseAssignments
 			modelBuilder.Entity<CourseAssignmentEntity>()

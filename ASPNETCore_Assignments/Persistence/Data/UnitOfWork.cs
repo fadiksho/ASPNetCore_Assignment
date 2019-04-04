@@ -25,7 +25,7 @@ namespace ASPNETCore_Assignments.Persistence.Data
 
 		public async Task<bool> SaveAsync()
 		{
-			return await _context.SaveChangesAsync() >= 0;
+			return await _context.SaveChangesAsync() > 0;
 		}
 	}
 }

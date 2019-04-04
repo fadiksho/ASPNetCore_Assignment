@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -200,6 +201,36 @@ namespace ASPNETCore_Assignments.Controllers
       }
 
       return PartialView("_ServerError");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteTeacher(int id)
+    {
+      try
+      {
+        if (!ModelState.IsValid)
+        {
+          return BadRequest(ModelState.Values);
+        }
+
+        // ToDo: Check if teacher exist before deleting
+
+        await this.unitOfWork.Teachers.DeleteTeacherAsync(id);
+
+        if (!await this.unitOfWork.SaveAsync())
+        {
+          return BadRequest();
+        }
+
+        return Ok(new { id });
+      }
+      catch
+      {
+        // ToDo: Logging
+      }
+
+      return StatusCode(500);
     }
   }
 }

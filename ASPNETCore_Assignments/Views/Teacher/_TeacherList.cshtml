@@ -2,31 +2,54 @@
 @{
   int counter = 1;
 }
-
-<table class="table table-borderless text-center">
-  <thead>
-    <tr class="border-bottom border-secondary">
-      <th scope="col">#</th>
-      <th scope="col">Teacher Name</th>
-      <th scope="col">Courses</th>
-      <th scope="col">Details</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach (var teacher in Model)
-    {
-      <tr>
-        <td scope="row">@counter</td>
-        <td>@teacher.Name</td>
-        <td>@teacher.Courses.Count</td>
-        <td>
-          <a asp-controller="Teacher"
-             asp-action="Details"
-             asp-route-teacherId="@teacher.Id"
-          >details</a>
-        </td>
-      </tr>
-      { counter++; }
-    }
-  </tbody>
-</table>
+<div class="container-fluid">
+  <div class="row align-items-center my-1 border-bottom border-secondary">
+    <div class="col-auto p-2 text-center">
+      #
+    </div>
+    <div class="col p-2 text-center">
+      Teacher Name
+    </div>
+    <div class="col p-2 text-center">
+      Courses
+    </div>
+    <div class="col p-2 text-center">
+      Details
+    </div>
+    <div class="col-auto p-2 text-center">
+      Actions
+    </div>
+  </div>
+  @foreach (var teacher in Model)
+  {
+    <div id="teacher_row_@teacher.Id" class="row align-items-center my-1">
+      <div class="col-auto p-2 text-center">
+        @counter
+      </div>
+      <div class="col p-2 text-center">
+        @teacher.Name
+      </div>
+      <div class="col p-2 text-center">
+        @teacher.Courses.Count
+      </div>
+      <div class="col p-2 text-center">
+        <a asp-controller="Teacher"
+           asp-action="Details"
+           asp-route-teacherId="@teacher.Id">Details</a>
+      </div>
+      <div class="col-auto p-2 text-center">
+        <form asp-controller="Teacher"
+              asp-action="DeleteTeacher"
+              method="post"
+              data-ajax="true"
+              data-ajax-method="post"
+              data-ajax-loading="#dashBoardLoaderId"
+              data-ajax-success="removeAfterSuccess('#teacher_row_@teacher.Id')">
+          <input type="hidden" name="id" value="@teacher.Id" />
+          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+    { counter++; }
+  }
+</div>
