@@ -104,7 +104,7 @@ namespace ASPNETCore_Assignments.Controllers
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> SelectTeacherToCourse(int teacherId, int courseId)
+    public async Task<IActionResult> SelectTeacherToCourse(int? teacherId, int courseId)
     {
       try
       {
