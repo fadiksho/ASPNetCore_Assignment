@@ -83,5 +83,14 @@ namespace ASPNETCore_Assignments.Persistence
 
       return this._mapper.Map<IEnumerable<ManageStudentInCourseDto>>(studentEntities);
     }
+
+    public async Task UpdateStudentAsync(int studentId, StudentForUpdatingDto dto)
+    {
+      var studentEntity = await this._context.Students
+        .Where(s => s.Id == studentId)
+        .FirstOrDefaultAsync();
+
+      this._mapper.Map(dto, studentEntity);
+    }
   }
 }

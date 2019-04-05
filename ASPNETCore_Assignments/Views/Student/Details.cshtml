@@ -10,7 +10,10 @@
 }
 
 <div class="container-fluid">
-	<partial name="~/Views/Student/_StudentDetails.cshtml" model="Model" />
+  <partial name="~/Views/Shared/_Loader.cshtml" />
+  <div id="student_detail_page">
+    <partial name="~/Views/Student/_StudentDetails.cshtml" model="Model" />
+  </div>
 </div>
 
 @section Scripts {

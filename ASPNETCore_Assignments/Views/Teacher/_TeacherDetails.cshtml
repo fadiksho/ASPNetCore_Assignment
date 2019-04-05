@@ -1,9 +1,20 @@
 @model Teacher
 
-<div>
-	<h1 class="display-4">@Model.Name</h1>
-	<p class="ml-4 text-muted">-Course count: @Model.Courses.Count</p>
-</div>
+  <div class="d-flex flex-wrap align-items-center">
+    <h1 class="display-4">@Model.Name</h1>
+    <a asp-controller="Teacher"
+       asp-action="Edit"
+       asp-route-teacherId="@Model.Id"
+       data-ajax="true"
+       data-ajax-method="get"
+       data-ajax-mode="replace"
+       data-ajax-update="#teacher_detail_page"
+       data-ajax-loading="#loaderId"
+       class="ml-auto">
+      Edit
+    </a>
+    <p class="w-100 ml-4 text-muted">-Course count: @Model.Courses.Count</p>
+  </div>
 
 <h2 class="display-4">Courses</h2>
 

@@ -13,7 +13,7 @@
          data-ajax-mode="replace"
          data-ajax-update="#teachers_to_course_@Model.Id"
          data-ajax-success="showAfterSuccess('#course_teacher_@Model.Id')"
-         data-ajax-loading="#dashBoardLoaderId"
+         data-ajax-loading="#loaderId"
          class="btn btn-outline-secondary">
         @(Model.Teacher != null ? Model.Teacher.Name : "No Teacher Yet!")
       </a>
@@ -49,10 +49,10 @@
             asp-action="SelectTeacherToCourse"
             method="post"
             data-ajax="true"
-            data-ajax-method="post"
+            data-ajaxg-method="post"
             data-ajax-mode="replace"
             data-ajax-update="#course_row_@Model.Id"
-            data-ajax-loading="#dashBoardLoaderId">
+            data-ajax-loading="#LoaderId">
         <div id="teachers_to_course_@Model.Id"></div>
         <input type="hidden" name="courseId" value="@Model.Id" />
         <div class="d-flex w-100 mt-2">

@@ -11,6 +11,7 @@ namespace ASPNETCore_Assignments.MapperProfiles
 		{
 			CreateMap<TeacherEntity, Teacher>();
 			CreateMap<TeacherForCreatingDto, TeacherEntity>();
-		}
+      CreateMap<TeacherEntity, TeacherForUpdatingDto>().ReverseMap();
+    }
 	}
 }

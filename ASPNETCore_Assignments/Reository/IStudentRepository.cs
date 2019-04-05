@@ -12,6 +12,7 @@ namespace ASPNETCore_Assignments.Reository
 
 		Task AddStudentAsync(StudentForCreatingDto dto);
 		Task DeleteStudentAsync(int studentId);
+    Task UpdateStudentAsync(int studentId, StudentForUpdatingDto dto);
 
 		Task<IEnumerable<ManageStudentInCourseDto>> GetStudentsThatNotInCourseAsync(int courseId);
 		Task<IEnumerable<ManageStudentInCourseDto>> GetStudentsThatAreInCourseAsync(int courseId);

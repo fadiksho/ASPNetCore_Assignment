@@ -58,7 +58,15 @@ namespace ASPNETCore_Assignments.Persistence
 
       this._context.Teachers.Remove(teacher);
     }
+    public async Task UpdateTeacherAsync(int teacherId, TeacherForUpdatingDto dto)
+    {
+      var teacherEntity = await this._context.Teachers
+        .Where(s => s.Id == teacherId)
+        .FirstOrDefaultAsync();
 
+      this._mapper.Map(dto, teacherEntity);
+    }
+    
     public async Task AssignTeacherToCourseAsync(int? teacherId, int courseId)
     {
       var course = await this._context.Courses
