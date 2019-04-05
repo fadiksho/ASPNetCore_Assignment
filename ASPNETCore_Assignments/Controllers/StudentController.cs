@@ -143,11 +143,9 @@ namespace ASPNETCore_Assignments.Controllers
         }
         // ToDo: Check if student exist before editing
         await this.unitOfWork.Students.UpdateStudentAsync(studentId, dto);
+      
+        await this.unitOfWork.SaveAsync();
 
-        if (!await this.unitOfWork.SaveAsync())
-        {
-          return PartialView("_SavingError");
-        }
         var student = await this.unitOfWork.Students.GetStudentAsync(studentId);
 
         return PartialView("_StudentDetails", student);

@@ -19,12 +19,30 @@
   <div class="form-group">
     <label asp-for="Name">Student Name: *</label>
     <textarea asp-for="Description"
-              class="form-control" 
-              aria-describedby="CourseDescription" 
+              class="form-control"
+              aria-describedby="CourseDescription"
               placeholder="Enter New Course Description...">
     </textarea>
   </div>
+  <div id="course_teacher_@Model.Id"
+       class="form-group">
+    <a asp-controller="Course"
+       asp-action="SelectTeacherToCourse"
+       asp-route-teacherId="@Model.TeacherId"
+       data-ajax="true"
+       data-ajax-method="get"
+       data-ajax-mode="replace"
+       data-ajax-update="#course_teacher_@Model.Id"
+       data-ajax-success="showAfterSuccess('#course_teacher_@Model.Id')"
+       data-ajax-loading="#loaderId"
+       class="btn btn-outline-secondary">
+      Change Techer
+    </a>
+    <input asp-for="TeacherId" type="hidden" />
+  </div>
+
   <input asp-for="Id" type="hidden" />
+
   <div class="form-group">
     <button type="submit" class="btn btn-success">Save</button>
     <a asp-controller="Course"

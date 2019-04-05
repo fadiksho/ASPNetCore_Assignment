@@ -1,22 +1,36 @@
 ﻿@model Course
 
-<div class="d-flex flex-wrap align-items-center">
-  <h1 class="display-4">@Model.Name</h1>
-  <a asp-controller="Course"
-     asp-action="Edit"
-     asp-route-courseId="@Model.Id"
-     data-ajax="true"
-     data-ajax-method="get"
-     data-ajax-mode="replace"
-     data-ajax-update="#course_detail_page"
-     data-ajax-loading="#loaderId"
-     class="ml-auto">
-    Edit
-  </a>
-  <p class="w-100 ml-2 text-muted">@Model.Description</p>
-  <p class="w-100 ml-4 text-muted">-@Model.Students.Count Students</p>
-  <p class="w-100 ml-4 text-muted">-@Model.CourseAssignments.Count Assignments</p>
-</div>
+  <div class="d-flex flex-wrap align-items-center">
+    <h1 class="display-4">@Model.Name</h1>
+    <a asp-controller="Course"
+       asp-action="Edit"
+       asp-route-courseId="@Model.Id"
+       data-ajax="true"
+       data-ajax-method="get"
+       data-ajax-mode="replace"
+       data-ajax-update="#course_detail_page"
+       data-ajax-loading="#loaderId"
+       class="ml-auto">
+      Edit
+    </a>
+
+    <p class="w-100 ml-2 text-muted">@Model.Description</p>
+    <p class="border-left border-warning w-100 ml-4 pl-2 text-muted">-@Model.Students.Count Students</p>
+    <p class="border-left border-warning w-100 ml-4 pl-2 text-muted">-@Model.CourseAssignments.Count Assignments</p>
+    <p class="border-left border-warning w-100 ml-4 pl-2 text-muted">
+      @if (Model.Teacher != null)
+      {
+        <text>Course By:</text>
+        <a asp-controller="Teacher"
+           asp-action="Details"
+           asp-route-teacherId="@Model.Teacher.Id">@Model.Teacher.Name</a>
+        }
+        else
+        {
+          <text>No Teacher Is Specified For This Course</text>
+        }
+    </p>
+  </div>
 
 <!-- #region Course Assignmets -->
 <div class="container-fluid">

@@ -370,7 +370,7 @@ namespace ASPNETCore_Assignments_Test.Repository
 				using (var context = new SchoolManagementContext(options))
 				{
 					var unitOfWork = new UnitOfWork(context, _mapper);
-					await unitOfWork.Teachers.AssignStudentsToCourseAsync(courseId, studentsId);
+					await unitOfWork.Courses.AssignStudentsToCourseAsync(courseId, studentsId);
 					await unitOfWork.SaveAsync();
 				}
 
@@ -430,7 +430,7 @@ namespace ASPNETCore_Assignments_Test.Repository
 				using (var context = new SchoolManagementContext(options))
 				{
 					var unitOfWork = new UnitOfWork(context, _mapper);
-					unitOfWork.Teachers.RemoveStudentsFromCourse(courseId, studentsId);
+					unitOfWork.Courses.RemoveStudentsFromCourse(courseId, studentsId);
 					await unitOfWork.SaveAsync();
 				}
 

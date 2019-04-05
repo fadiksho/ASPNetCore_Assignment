@@ -106,10 +106,8 @@ namespace ASPNETCore_Assignments.Controllers
         // ToDo: Check if student exist before editing
         await this.unitOfWork.Courses.UpdateCourseAsync(courseId, dto);
 
-        if (!await this.unitOfWork.SaveAsync())
-        {
-          return PartialView("_SavingError");
-        }
+        await this.unitOfWork.SaveAsync();
+        
         var course = await this.unitOfWork.Courses.GetCourseAsync(courseId);
 
         return PartialView("_CourseDetails", course);
@@ -219,7 +217,7 @@ namespace ASPNETCore_Assignments.Controllers
           return BadRequest(ModelState.Values);
         }
 
-        await this.unitOfWork.Teachers.AssignStudentsToCourseAsync(model.CourseId, model.Students);
+        await this.unitOfWork.Courses.AssignStudentsToCourseAsync(model.CourseId, model.Students);
 
         if (!await this.unitOfWork.SaveAsync())
         {
@@ -263,7 +261,7 @@ namespace ASPNETCore_Assignments.Controllers
           return BadRequest(ModelState.Values);
         }
 
-        this.unitOfWork.Teachers.RemoveStudentsFromCourse(model.CourseId, model.Students);
+        this.unitOfWork.Courses.RemoveStudentsFromCourse(model.CourseId, model.Students);
 
         if (!await this.unitOfWork.SaveAsync())
         {
@@ -278,6 +276,26 @@ namespace ASPNETCore_Assignments.Controllers
       }
 
       return PartialView("_ServerError");
+    }
+
+    public async Task<IActionResult> SelectTeacherToCourse(int? teacherId)
+    {
+      try
+      {
+        Thread.Sleep(1000);
+        var teachers = await this.unitOfWork.Teachers.GetAllTeachersAsync();
+        var selectTeacherToCourseViewModel = new SelectTeacherToCourseViewModel
+        {
+          Teachers = teachers,
+          TeacherId = teacherId
+        };
+        return PartialView("_SelectTeacherToCourse", selectTeacherToCourseViewModel);
+      }
+      catch
+      {
+        // ToDo: Logging
+      }
+      return View("ErrorRetrivingData");
     }
   }
 }

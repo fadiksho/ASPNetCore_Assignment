@@ -1,8 +1,0 @@
-﻿@model IEnumerable<Teacher>
-
-<select class="form-control"
-				asp-items="@(new SelectList(Model, "Id", "Name"))"
-				id="teacherId"
-				name="teacherId">
-	<option selected value="@null">Without Teacher</option>
-</select>

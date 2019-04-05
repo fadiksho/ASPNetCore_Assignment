@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ASPNETCore_Assignments.DTO;
 using ASPNETCore_Assignments.Reository.Data;
+using ASPNETCore_Assignments.ViewModel;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -104,49 +105,6 @@ namespace ASPNETCore_Assignments.Controllers
       return PartialView("_ServerError");
     }
 
-    public async Task<IActionResult> SelectTeacherToCourse()
-    {
-      try
-      {
-        Thread.Sleep(1000);
-        var teachers = await this.unitOfWork.Teachers.GetAllTeachersAsync();
-
-        return PartialView("_SelectTeacherToCourse", teachers);
-      }
-      catch
-      {
-        // ToDo: Logging
-      }
-      return View("ErrorRetrivingData");
-    }
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> SelectTeacherToCourse(int? teacherId, int courseId)
-    {
-      try
-      {
-        Thread.Sleep(1000);
-        // ToDo: Check if teacher exist before deleting
-        // ToDo: Check if course exist before deleting
-
-        await this.unitOfWork.Teachers.AssignTeacherToCourseAsync(teacherId, courseId);
-
-        if (!await this.unitOfWork.SaveAsync())
-        {
-          return BadRequest();
-        }
-
-        var course = await this.unitOfWork.Courses.GetCourseAsync(courseId);
-        return PartialView("_CourseRow", course);
-      }
-      catch
-      {
-        // ToDo: Logging
-      }
-
-      return StatusCode(500);
-    }
-
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteTeacher(int id)
@@ -215,11 +173,8 @@ namespace ASPNETCore_Assignments.Controllers
         // ToDo: Check if teacher exist before editing
         await this.unitOfWork.Teachers.UpdateTeacherAsync(teacherId, dto);
 
-        if (!await this.unitOfWork.SaveAsync())
-        {
-          return PartialView("_SavingError");
-        }
-
+        await this.unitOfWork.SaveAsync();
+        
         var teacher = await this.unitOfWork.Teachers.GetTeacherAsync(teacherId);
 
         return PartialView("_TeacherDetails", teacher);

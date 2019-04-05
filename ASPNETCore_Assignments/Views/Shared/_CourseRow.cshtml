@@ -6,17 +6,19 @@
       @Model.Name
     </div>
     <div class="col p-2 text-center">
-      <a asp-controller="Teacher"
-         asp-action="SelectTeacherToCourse"
-         data-ajax="true"
-         data-ajax-method="get"
-         data-ajax-mode="replace"
-         data-ajax-update="#teachers_to_course_@Model.Id"
-         data-ajax-success="showAfterSuccess('#course_teacher_@Model.Id')"
-         data-ajax-loading="#loaderId"
-         class="btn btn-outline-secondary">
-        @(Model.Teacher != null ? Model.Teacher.Name : "No Teacher Yet!")
-      </a>
+      @if (Model.Teacher != null)
+      {
+        <a asp-controller="Teacher"
+           asp-action="Details"
+           asp-route-teacherId="@Model.Teacher.Id"
+           class="text-success">
+          @Model.Teacher.Name
+        </a>
+      }
+      else
+      {
+        <span class="text-danger">Not Specified</span>
+      }
     </div>
     <div class="col p-2 text-center">
       @Model.Students.Count
@@ -44,31 +46,4 @@
       <partial name="~/Views/CourseAssignment/_CourseAssignmentList.cshtml" model="Model.CourseAssignments" />
     </div>
   </div>
-  <div class="row align-items-center my-1 mb-3 collapse"
-       id="course_teacher_@Model.Id">
-    <span class="text-white rounded-pill bg-secondary scm-translateY-down px-3 ml-2">Assign New Teacher</span>
-    <div class="p-3 pt-4 w-100 rounded border border-secondary">
-      <form asp-controller="Teacher"
-            asp-action="SelectTeacherToCourse"
-            method="post"
-            data-ajax="true"
-            data-ajaxg-method="post"
-            data-ajax-mode="replace"
-            data-ajax-update="#course_row_@Model.Id"
-            data-ajax-loading="#LoaderId">
-        <div id="teachers_to_course_@Model.Id"></div>
-        <input type="hidden" name="courseId" value="@Model.Id" />
-        <div class="d-flex w-100 mt-2">
-          <button type="button"
-                  data-dynamic-toggle="show"
-                  data-dynamic-target="course_teacher_@Model.Id"
-                  class="ml-auto btn btn-sm btn-outline-danger">
-            Cancel
-          </button>
-          <button type="submit" class="btn ml-2 btn-sm btn-outline-success">Save</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
 </div>

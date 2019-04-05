@@ -71,5 +71,47 @@ namespace ASPNETCore_Assignments.Persistence
 
       this._mapper.Map(dto, courseEntity);
     }
+    public async Task AssignStudentsToCourseAsync(int courseId, List<int> studentsId)
+    {
+      var studenToCourses = new List<StudentCourseEntity>();
+      foreach (var studenId in studentsId)
+      {
+        var studentcourse = new StudentCourseEntity
+        {
+          CourseId = courseId,
+          StudentId = studenId
+        };
+        studenToCourses.Add(studentcourse);
+      }
+      if (studenToCourses.Count > 0)
+        await this._context.AddRangeAsync(studenToCourses);
+    }
+    public async Task AssignStudentsToCourseAsync(int courseId, List<ManageStudentInCourseDto> students)
+    {
+      var studentIds = students.Where(c => c.IsSelected).Select(s => s.Id).ToList();
+
+      await this.AssignStudentsToCourseAsync(courseId, studentIds);
+    }
+    public void RemoveStudentsFromCourse(int courseId, List<int> studentsId)
+    {
+      var studenToCourses = new List<StudentCourseEntity>();
+      foreach (var studenId in studentsId)
+      {
+        var studentcourse = new StudentCourseEntity
+        {
+          CourseId = courseId,
+          StudentId = studenId
+        };
+        studenToCourses.Add(studentcourse);
+      }
+      if (studenToCourses.Count > 0)
+        this._context.RemoveRange(studenToCourses);
+    }
+    public void RemoveStudentsFromCourse(int courseId, List<ManageStudentInCourseDto> students)
+    {
+      var studentIds = students.Where(c => c.IsSelected).Select(s => s.Id).ToList();
+
+      this.RemoveStudentsFromCourse(courseId, studentIds);
+    }
   }
 }
