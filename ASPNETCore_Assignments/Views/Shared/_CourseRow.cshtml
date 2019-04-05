@@ -28,6 +28,9 @@
     <div class="col p-2 text-center">
       <button data-dynamic-target="course_description_@Model.Id" data-dynamic-toggle="show" class="btn btn-outline-info">Show</button>
     </div>
+    <div class="col p-2 text-center">
+      <a asp-controller="Course" asp-action="Details" asp-route-courseId="@Model.Id">Details</a>
+    </div>
   </div>
   <div class="row align-items-center my-1 mb-3 collapse" id="course_description_@Model.Id">
     <span class="text-white rounded-pill bg-info scm-translateY-down px-3 ml-2">Description</span>

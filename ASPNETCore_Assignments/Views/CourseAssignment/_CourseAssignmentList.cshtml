@@ -1,24 +1,17 @@
 ﻿@model IEnumerable<CourseAssignment>
 @{
-	int counter = 1;
+  int counter = 1;
+}
+@foreach (var courseAssignment in Model)
+{
+  <div class="row align-items-center my-1">
+    <div class="col-auto mx-4 p-2">
+      @counter
+    </div>
+    <div class="col p-2">
+      @courseAssignment.Name
+    </div>
+  </div>
+  { counter++; }
 }
 
-<table class="table table-borderless text-center">
-	<thead>
-		<tr class="border-bottom border-light">
-			<th scope="col">#</th>
-			<th scope="col">Assignment Name</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var courseAssignment in Model)
-		{
-			<tr>
-				<td scope="row">@counter</td>
-				<td>@courseAssignment.Name</td>
-			</tr>
-
-			{ counter++; }
-		}
-	</tbody>
-</table>

@@ -63,5 +63,13 @@ namespace ASPNETCore_Assignments.Persistence
 
 			return this._mapper.Map<Course>(courseEntity);
 		}
-	}
+    public async Task UpdateCourseAsync(int courseId, CourseForUpdatingDto dto)
+    {
+      var courseEntity = await this._context.Courses
+        .Where(s => s.Id == courseId)
+        .FirstOrDefaultAsync();
+
+      this._mapper.Map(dto, courseEntity);
+    }
+  }
 }

@@ -1,9 +1,7 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ASPNETCore_Assignments.DTO;
 using ASPNETCore_Assignments.Reository.Data;
-using ASPNETCore_Assignments.ViewModel;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -147,106 +145,6 @@ namespace ASPNETCore_Assignments.Controllers
       }
 
       return StatusCode(500);
-    }
-
-    public async Task<IActionResult> AssignStudentsToCourse(int courseId)
-    {
-      try
-      {
-        Thread.Sleep(1000);
-
-        var assignStudentToCourseDtos = await this.unitOfWork.Students.GetStudentsThatNotInCourseAsync(courseId);
-
-        var AssignStudentToCourseViewModel = new ManageStudentInCourseViewModel
-        {
-          Students = assignStudentToCourseDtos.ToList(),
-          CourseId = courseId
-        };
-
-        return PartialView("_AssignStudentsToCourse", AssignStudentToCourseViewModel);
-      }
-      catch
-      {
-        // ToDo: Logging
-      }
-      return View("ErrorRetrivingData");
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> AssignStudentsToCourse(ManageStudentInCourseViewModel model)
-    {
-      try
-      {
-        Thread.Sleep(1000);
-        if (!ModelState.IsValid)
-        {
-          return BadRequest(ModelState.Values);
-        }
-
-        await this.unitOfWork.Teachers.AssignStudentsToCourseAsync(model.CourseId, model.Students);
-
-        if (!await this.unitOfWork.SaveAsync())
-        {
-          return PartialView("_SavingError");
-        }
-
-        var course = await this.unitOfWork.Courses.GetCourseAsync(model.CourseId);
-
-        return PartialView("_TeacherCourseRow", course);
-      }
-      catch
-      {
-        // ToDo: Logging
-      }
-
-      return PartialView("_ServerError");
-    }
-
-    public async Task<IActionResult> RemoveStudentsFromCourse(int courseId)
-    {
-      Thread.Sleep(1000);
-
-      var studentsInCourse = await this.unitOfWork.Students.GetStudentsThatAreInCourseAsync(courseId);
-
-      var AssignStudentToCourseViewModel = new ManageStudentInCourseViewModel
-      {
-        Students = studentsInCourse.ToList(),
-        CourseId = courseId
-      };
-
-      return PartialView("_RemoveStudentsFromCourse", AssignStudentToCourseViewModel);
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> RemoveStudentsToCourse(ManageStudentInCourseViewModel model)
-    {
-      try
-      {
-        Thread.Sleep(1000);
-        if (!ModelState.IsValid)
-        {
-          return BadRequest(ModelState.Values);
-        }
-
-        this.unitOfWork.Teachers.RemoveStudentsFromCourse(model.CourseId, model.Students);
-
-        if (!await this.unitOfWork.SaveAsync())
-        {
-          return PartialView("_SavingError");
-        }
-
-        var course = await this.unitOfWork.Courses.GetCourseAsync(model.CourseId);
-
-        return PartialView("_TeacherCourseRow", course);
-      }
-      catch
-      {
-        // ToDo: Logging
-      }
-
-      return PartialView("_ServerError");
     }
 
     [HttpPost]

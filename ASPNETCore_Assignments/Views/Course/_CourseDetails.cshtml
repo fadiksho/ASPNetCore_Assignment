@@ -1,0 +1,77 @@
+﻿@model Course
+
+<div class="d-flex flex-wrap align-items-center">
+  <h1 class="display-4">@Model.Name</h1>
+  <a asp-controller="Course"
+     asp-action="Edit"
+     asp-route-courseId="@Model.Id"
+     data-ajax="true"
+     data-ajax-method="get"
+     data-ajax-mode="replace"
+     data-ajax-update="#course_detail_page"
+     data-ajax-loading="#loaderId"
+     class="ml-auto">
+    Edit
+  </a>
+  <p class="w-100 ml-2 text-muted">@Model.Description</p>
+  <p class="w-100 ml-4 text-muted">-@Model.Students.Count Students</p>
+  <p class="w-100 ml-4 text-muted">-@Model.CourseAssignments.Count Assignments</p>
+</div>
+
+<!-- #region Course Assignmets -->
+<div class="container-fluid">
+  <div class="row align-items-center my-1 border-bottom border-light">
+    <div class="col-auto mx-4 p-2">
+      #
+    </div>
+    <div class="col p-2">
+      Course Assignments
+    </div>
+    <div class="col-auto ml-auto">
+      <a asp-controller="CourseAssignment"
+         asp-action="ManageCourseAssignments"
+         asp-route-courseId="@Model.Id"
+         data-ajax="true"
+         data-ajax-method="get"
+         data-ajax-mode="replace"
+         data-ajax-loading="#loaderId"
+         data-ajax-update="#course_assignments_@Model.Id">Manage Assignments</a>
+    </div>
+  </div>
+  <partial name="~/Views/CourseAssignment/_CourseAssignmentList.cshtml" model="Model.CourseAssignments" />
+  <div id="course_assignments_@Model.Id"></div>
+  <!-- #endregion -->
+  <!-- #region Students In Course -->
+  <div class="row align-items-center my-1 mb-3" id="course_students_@Model.Id">
+    <span class="text-white rounded-pill bg-primary scm-translateY-down px-3 ml-2">Students In Course</span>
+    <a asp-controller="Course"
+       asp-action="RemoveStudentsFromCourse"
+       asp-route-courseId="@Model.Id"
+       data-ajax="true"
+       data-ajax-method="get"
+       data-ajax-mode="replace"
+       data-ajax-update="#course_student_@Model.Id"
+       data-ajax-loading="#loaderId"
+       class="ml-auto mb-2 text-danger">Remove</a>
+    <a asp-controller="Course"
+       asp-action="AssignStudentsToCourse"
+       asp-route-courseId="@Model.Id"
+       data-ajax="true"
+       data-ajax-method="get"
+       data-ajax-mode="replace"
+       data-ajax-update="#course_student_@Model.Id"
+       data-ajax-loading="#loaderId"
+       class="ml-3 mr-2 mb-2 text-success">Add</a>
+    <div class="pt-3 w-100 rounded-left rounded-bottom border border-info">
+      <partial name="~/Views/Course/_CourseStudentList.cshtml" model="Model.Students" />
+      @if (Model.Students.Count < 1)
+      {
+        <h6 class="text-center text-primary my-4">No Students Enrolled In This Course.</h6>
+      }
+      <div class="container-fluid" id="course_student_@Model.Id"></div>
+    </div>
+  </div>
+  <!-- #endregion -->
+</div>
+
+

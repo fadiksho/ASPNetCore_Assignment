@@ -12,5 +12,6 @@ namespace ASPNETCore_Assignments.Reository
 
 		Task AddCourseAsync(CourseForCreatingDto dto);
 		Task DeleteCourseAsync(int courseId);
-	}
+    Task UpdateCourseAsync(int studentId, CourseForUpdatingDto dto);
+  }
 }

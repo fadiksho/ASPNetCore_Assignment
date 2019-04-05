@@ -13,8 +13,9 @@ $(document).on('click', '[data-dynamic-toggle]', function (e) {
 $(document).on('click', '[data-dynamic-toggle-remove]', function (e) {
 	let targetTrigger = e.target.attributes["data-dynamic-toggle-remove"].value;
 	let targetElement = $(`#${targetTrigger}`);
-	targetElement.hide('slow', function () {
-		targetElement.remove();
+  targetElement.hide('slow', function () {
+    targetElement.empty();
+    targetElement.css('display', 'block');
 	});
 });
 
@@ -26,9 +27,10 @@ showAfterSuccess = function (selector) {
   $(selector).addClass('show');
 };
 
-removeAfterSuccess = function (selector) {
-	$(selector).hide('slow', function () {
-		$(selector).remove();
+clearAfterSuccess = function (selector) {
+  $(selector).hide('slow', function () {
+    $(selector).empty();
+    $(selector).css('display', 'block');
 	});
 }
 

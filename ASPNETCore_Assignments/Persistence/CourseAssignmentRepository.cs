@@ -40,17 +40,17 @@ namespace ASPNETCore_Assignments.Persistence
 			var courseAssignmentEntities = await this._context.CourseAssignments
 				.Include(ca => ca.Course)
 				.ToListAsync();
-
+      
 			return this._mapper.Map<IEnumerable<CourseAssignment>>(courseAssignmentEntities);
 		}
 
-		public async Task<CourseAssignment> GetCourseAssignmentsAsync(int courseAssignmentId)
+		public async Task<CourseAssignment> GetAssignmentAsync(int courseAssignmentId)
 		{
 			var courseAssignmentEntity = await this._context.CourseAssignments
 				.Where(ca => ca.Id == courseAssignmentId)
 				.Include(ca => ca.Course)
 				.FirstOrDefaultAsync();
-
+      
 			return this._mapper.Map<CourseAssignment>(courseAssignmentEntity);
 		}
 

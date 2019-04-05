@@ -7,7 +7,7 @@ namespace ASPNETCore_Assignments.Reository
 {
 	public interface ICourseAssignmentRepository
 	{
-		Task<CourseAssignment> GetCourseAssignmentsAsync(int courseAssignmentId);
+		Task<CourseAssignment> GetAssignmentAsync(int courseAssignmentId);
 		Task<IEnumerable<CourseAssignment>> GetAllCourseAssignmentsAsync();
 
 		Task AddCourseAssignmentAsync(CourseAssignmentForCreatingDto dto);

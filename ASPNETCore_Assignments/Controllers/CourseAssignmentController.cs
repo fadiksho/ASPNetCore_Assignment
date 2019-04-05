@@ -21,7 +21,7 @@ namespace ASPNETCore_Assignments.Controllers
 			return PartialView("_AddCourseAssignment");
 		}
 
-    public async Task<IActionResult> TeacherCourseAssignments(int courseId)
+    public async Task<IActionResult> ManageCourseAssignments(int courseId)
     {
       try
       {
@@ -33,7 +33,7 @@ namespace ASPNETCore_Assignments.Controllers
           CourseId = courseId
         };
 
-        return PartialView("_TeacherCourseAssignments", teacherCourseAssignmentsViewModel);
+        return PartialView("_ManageCourseAssignments", teacherCourseAssignmentsViewModel);
       }
       catch
       {
@@ -45,7 +45,7 @@ namespace ASPNETCore_Assignments.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> TeacherCourseAssignments(TeacherCourseAssignmentViewModel model)
+    public async Task<IActionResult> ManageCourseAssignments(TeacherCourseAssignmentViewModel model)
     {
       try
       {
@@ -62,7 +62,7 @@ namespace ASPNETCore_Assignments.Controllers
           return PartialView("_SavingError");
         }
 
-        return Ok(new { courseId = model.CourseId });
+        return RedirectToAction("_Details", "Course", new { courseId = model.CourseId });
       }
       catch
       {

@@ -2,14 +2,14 @@
 
 <div id="course_assignment_@Model.CourseId" 
      class="row align-items-center my-1 mb-3">
-  <span class="text-dark rounded-pill bg-light scm-translateY-down px-3 ml-2">Student Assignment</span>
+  <span class="text-dark rounded-pill bg-light scm-translateY-down px-3 ml-2">Manage Course Assignments</span>
   <div class="pt-3 w-100 rounded border border-light">
     <form asp-controller="CourseAssignment"
-          asp-action="TeacherCourseAssignments"
+          asp-action="ManageCourseAssignments"
           data-ajax="true"
           method="post"
           data-ajax-method="post"
-          data-ajax-success="removeAfterSuccess('#course_assignment_@Model.CourseId')"
+          data-ajax-update="#course_detail_page"
           data-ajax-loading="#loaderId"
           class="ml-3 mt-4" id="addCourseAssignmentFormId">
       @foreach (var courseAssignment in Model.CourseAssignments)
