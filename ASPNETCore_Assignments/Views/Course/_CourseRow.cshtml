@@ -25,13 +25,31 @@
     </div>
     <div class="col p-2 text-center">
       @Model.CourseAssignments.Count
-      <button data-dynamic-target="course_assignments_@Model.Id" data-dynamic-toggle="show" class="btn btn-outline-info ml-1">View Assignments</button>
+      <button data-dynamic-target="course_assignments_@Model.Id"
+              data-dynamic-toggle="show" 
+              class="btn btn-sm btn-outline-info ml-1">View Assignments</button>
     </div>
     <div class="col p-2 text-center">
-      <button data-dynamic-target="course_description_@Model.Id" data-dynamic-toggle="show" class="btn btn-outline-info">Show</button>
+      <button data-dynamic-target="course_description_@Model.Id" 
+              data-dynamic-toggle="show" 
+              class="btn btn-sm btn-outline-info">Show</button>
     </div>
     <div class="col p-2 text-center">
-      <a asp-controller="Course" asp-action="Details" asp-route-courseId="@Model.Id">Details</a>
+      <a asp-controller="Course" 
+         asp-action="Details" 
+         asp-route-courseId="@Model.Id">Details</a>
+    </div>
+    <div class="col p-2 text-center">
+      <form method="post"
+            asp-controller="Course"
+            asp-action="DeleteCourse"
+            asp-route-courseId="@Model.Id"
+            data-ajax="true"
+            data-ajax-method="post"
+            data-ajax-success="clearAfterSuccess('#course_row_@Model.Id')"
+            data-ajax-loading="#loaderId">
+        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+      </form>
     </div>
   </div>
   <div class="row align-items-center my-1 mb-3 collapse" id="course_description_@Model.Id">
