@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="src\images\sokoban\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
