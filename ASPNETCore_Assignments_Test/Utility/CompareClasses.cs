@@ -39,8 +39,7 @@ namespace ASPNETCore_Assignments_Test.Utility
 				return false;
 			}
 
-			if (model1.Id != model2.Id || model1.Name != model2.Name
-				|| model1.IsDone != model2.IsDone)
+			if (model1.Id != model2.Id || model1.Name != model2.Name)
 			{
 				return false;
 			}
@@ -104,7 +103,7 @@ namespace ASPNETCore_Assignments_Test.Utility
 			}
 
 			if (model1.CourseId != model2.CourseId || model1.Name != model2.Name
-				|| model1.Id != model2.Id || model1.IsDone != model2.IsDone)
+				|| model1.Id != model2.Id)
 			{
 				return false;
 			}

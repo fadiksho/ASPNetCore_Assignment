@@ -46,14 +46,12 @@ namespace ASPNETCore_Assignments_Test.MapperProfiles
 			var courseAssignmentEntity = new CourseAssignmentEntity
 			{
 				Id = 1,
-				IsDone = true,
 				Name = "Course Assignment 1",
 				Course = new CourseEntity()
 			};
 			var expectedModel = new CourseAssignment
 			{
 				Id = 1,
-				IsDone = true,
 				Name = "Course Assignment 1",
 				Course = new Course()
 			};
