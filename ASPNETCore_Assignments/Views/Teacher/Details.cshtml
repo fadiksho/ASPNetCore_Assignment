@@ -1,0 +1,23 @@
+﻿@model Teacher
+@{
+  ViewData["Title"] = Model.Name;
+}
+
+@section Styles {
+  <environment include="Development">
+    <link href="~/css/school_management.css" rel="stylesheet" type="text/css" />
+  </environment>
+}
+
+<div class="container-fluid">
+  <partial name="~/Views/Shared/_Loader.cshtml" />
+  <div id="teacher_detail_page">
+    <partial name="~/Views/Teacher/_TeacherDetails.cshtml" model="Model" />
+  </div>
+</div>
+
+@section Scripts {
+  <environment include="Development">
+    <script src="~/js/schoolManagement-bandle.js"></script>
+  </environment>
+}

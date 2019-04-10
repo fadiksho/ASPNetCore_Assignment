@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Student>
+@{
+	int counter = 1;
+}
+  <div class="container-fluid">
+    <div class="row align-items-center my-1 border-bottom rounded-0 border-primary">
+      <div class="col-auto mx-3 p-2 text-center">
+        #
+      </div>
+      <div class="col p-2">
+        Student Name
+      </div>
+      <div class="col p-2">
+        Details
+      </div>
+    </div>
+    @foreach (var student in Model)
+    {
+      <div class="row align-items-center my-1">
+        <div class="col-auto mx-3 p-2">
+          @counter
+        </div>
+        <div class="col p-2">
+          @student.Name
+        </div>
+        <div class="col p-2">
+          <a asp-controller="Student"
+             asp-action="Details"
+             asp-route-studentId="@student.Id">Details</a>
+        </div>
+      </div>
+      { counter++; }
+    }
+  </div>

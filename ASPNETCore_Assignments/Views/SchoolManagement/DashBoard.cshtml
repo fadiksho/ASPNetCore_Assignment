@@ -1,0 +1,90 @@
+@model IEnumerable<Teacher>
+
+@section Styles {
+	<environment include="Development">
+		<link href="~/css/school_management.css" rel="stylesheet" type="text/css" />
+	</environment>
+}
+
+<partial name="~/Views/Shared/_Loader.cshtml" />
+
+<div class="position-relative">
+	<img src="~/images/school_management_dashboard.jpg" class="w-100">
+	<h1 class="d-inline-block position-absolute rounded-pill shadow px-5 py-3 school_dashboard_cover_text display-1">School Management</h1>
+</div>
+
+<nav class="position-relative scm-translateY-up d-flex justify-content-around">
+	<a asp-controller="Student"
+     asp-action="StudentList"
+     data-ajax="true"
+		 data-ajax-loading="#loaderId"
+		 data-ajax-method="GET"
+		 data-ajax-mode="replace"
+		 data-ajax-update="#dashboard_content"
+		 class="btn btn-outline-primary shadow display-5 rounded-pill">Students</a>
+	<a data-ajax="true"
+		 data-ajax-loading="#loaderId"
+		 data-ajax-method="GET"
+		 data-ajax-mode="replace"
+		 data-ajax-update="#dashboard_content"
+		 data-ajax-url="@Url.Action("TeacherList", "Teacher")"
+		 class="btn btn-outline-secondary shadow display-5 rounded-pill">Teachers</a>
+	<a data-ajax="true"
+		 data-ajax-loading="#loaderId"
+		 data-ajax-method="GET"
+		 data-ajax-mode="replace"
+		 data-ajax-update="#dashboard_content"
+		 data-ajax-url="@Url.Action("CourseList", "Course")"
+		 class="btn btn-outline-warning shadow display-5 rounded-pill">Courses</a>
+	<div class="d-flex">
+		<div class="dropdown mr-1">
+			<button type="button"
+							class="btn btn-outline-success shadow display-5 rounded-pill dropdown-toggle"
+							data-toggle="show"
+							data-target="AddNewInDashboardId">
+				Add New
+			</button>
+			<div id="AddNewInDashboardId" class="dropdown-menu dropdown-menu-left">
+				<a asp-controller="Student"
+					 asp-action="AddStudent"
+           data-ajax="true"
+					 data-ajax-loading="#loaderId"
+					 data-ajax-method="GET"
+					 data-ajax-mode="replace"
+					 data-ajax-update="#dashboard_content"
+					 data-ajax-complete="hideAfterSuceess('#AddNewInDashboardId')"
+					 data-ajax-success="loadFormValidation('#addStudentFormId')"
+					 class="dropdown-item border-bottom border-primary">Student</a>
+				<a asp-controller="Teacher"
+					 asp-action="AddTeacher"
+           data-ajax="true"
+					 data-ajax-loading="#loaderId"
+					 data-ajax-method="GET"
+					 data-ajax-mode="replace"
+					 data-ajax-update="#dashboard_content"
+					 data-ajax-complete="hideAfterSuceess('#AddNewInDashboardId')"
+					 data-ajax-success="loadFormValidation('#addTeacherFormId')"
+					 class="dropdown-item border-bottom border-secondary">Teacher</a>
+				<a asp-controller="Course"
+					 asp-action="AddCourse"
+           data-ajax="true"
+					 data-ajax-loading="#loaderId"
+					 data-ajax-method="GET"
+					 data-ajax-mode="replace"
+					 data-ajax-update="#dashboard_content"
+					 data-ajax-complete="hideAfterSuceess('#AddNewInDashboardId')"
+					 data-ajax-success="loadFormValidation('#addCourseFormId')"
+					 class="dropdown-item border-bottom border-warning">Course</a>
+			</div>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid" id="dashboard_content">
+	<partial name="~/Views/Teacher/_TeacherList.cshtml" model="@Model" />
+</div>
+
+@section Scripts {
+	<environment include="Development">
+		<script src="~/js/schoolManagement-bandle.js"></script>
+	</environment>
+}

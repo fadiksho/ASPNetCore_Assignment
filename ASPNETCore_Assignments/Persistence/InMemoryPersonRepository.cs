@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ASPNETCore_Assignments.Peristence
+namespace ASPNETCore_Assignments.Persistence
 {
 	public class InMemoryPersonRepository : IPersonRepository
 	{

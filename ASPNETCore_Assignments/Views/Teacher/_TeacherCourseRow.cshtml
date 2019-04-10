@@ -1,0 +1,75 @@
+﻿@model Course
+<!--#region Course Row-->
+<div id="course_row_@Model.Id">
+  <!-- #region Course Row Header -->
+  <div class="row align-items-center">
+    <div class="col p-2 text-center">
+      @Model.Name
+    </div>
+    <div class="col p-2 text-center">
+      @Model.Students.Count
+      <button data-dynamic-target="course_students_@Model.Id" data-dynamic-toggle="show" class="btn btn-outline-primary ml-1">View Students</button>
+    </div>
+    <div class="col p-2 text-center">
+      <button data-dynamic-target="course_assignments_@Model.Id" data-dynamic-toggle="show"
+              class="btn btn-outline-info ml-1">
+        View Assignments
+      </button>
+    </div>
+    <div class="col p-2 text-center">
+      <button data-dynamic-target="course_description_@Model.Id" data-dynamic-toggle="show" class="btn btn-outline-info">Show</button>
+    </div>
+    <div class="col p-2 text-center">
+      <a asp-controller="Course"
+         asp-action="Details"
+         asp-route-courseId="@Model.Id">Details</a>
+    </div>
+    <div class="col p-2 text-center">
+      <form method="post"
+            asp-controller="Course"
+            asp-action="DeleteCourse"
+            asp-route-courseId="@Model.Id"
+            data-ajax="true"
+            data-ajax-method="post"
+            data-ajax-success="clearAfterSuccess('#course_row_@Model.Id')"
+            data-ajax-loading="#loaderId">
+        <button type="submit" class="btn btn-danger">Remove Course</button>
+      </form>
+    </div>
+  </div>
+  <!-- #endregion -->
+  <!--#region Course Students-->
+  <div class="row align-items-center my-1 mb-3 collapse" id="course_students_@Model.Id">
+    <span class="text-white rounded-pill bg-primary scm-translateY-down px-3 ml-2">Students In Course</span>
+    <div class="pt-3 w-100 rounded-left rounded-bottom border border-info">
+      <div class="studentInCourseContainerId_@Model.Id">
+        <partial name="~/Views/Course/_CourseStudentList.cshtml" model="Model.Students" />
+      </div>
+      @if (Model.Students.Count < 1)
+      {
+        <h6 class="text-center my-4">No Students Enrolled Yet</h6>
+      }
+      <div id="course_student_@Model.Id"></div>
+    </div>
+  </div>
+  <!--#endregion-->
+  <!--#region Course Assignments-->
+  <div class="row align-items-center my-1 mb-3 collapse" id="course_assignments_@Model.Id">
+    <span class="text-dark rounded-pill bg-light scm-translateY-down px-3 ml-2">Course Assignment</span>
+    <div class="pt-3 w-100 rounded border border-light">
+      <div class="container-fluid">
+        <partial name="~/Views/CourseAssignment/_CourseAssignmentList.cshtml" model="Model.CourseAssignments" />
+      </div>
+    </div>
+  </div>
+  <!--#endregion-->
+  <!--#region Course Description-->
+  <div class="row align-items-center my-1 mb-3 collapse" id="course_description_@Model.Id">
+    <span class="text-white rounded-pill bg-info scm-translateY-down px-3 ml-2">Description</span>
+    <div class="alert pt-3 w-100 rounded border-info">
+      @Model.Description
+    </div>
+  </div>
+  <!--#endregion-->
+</div>
+<!-- #endregion-->

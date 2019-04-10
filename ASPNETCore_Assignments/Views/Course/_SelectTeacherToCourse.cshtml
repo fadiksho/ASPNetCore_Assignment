@@ -1,0 +1,8 @@
+﻿@model SelectTeacherToCourseViewModel
+<label name="teacherId" id="teacheId">Teacher Name:</label>
+<select class="form-control"
+				asp-items="@(new SelectList( Model.Teachers, "Id", "Name", Model.TeacherId))"
+				id="teacherId"
+				name="teacherId">
+  <option value="@null">None</option>
+</select>

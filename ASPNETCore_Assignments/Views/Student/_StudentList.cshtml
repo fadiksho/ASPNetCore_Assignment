@@ -1,0 +1,56 @@
+@model IEnumerable<Student>
+@{
+  int counter = 1;
+}
+
+<div class="container-fluid">
+  <div class="row align-items-center my-1 border-bottom border-primary">
+    <div class="col-auto p-2 mx-3">
+      #
+    </div>
+    <div class="col p-2 text-center">
+      Student Name
+    </div>
+    <div class="col p-2 text-center">
+      Course Count
+    </div>
+    <div class="col p-2 text-center">
+      Details
+    </div>
+    <div class="col-auto p-2 text-center">
+      Actions
+    </div>
+  </div>
+  @foreach (var student in Model)
+  {
+    <div id="student_row_@student.Id" class="row align-items-center my-1">
+      <div class="col-auto p-2 mx-3">
+        @counter
+      </div>
+      <div class="col p-2 text-center">
+        @student.Name
+      </div>
+      <div class="col p-2 text-center">
+        @student.Courses.Count
+      </div>
+      <div class="col p-2 text-center">
+        <a asp-controller="Student"
+           asp-action="Details"
+           asp-route-studentId="@student.Id">Details</a>
+      </div>
+      <div class="col-auto p-2 text-center">
+        <form asp-controller="Student"
+              asp-action="DeleteStudent"
+              method="post"
+              data-ajax="true"
+              data-ajax-method="post"
+              data-ajax-loading="#loaderId"
+              data-ajax-success="clearAfterSuccess('#student_row_@student.Id')">
+          <input type="hidden" name="id" value="@student.Id" />
+          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+    { counter++; }
+  }
+</div>

@@ -1,0 +1,49 @@
+﻿@model TeacherCourseAssignmentViewModel
+
+<div id="course_assignment_@Model.CourseId" 
+     class="row align-items-center my-1 mb-3">
+  <span class="text-dark rounded-pill bg-light scm-translateY-down px-3 ml-2">Manage Course Assignments</span>
+  <div class="pt-3 w-100 rounded border border-light">
+    <form asp-controller="CourseAssignment"
+          asp-action="ManageCourseAssignments"
+          data-ajax="true"
+          method="post"
+          data-ajax-method="post"
+          data-ajax-update="#course_detail_page"
+          data-ajax-loading="#loaderId"
+          class="ml-3 mt-4" id="addCourseAssignmentFormId">
+      @foreach (var courseAssignment in Model.CourseAssignments)
+      {
+        <partial name="~/Views/CourseAssignment/_AddCourseAssignment.cshtml" model="courseAssignment" />
+      }
+      <div id="newAssignmentLocationId"></div>
+      <div class="align-items-center form-group ml-3">
+        <a asp-controller="CourseAssignment"
+           asp-action="AddCourseAssignment"
+           data-ajax="true"
+           data-ajax-method="get"
+           data-ajax-mode="after"
+           data-ajax-success="loadFormValidation('#addCourseAssignmentFormId')"
+           data-ajax-update="#newAssignmentLocationId"
+           data-ajax-loading="#loaderId"
+           class="btn btn-sm btn-outline-success ml-3">Add Assignment</a>
+      </div>
+
+      <hr class="w-75 bg-primary" />
+
+      <div class="row align-items-center my-2">
+        <div class="col-auto ml-auto mr-2">
+          <button data-dynamic-toggle-remove="course_assignment_@Model.CourseId"
+                  type="button"
+                  class="btn btn-sm btn-outline-danger ml-2">
+            Cancel
+          </button>
+
+          <button type="submit" class="btn btn-sm btn-outline-success px-4">Save</button>
+        </div>
+      </div>
+      <input type="hidden" asp-for="@Model.CourseId" />
+    </form>
+  </div>
+</div>
+

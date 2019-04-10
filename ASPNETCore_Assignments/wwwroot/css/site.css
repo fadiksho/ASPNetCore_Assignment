@@ -5404,13 +5404,13 @@ button.bg-dark:focus {
   white-space: normal; }
 
 .shadow-sm {
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important; }
+  box-shadow: 0 0.125rem 0.25rem black !important; }
 
 .shadow {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; }
+  box-shadow: 0 0.5rem 1rem black !important; }
 
 .shadow-lg {
-  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important; }
+  box-shadow: 0 1rem 3rem black !important; }
 
 .shadow-none {
   box-shadow: none !important; }
@@ -7070,7 +7070,7 @@ a {
 .navbar-brand {
   font-size: 1.5rem; }
 
-.navbar-nav .dropdown-menu {
+.dropdown-menu-left {
   right: 0;
   left: auto; }
 

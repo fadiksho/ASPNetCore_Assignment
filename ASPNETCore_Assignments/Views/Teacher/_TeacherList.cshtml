@@ -1,0 +1,55 @@
+@model IEnumerable<Teacher>
+@{
+  int counter = 1;
+}
+<div class="container-fluid">
+  <div class="row align-items-center my-1 border-bottom border-secondary">
+    <div class="col-auto p-2 text-center">
+      #
+    </div>
+    <div class="col p-2 text-center">
+      Teacher Name
+    </div>
+    <div class="col p-2 text-center">
+      Courses
+    </div>
+    <div class="col p-2 text-center">
+      Details
+    </div>
+    <div class="col-auto p-2 text-center">
+      Actions
+    </div>
+  </div>
+  @foreach (var teacher in Model)
+  {
+    <div id="teacher_row_@teacher.Id" class="row align-items-center my-1">
+      <div class="col-auto p-2 text-center">
+        @counter
+      </div>
+      <div class="col p-2 text-center">
+        @teacher.Name
+      </div>
+      <div class="col p-2 text-center">
+        @teacher.Courses.Count
+      </div>
+      <div class="col p-2 text-center">
+        <a asp-controller="Teacher"
+           asp-action="Details"
+           asp-route-teacherId="@teacher.Id">Details</a>
+      </div>
+      <div class="col-auto p-2 text-center">
+        <form asp-controller="Teacher"
+              asp-action="DeleteTeacher"
+              method="post"
+              data-ajax="true"
+              data-ajax-method="post"
+              data-ajax-loading="#loaderId"
+              data-ajax-success="clearAfterSuccess('#teacher_row_@teacher.Id')">
+          <input type="hidden" name="id" value="@teacher.Id" />
+          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+    { counter++; }
+  }
+</div>

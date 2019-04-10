@@ -1,0 +1,32 @@
+﻿@model StudentForUpdatingDto
+
+<form asp-controller="Student"
+      asp-action="Edit"
+      asp-route-studentId="@Model.Id"
+      method="post"
+      data-ajax="true"
+      data-ajax-method="post"
+      data-ajax-mode="replace"
+      data-ajax-update="#student_detail_page"
+      data-ajax-loading="#loaderId"
+      class="w-100 p-4">
+  <div class="form-group">
+    <label asp-for="Name">Student Name: *</label>
+    <input asp-for="Name"
+           class="form-control" aria-describedby="StudentName" placeholder="Enter New Name..." />
+    <small class="text-danger"><span asp-validation-for="Name"></span></small>
+  </div>
+  <input asp-for="Id" type="hidden" />
+  <div class="form-group">
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-controller="Student"
+       asp-action="_Details"
+       asp-route-studentId="@Model.Id"
+       data-ajax="true"
+       data-ajax-method="get"
+       data-ajax-mode="replace"
+       data-ajax-update="#student_detail_page"
+       data-ajax-loading="#loaderId"
+       class="btn btn-danger">Cancel</a>
+  </div>
+</form>

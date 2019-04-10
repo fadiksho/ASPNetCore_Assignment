@@ -1,0 +1,32 @@
+@model IEnumerable<Course>
+
+<div class="container-fluid">
+  <div class="row align-items-center my-1 border-bottom border-warning">
+    <div class="col p-2 text-center">
+      Course Name
+    </div>
+    <div class="col p-2 text-center">
+      Teacher Name
+    </div>
+    <div class="col p-2 text-center">
+      Enrollments
+    </div>
+    <div class="col p-2 text-center">
+      Assignments
+    </div>
+    <div class="col p-2 text-center">
+      Description
+    </div>
+    <div class="col p-2 text-center">
+      Details
+    </div>
+    <div class="col p-2 text-center">
+      Action
+    </div>
+  </div>
+	@foreach (var course in Model)
+	{
+		<partial name="~/Views/Course/_CourseRow.cshtml" model="course" />
+    <hr class="w-75"/>
+	}
+</div>
